@@ -26,7 +26,7 @@ const Home = () => {
   console.log(user.user)
 
   return (
-    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,350px,550px,350px,auto,100px] bg-[#ffffff]`}>
+    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,650px,550px,450px,350PX,250px,auto,100px] bg-[#ffffff]`}>
 
       <div className={`bg-[#EAE6DF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-lime-300 `}>
 
@@ -171,7 +171,7 @@ const Home = () => {
 
       </div>
 
-      <div className={`col-start-1 col-end-8 row-start-3 row-end-4 justify-self-center self-center text-center grid`}>
+      <div className={`mt-4 col-start-1 col-end-8 row-start-3 row-end-4 justify-self-center self-center text-center grid`}>
 
         <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] `}>How it Works </p>
 
@@ -266,16 +266,15 @@ const Home = () => {
           </p>
         </span>
 
-
         <Swiper
           effect={"coverflow"}
-          centeredSlides={true}
+          centeredSlides={false}
           slidesPerView={2}
-
+          speed={1000}
           navigation={true}
           modules={[Navigation, EffectCoverflow]}
-          allowTouchMove={true}
-          className={`w-full mt-8 self-center bg-center bg-cover max-w-[1400px]`}
+          allowTouchMove={false}
+          className={`w-full mt-8 self-center max-w-[1400px] `}
           loop={true}
           coverflowEffect={{
             rotate: 50,
@@ -284,7 +283,7 @@ const Home = () => {
             modifier: 1,
             slideShadows: false,
           }}
-        // spaceBetween={0}
+        // spaceBetween={-190}
 
         >
           <SwiperSlide >
@@ -292,11 +291,11 @@ const Home = () => {
               <Image
                 width={400}
                 height={220}
-                className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+                className={`inline mx-8 justify-self-center `}
                 alt={'Beans-Foul-and-Beef-Rice'}
                 src={'/Beans-Foul-and-Beef-Rice.jpeg'}
               />
-              <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+              <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
                 Beans-Foul-and-Beef-Rice
               </p>
             </span>
@@ -309,11 +308,11 @@ const Home = () => {
               <Image
                 width={450}
                 height={220}
-                className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+                className={`inline mx-8 justify-self-center `}
                 alt={'Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce'}
                 src={'/Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce.jpeg'}
               />
-              <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+              <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
                 Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce
               </p>
             </span>
@@ -324,11 +323,11 @@ const Home = () => {
               <Image
                 width={450}
                 height={220}
-                className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+                className={`inline mx-8 justify-self-center `}
                 alt={'Peri-Peri-Chicken'}
                 src={'/Peri-Peri-Chicken.jpeg'}
               />
-              <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+              <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
                 Peri-Peri-Chicken
               </p>
             </span>
@@ -339,11 +338,11 @@ const Home = () => {
               <Image
                 width={450}
                 height={220}
-                className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+                className={`inline mx-8 justify-self-center `}
                 alt={'Shells-Pasta-with-Yogurt-and-Tahini-Sauce'}
                 src={'/Shells-Pasta-with-Yogurt-and-Tahini-Sauce.jpeg'}
               />
-              <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+              <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
                 Shells-Pasta-with-Yogurt-and-Tahini-Sauce
               </p>
             </span>
@@ -352,8 +351,24 @@ const Home = () => {
 
         </Swiper>
 
+        <span
+          onClick={() => router.push('/plans')}
+          className={`my-6 py-2 px-8 mx-4 self-center justify-self-center border-[1px] border-[green] bg-lime-300 hover:cursor-pointer hover:opacity-100 opacity-80`}>
+          <p className={`text-[green] text-sm font-bold inline`}>
+            See our menus
+          </p>
+        </span>
+
       </div>
 
+      <div className="mt-8 col-start-1 col-end-8 row-start-5 row-end-6 h-full w-full relative">
+        <Image
+          src={'/cover-3.jpeg'}
+          alt="Boxeh Cover 2"
+          fill
+          className="object-cover" // just an example
+        />
+      </div>
     </div >
   )
 }
