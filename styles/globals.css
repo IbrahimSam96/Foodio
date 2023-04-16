@@ -25,3 +25,22 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* Swiper */
+div.swiper-button-prev,
+div.swiper-button-next {
+color: lime;
+padding: 35px;
+border-radius: 35px;
+transform: scale(.5);
+outline: auto;
+}
+
+div.swiper-button-prev:hover{
+  background-color: #E4FABF;
+
+}
+div.swiper-button-next:hover {
+  background-color: #E4FABF;
+
+}

@@ -1,152 +1,332 @@
 import Image from 'next/image'
-import { supabase } from "../utility/supabaseClient"
+// Client Firebase SDK
 import { firebaseauth } from '@/InitFirebase'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, fetchSignInMethodsForEmail } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  signOut, signInWithPopup, GoogleAuthProvider
+} from "firebase/auth";
+import { useAuth } from '@/Authenticator';
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { TypeAnimation } from 'react-type-animation';
+// Carousel/Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, EffectCoverflow } from "swiper";
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
 
-const Home = ({ Clients }) => {
 
-  const provider = new GoogleAuthProvider();
+const Home = () => {
+
+  const user = useAuth();
+  const router = useRouter()
+
+  console.log(user.user)
 
   return (
-    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[100px,25px,auto,100px] bg-[#131341]`}>
+    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,350px,550px,350px,auto,100px] bg-[#ffffff]`}>
 
-      <button onClick={() => {
-        signInWithEmailAndPassword(firebaseauth, "Ibrahimsam96@gmail.com", "Password11@")
-          .then((result) => {
-            // window.location.href = '/';
-            var credential = result.credential;
+      <div className={`bg-[#EAE6DF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-lime-300 `}>
 
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            var token = credential.accessToken;
-            // The signed-in user info.
-            var user = result.user;
-            // ...
-            console.log(user)
+        <span>
+          <Image
+            width={50}
+            height={50}
+            className={`inline hover:cursor-pointer `}
+            alt={'Boxeh'}
+            src={'/Brand.png'}
+            onClick={() => {
+              window.location = '/'
+            }}
+          />
+        </span>
 
-          }).catch((error) => {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
-            console.log(error)
-            if (error == "FirebaseError: Firebase: Error (auth/wrong-password).") {
-              signInWithPopup(firebaseauth, provider)
-                .then((result) => {
-                  // This gives you a Google Access Token. You can use it to access the Google API.
-                  const credential = GoogleAuthProvider.credentialFromResult(result);
-                  const token = credential.accessToken;
-                  // The signed-in user info.
-                  const user = result.user;
-                  // IdP data available using getAdditionalUserInfo(result)
-                  // ...
-                }).catch((error) => {
-                  // Handle Errors here.
-                  const errorCode = error.code;
-                  const errorMessage = error.message;
-                  // The email of the user's account used.
-                  const email = error.customData.email;
-                  // The AuthCredential type that was used.
-                  const credential = GoogleAuthProvider.credentialFromError(error);
-                  // ...
-                });
+        <span className={` p-4 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
+          <p className={`group-hover:text-[green] text-sm `}> Our Plans </p>
+        </span>
 
-            }
-            // setloginerror(errorMessage)
-            // setShow(true)
-          });
-      }}>
-        Sign In
-      </button>
+        <span className={` p-4 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
+          <p className={`group-hover:text-[green] inline text-sm `}>  How It Works  </p>
+          <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fill-rule="evenodd" clip-rule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
+            fill="currentColor"></path>
+          </svg>
 
-      <button onClick={() => {
-        createUserWithEmailAndPassword(firebaseauth, "Ibrahimsam96@gmail.com", "Password11@")
-          .then((result) => {
-            // window.location.href = '/';
-            var credential = result.credential;
+          <span className={`hidden z-50 group-hover:grid bg-[#EAE6DF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
 
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            var token = credential.accessToken;
-            // The signed-in user info.
-            var user = result.user;
-            // ...
-            console.log(user)
+            <span className={`hover:bg-[#E4FABF] p-3 `}>
+              <p className={` whitespace-nowrap text-sm	 `}>  How It Works </p>
+            </span>
 
-          }).catch((error) => {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
-            console.log(error)
-            // setloginerror(errorMessage)
-            // setShow(true)
-          });
-      }}>
-        Sign Up
-      </button>
+            <span className={`hover:bg-[#E4FABF] p-3 `}>
+              <p className={`whitespace-nowrap text-sm	`}>  Our Chefs </p>
+            </span>
 
-      <button onClick={() => {
-        signInWithPopup(firebaseauth, provider)
-          .then((result) => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            // The signed-in user info.
-            const user = result.user;
-            // IdP data available using getAdditionalUserInfo(result)
-            // ...
-          }).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
-          });
+            <span className={`hover:bg-[#E4FABF] p-3`}>
+              <p className={` whitespace-nowrap text-sm	`}>  Delivery Areas </p>
+            </span>
 
-      }}>
-        Sign in With Google
-      </button>
+          </span>
+        </span>
 
-      <button onClick={() => {
-        signOut(firebaseauth).then(() => {
-          // Sign-out successful.
-          console.log("success")
-        }).catch((error) => {
-          console.log(error)
-          // An error happened.
-        });
+        <span className={` p-4 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
+          <p className={`group-hover:text-[green] inline text-sm `}>  Our Receipes </p>
+          <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fill-rule="evenodd" clip-rule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
+            fill="currentColor"></path>
+          </svg>
 
-      }}>
-        Sign Out
-      </button>
+          <span className={`hidden z-50 group-hover:grid bg-[#EAE6DF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
 
-    </div>
+            <span className={`hover:bg-[#E4FABF] p-3 `}>
+              <p className={` whitespace-nowrap text-sm	 `}>  On The Menu </p>
+            </span>
+
+            <span className={`hover:bg-[#E4FABF] p-3 `}>
+              <p className={`whitespace-nowrap text-sm	`}>  Cookbook </p>
+            </span>
+
+            <span className={`hover:bg-[#E4FABF] p-3`}>
+              <p className={` whitespace-nowrap text-sm	`}>  Vegetarian Receipes </p>
+            </span>
+
+          </span>
+        </span>
+
+        {user.user ?
+          <span className={`col-start-6 p-4 mx-2 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
+            <p className={`group-hover:text-[green] text-sm `}> My Account </p>
+          </span>
+
+          :
+          <span onClick={() => router.push('/login')} className={`col-start-6 py-2 px-8 mx-4 border-[1px] border-[green] self-center justify-self-end hover:bg-[#E4FABF] hover:cursor-pointer group`}>
+            <p className={`text-[green] text-sm font-bold`}>
+              Log In
+            </p>
+          </span>
+        }
+
+      </div>
+
+      {/* <div className={`col-start-1 col-end-8 row-start-2 row-end-3 aspect-video self-center `}>
+        <Image
+          src={'/cover-1.jpg'}
+          width="0"
+          height="0"
+          sizes="100vw"
+          className="w-full h-auto "
+        />
+      </div> */}
+
+      <div className="col-start-1 col-end-8 row-start-2 row-end-3 h-full w-full relative">
+        <Image
+          src={'/cover-1.jpg'}
+          alt="Boxeh Cover"
+          fill
+          className="object-cover" // just an example
+        />
+      </div>
+
+      <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center text-center grid z-20`}>
+
+        <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] `}>We save you serious </p>
+        <TypeAnimation
+          sequence={[
+            'Time', // Types 'One'
+            1000, // Waits 1s
+            'Money', // Deletes 'One' and types 'Two'
+            1000, // Waits 2s
+            'Effort', // Types 'Three' without deleting 'Two'
+            1000, // Waits 1s
+            () => {
+              console.log('Sequence completed');
+            },
+          ]}
+          wrapper="span"
+          cursor={false}
+          repeat={Infinity}
+          speed={{ type: 'keyStrokeDelayInMs', value: 250 }}
+
+          style={{
+            height: '85px',
+            width: '300px',
+            margin: "auto",
+            display: 'block',
+            fontSize: '2em',
+            zIndex: "20",
+            color: "green"
+          }}
+        />
+        <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] w-[350px] p-2`}>
+          Now with more choices every week and meals starting from just $4.45 JD /pp.
+        </p>
+
+        <span
+          onClick={() => router.push('/plans')}
+          className={`mt-6 py-2 px-8 mx-8 border-[1px] border-[green] bg-lime-300 hover:cursor-pointer hover:opacity-100 opacity-80`}>
+          <p className={`text-[green] text-sm font-bold inline`}>
+            View our plans
+          </p>
+        </span>
+
+      </div>
+
+      <div className={`col-start-1 col-end-8 row-start-3 row-end-4 justify-self-center self-center text-center grid`}>
+
+        <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] `}>How it Works </p>
+
+        <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2`}>
+          Choose your recipes • Place your order  • Delivered safely to your door
+        </p>
+
+        <span className={`flex mx-2`} >
+
+          <span className={`grid justify-self-center self-center max-w-[300px] mx-8`}>
+            <Image
+              width={180}
+              height={220}
+              className={`inline hover:cursor-pointer justify-self-center `}
+              alt={'Recipes'}
+              src={'/Meals-3.jpg'}
+            />
+            <p className={` text-[1.3em] font-medium font-serif text-[rgb(36,36,36)] `}>Choose your meals </p>
+
+            <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center`}>
+              Curated, easy-to-follow recipes every week
+            </p>
+
+          </span>
+
+          <span className={`grid justify-self-center self-center max-w-[300px] mx-8`}>
+            <Image
+              width={180}
+              height={220}
+              className={`inline hover:cursor-pointer justify-self-center `}
+              alt={'Recipes'}
+              src={'/Cook.jpg'}
+            />
+            <p className={` text-[1.3em] font-medium font-serif text-[rgb(36,36,36)] `}>Create the perfect box </p>
+
+            <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center`}>
+              Suit your lifestyle with a variety of Extras, including Garlic Bread
+            </p>
+          </span>
+
+
+          <span className={`grid justify-self-center self-center max-w-[300px] mx-8`}>
+            <Image
+              width={180}
+              height={220}
+              className={`inline hover:cursor-pointer justify-self-center `}
+              alt={'Recipes'}
+              src={'/Delivery.jpg'}
+            />
+            <p className={` text-[1.3em] font-medium font-serif text-[rgb(36,36,36)] `}>Get convenient weekly deliveries </p>
+
+            <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center `}>
+              Scheduling made easy, with drop-offs right at your door</p>
+          </span>
+
+          <span className={`grid justify-self-center self-center max-w-[300px]`}>
+            <Image
+              width={180}
+              height={220}
+              className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+              alt={'Recipes'}
+              src={'/Season-2.jpg'}
+            />
+            <p className={` text-[1.3em] font-medium font-serif text-[rgb(36,36,36)] `}>Cook seasonal, fresh ingredients </p>
+
+            <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center `}>
+              Food made from scratch in the comfort of your kitchen
+            </p>
+          </span>
+
+
+        </span>
+
+
+        <span
+          onClick={() => router.push('/plans')}
+          className={`my-6 py-2 px-8 mx-4 self-center justify-self-center border-[1px] border-[green] bg-lime-300 hover:cursor-pointer hover:opacity-100 opacity-80`}>
+          <p className={`text-[green] text-sm font-bold inline`}>
+            Learn more
+          </p>
+        </span>
+
+      </div>
+
+      <div className={`col-start-1 col-end-8 row-start-4 row-end-5 grid justify-self-center text-center `}>
+
+        <span className={`self-center justify-self-center text-center`}>
+          <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)]  `}>Your box, your way
+          </p>
+          <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 `}>
+            Flexible options to delight you and customise your weekly box
+          </p>
+        </span>
+
+
+        <Swiper
+          effect={"coverflow"}
+          centeredSlides={false}
+          slidesPerView={"auto"}
+          navigation={true}
+          modules={[Navigation]}
+          allowTouchMove={false}
+          className={`w-full mb-8 text-center self-center max-w-[1350px] `}
+          loop={true}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }}
+  
+        // slidesPerView={2}
+        // spaceBetween={0}
+
+        >
+          <SwiperSlide >
+            <Image
+              width={250}
+              height={220}
+              className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+              alt={'Beans-Foul-and-Beef-Rice'}
+              src={'/Beans-Foul-and-Beef-Rice.jpeg'}
+            />
+          </SwiperSlide >
+
+
+          <SwiperSlide >
+            <Image
+              width={250}
+              height={220}
+              className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+              alt={'Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce'}
+              src={'/Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce.jpeg'}
+            />
+          </SwiperSlide >
+          <SwiperSlide >
+            <Image
+              width={250}
+              height={220}
+              className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+              alt={'Peri-Peri-Chicken'}
+              src={'/Peri-Peri-Chicken.jpeg'}
+            />
+
+          </SwiperSlide >
+
+
+        </Swiper>
+
+      </div>
+
+    </div >
   )
 }
 
-export async function getServerSideProps() {
-
-  let { data, error } = await supabase
-    .from('clients')
-    .select('id')
-
-
-  return {
-    props: {
-      Clients: data
-    },
-  }
-}
 
 
 export default Home;
