@@ -15,6 +15,7 @@ import { Navigation, EffectCoverflow } from "swiper";
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
+import "swiper/css/effect-coverflow";
 
 
 const Home = () => {
@@ -255,7 +256,7 @@ const Home = () => {
 
       </div>
 
-      <div className={`col-start-1 col-end-8 row-start-4 row-end-5 grid justify-self-center text-center `}>
+      <div className={`col-start-1 col-end-8 row-start-4 row-end-5 grid justify-self-center`}>
 
         <span className={`self-center justify-self-center text-center`}>
           <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)]  `}>Your box, your way
@@ -268,56 +269,86 @@ const Home = () => {
 
         <Swiper
           effect={"coverflow"}
-          centeredSlides={false}
-          slidesPerView={"auto"}
+          centeredSlides={true}
+          slidesPerView={2}
+
           navigation={true}
-          modules={[Navigation]}
-          allowTouchMove={false}
-          className={`w-full mb-8 text-center self-center max-w-[1350px] `}
+          modules={[Navigation, EffectCoverflow]}
+          allowTouchMove={true}
+          className={`w-full mt-8 self-center bg-center bg-cover max-w-[1400px]`}
           loop={true}
           coverflowEffect={{
             rotate: 50,
             stretch: 0,
             depth: 100,
             modifier: 1,
-            slideShadows: true,
+            slideShadows: false,
           }}
-  
-        // slidesPerView={2}
         // spaceBetween={0}
 
         >
           <SwiperSlide >
-            <Image
-              width={250}
-              height={220}
-              className={`inline hover:cursor-pointer mx-8 justify-self-center `}
-              alt={'Beans-Foul-and-Beef-Rice'}
-              src={'/Beans-Foul-and-Beef-Rice.jpeg'}
-            />
-          </SwiperSlide >
+            <span className={`grid`} >
+              <Image
+                width={400}
+                height={220}
+                className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+                alt={'Beans-Foul-and-Beef-Rice'}
+                src={'/Beans-Foul-and-Beef-Rice.jpeg'}
+              />
+              <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+                Beans-Foul-and-Beef-Rice
+              </p>
+            </span>
 
+          </SwiperSlide >
 
           <SwiperSlide >
-            <Image
-              width={250}
-              height={220}
-              className={`inline hover:cursor-pointer mx-8 justify-self-center `}
-              alt={'Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce'}
-              src={'/Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce.jpeg'}
-            />
+            <span className={`grid`} >
+
+              <Image
+                width={450}
+                height={220}
+                className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+                alt={'Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce'}
+                src={'/Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce.jpeg'}
+              />
+              <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+                Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce
+              </p>
+            </span>
           </SwiperSlide >
           <SwiperSlide >
-            <Image
-              width={250}
-              height={220}
-              className={`inline hover:cursor-pointer mx-8 justify-self-center `}
-              alt={'Peri-Peri-Chicken'}
-              src={'/Peri-Peri-Chicken.jpeg'}
-            />
+            <span className={`grid`} >
+
+              <Image
+                width={450}
+                height={220}
+                className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+                alt={'Peri-Peri-Chicken'}
+                src={'/Peri-Peri-Chicken.jpeg'}
+              />
+              <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+                Peri-Peri-Chicken
+              </p>
+            </span>
+          </SwiperSlide >
+          <SwiperSlide >
+            <span className={`grid`} >
+
+              <Image
+                width={450}
+                height={220}
+                className={`inline hover:cursor-pointer mx-8 justify-self-center `}
+                alt={'Shells-Pasta-with-Yogurt-and-Tahini-Sauce'}
+                src={'/Shells-Pasta-with-Yogurt-and-Tahini-Sauce.jpeg'}
+              />
+              <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+                Shells-Pasta-with-Yogurt-and-Tahini-Sauce
+              </p>
+            </span>
 
           </SwiperSlide >
-
 
         </Swiper>
 
