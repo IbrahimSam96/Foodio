@@ -1,12 +1,6 @@
 import Image from 'next/image'
-// Client Firebase SDK
-import { firebaseauth } from '@/InitFirebase'
-import {
-  createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  signOut, signInWithPopup, GoogleAuthProvider
-} from "firebase/auth";
 import { useAuth } from '@/Authenticator';
-import Link from 'next/link'
+
 import { useRouter } from 'next/router'
 import { TypeAnimation } from 'react-type-animation';
 // Carousel/Swiper
@@ -16,17 +10,18 @@ import { Navigation, EffectCoverflow } from "swiper";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import "swiper/css/effect-coverflow";
+import Link from 'next/link';
 
 
 const Home = () => {
 
   const user = useAuth();
-  const router = useRouter()
+  const router = useRouter();
 
   console.log(user.user)
 
   return (
-    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,650px,550px,450px,350PX,250px,auto,100px] bg-[#ffffff]`}>
+    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,650px,550px,450px,350PX,350px] bg-[#ffffff]`}>
 
       <div className={`bg-[#EAE6DF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-lime-300 `}>
 
@@ -49,7 +44,7 @@ const Home = () => {
 
         <span className={` p-4 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
           <p className={`group-hover:text-[green] inline text-sm `}>  How It Works  </p>
-          <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fill-rule="evenodd" clip-rule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
+          <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
             fill="currentColor"></path>
           </svg>
 
@@ -72,7 +67,7 @@ const Home = () => {
 
         <span className={` p-4 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
           <p className={`group-hover:text-[green] inline text-sm `}>  Our Receipes </p>
-          <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fill-rule="evenodd" clip-rule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
+          <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
             fill="currentColor"></path>
           </svg>
 
@@ -369,6 +364,89 @@ const Home = () => {
           className="object-cover" // just an example
         />
       </div>
+
+      <div className="border-4 border-t-lime-300 mt-8 mx-8 col-start-1 col-end-8 row-start-6 row-end-8 grid grid-cols-[repeat(7,1fr)] grid-rows-2">
+
+        <span className={`grid self-center row-start-1 col-start-2 col-end-8`}>
+
+          <span className={`grid self-center justify-self-start row-start-1 col-start-1`}>
+          <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] p-2 `}>Boxeh </p>
+          <Link href={'/ourStory'}>
+            <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline `}>
+              Our Story
+            </p>
+          </Link>
+
+          <Link href={'/aboutUs'}>
+
+            <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
+              About Us
+            </p>
+          </Link>
+
+          <Link href={'/faqs'}>
+            <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
+              FAQS
+            </p>
+          </Link>
+          </span>
+
+          <span className={`self-center justify-self-start row-start-1 col-start-2 `} >
+            <Image
+              width={150}
+              height={150}
+              className={`inline hover:cursor-pointer `}
+              alt={'powered-by-stripe'}
+              src={'/powered-by-stripe.png'}
+              onClick={() => {
+                window.location = '/'
+              }}
+            />
+          </span>
+
+        </span>
+
+        <span className={`grid self-center row-start-2 col-start-2 col-end-8 `}>
+
+          <span className={`flex self-center justify-self-start row-start-1 col-start-1 whitespace-nowrap`}>
+
+            <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2`}>
+              © Boxeh 2023
+            </p>
+            
+            <Link href={'/conditions'}>
+
+              <p className={`ml-4 text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
+                Terms & Conditions
+              </p>
+            </Link>
+
+            <Link href={'/privacy'}>
+
+              <p className={`ml-4 text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
+                Privacy
+              </p>
+            </Link>
+
+          </span>
+
+        
+          <span className={`justify-self-start self-center row-start-1 col-start-2 `} >
+            <Image
+              width={50}
+              height={50}
+              className={`inline hover:cursor-pointer `}
+              alt={'Boxeh'}
+              src={'/Brand.png'}
+              onClick={() => {
+                window.location = '/'
+              }}
+            />
+          </span>
+        </span>
+
+      </div>
+
     </div >
   )
 }
