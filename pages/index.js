@@ -92,7 +92,6 @@ const Home = () => {
           <span className={`col-start-6 p-4 mx-2 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
             <p className={`group-hover:text-[green] text-sm `}> My Account </p>
           </span>
-
           :
           <span onClick={() => router.push('/login')} className={`col-start-6 py-2 px-8 mx-4 border-[1px] border-[green] self-center justify-self-end hover:bg-[#E4FABF] hover:cursor-pointer group`}>
             <p className={`text-[green] text-sm font-bold`}>

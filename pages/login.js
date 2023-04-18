@@ -8,14 +8,17 @@ import {
 import { useAuth } from '@/Authenticator';
 
 //  Admin Firebase SDK
-// import { AdminAuth, AdminFireStore } from '@/AdminFirebase';
+import { AdminAuth } from '@/AdminFirebase';
 
 // SRS
 import nookies from "nookies";
 // MUI
 import TextField from '@mui/material/TextField';
 import Link from 'next/link';
-import { Checkbox, FormControlLabel } from '@mui/material';
+import { Checkbox, FormControlLabel, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 import GoogleButton from 'react-google-button'
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -33,12 +36,13 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
 
     const SignUp = () => {
-        createUserWithEmailAndPassword(firebaseauth, "Ibrahimsam96@gmail.com", "Password11@")
+        createUserWithEmailAndPassword(firebaseauth, email, password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
                 console.log("Success")
                 // ...
+                router.push('/plans');
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -105,6 +109,16 @@ const Login = () => {
         });
 
     }
+
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
 
     return (
 
@@ -190,88 +204,191 @@ const Login = () => {
 
             </div>
 
-            <div className={`max-w-[450px] col-start-2 col-end-8 row-start-2 self-center justify-self-start grid `}>
+            {action == "SignIn" ?
+                <div className={`max-w-[450px] col-start-2 col-end-8 row-start-2 self-center justify-self-start grid `}>
 
-                <p className={` text-2xl justify-self-center p-2`}>
-                    Log In
-                </p>
-
-                <TextField
-                    // value={email}
-                    required
-                    sx={{ margin: "10px" }}
-                    color="success"
-                    id="outlined-basic"
-                    label="Email"
-                    variant="outlined"
-                    onChange={(v) => {
-                        console.log(v)
-                        setEmail(v.target.value)
-                    }}
-                />
-                <TextField
-                    // value={password}
-                    required
-                    sx={{ margin: "10px" }}
-                    color="success"
-                    id="outlined-password-input"
-                    label="Password"
-                    type="password"
-                    autoComplete="current-password"
-                    onChange={(v) => {
-                        console.log(v.target.value)
-                        setPassword(v)
-                    }}
-                />
-                <span className={`flex mx-2 p-4`}>
-                    <FormControlLabel defaultChecked control={<Checkbox defaultChecked />} label="Keep me signed in" />
-                    <Link className={`ml-auto `} href={'/login'}>
-                        <p className={`my-3 text-[0.8em] font-medium font-serif text-[green] underline whitespace-nowrap `}>
-                            Forgot Password?
-                        </p>
-                    </Link>
-                </span>
-
-                <span onClick={() => { SignIn() }} className={`text-center p-2 mx-3 self-center border-[1px] border-[green] bg-lime-300 hover:cursor-pointer hover:opacity-100 opacity-80`}>
-                    <p className={`text-[green] text-sm font-bold`}>
+                    <p className={` text-3xl justify-self-center p-2`}>
                         Log In
                     </p>
-                </span>
 
-                <span className={`flex p-4 `} >
-                    <svg width="100%" height="30" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M 10 10 L 300 10" stroke="#000" />
-                    </svg>
+                    <TextField
+                        // value={email}
+                        required
+                        sx={{ margin: "10px" }}
+                        color="success"
+                        id="outlined-basic"
+                        label="Email"
+                        variant="outlined"
+                        onChange={(v) => {
+                            console.log(v)
+                            setEmail(v.target.value)
+                        }}
+                    />
+                    <OutlinedInput
+                        required
+                        sx={{ margin: "10px" }}
+                        color="success"
+                        label="Choose a password"
+                        autoComplete="current-password"
+                        onChange={(v) => {
+                            console.log(v.target.value)
+                            setPassword(v)
+                        }}
 
-                    <p className={`text-xs mx-2`}>or</p>
+                        id="outlined-adornment-password"
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                    <span className={`flex mx-2 p-4`}>
+                        <FormControlLabel defaultChecked control={<Checkbox defaultChecked />} label="Keep me signed in" />
+                        <Link className={`ml-auto `} href={'/login'}>
+                            <p className={`my-3 text-[0.8em] font-medium font-serif text-[green] underline whitespace-nowrap `}>
+                                Forgot Password?
+                            </p>
+                        </Link>
+                    </span>
 
-                    <svg width="100%" height="30" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M 10 10 L 300 10" stroke="#000" />
-                    </svg>
-                </span>
-                <span className={`justify-self-center `}>
-                    <GoogleButton
-                        onClick={() => { console.log('Google button clicked') }}
+                    <span onClick={() => { SignIn() }} className={`text-center p-2 mx-3 self-center border-[1px] border-[green] bg-[#056835] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                        <p className={`text-[white] text-sm font-bold`}>
+                            Log In
+                        </p>
+                    </span>
+
+                    <span className={`flex p-4 `} >
+                        <svg width="100%" height="30" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 10 10 L 300 10" stroke="#000" />
+                        </svg>
+
+                        <p className={`text-xs mx-2`}>or</p>
+
+                        <svg width="100%" height="30" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 10 10 L 300 10" stroke="#000" />
+                        </svg>
+                    </span>
+                    <span className={`justify-self-center `}>
+                        <GoogleButton
+                            onClick={() => { SignInWithGoogle() }}
+                        />
+
+                    </span>
+
+                    <span className={`flex justify-self-center`}>
+                        <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center `}>
+                            Don't have an account?
+
+                        </p>
+                        <p onClick={() => {
+                            setAction('SignUp');
+                            setEmail("")
+                            setPassword("")
+                        }} className={`text-[0.8em] font-medium font-serif text-[#056835] p-2 underline hover:cursor-pointer`}>
+                            Sign up
+                        </p>
+                    </span>
+
+
+                </div>
+                :
+                <div className={`max-w-[450px] col-start-2 col-end-8 row-start-2 self-center justify-self-start grid `}>
+                    <p className={` text-3xl justify-self-center p-2`}>
+                        Create a Boxeh account
+                    </p>
+
+                    <TextField
+                        // value={email}
+                        required
+                        sx={{ margin: "10px", width: "400px" }}
+                        color="success"
+                        id="outlined-basic"
+                        label="Email"
+                        variant="outlined"
+                        onChange={(v) => {
+                            console.log(v)
+                            setEmail(v.target.value)
+                        }}
                     />
 
-                </span>
+                    <OutlinedInput
+                        required
+                        sx={{ margin: "10px", width: "400px" }}
+                        color="success"
+                        label="Choose a password"
+                        autoComplete="current-password"
+                        onChange={(v) => {
+                            console.log(v.target.value)
+                            setPassword(v)
+                        }}
 
-                <span className={`flex justify-self-center`}>
-                    <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center `}>
-                        Don't have an account?
+                        id="outlined-adornment-password"
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
 
+                    {/* <TextField
+                        // value={password}
+                        required
+                        sx={{ margin: "10px", width: "400px" }}
+                        color="success"
+                        id="outlined-password-input"
+                        label="Choose a password"
+                        type="password"
+                        autoComplete="current-password"
+                        onChange={(v) => {
+                            console.log(v.target.value)
+                            setPassword(v)
+                        }}
+                    />
+ */}
+                    <p className={`m-3 text-[0.8em] font-medium font-serif whitespace-nowrap `}>
+                        Password should be a minimum of 5 characters
                     </p>
+
+                    <span className={`flex mx-2 p-4`}>
+                        <FormControlLabel className={`mr-0`} defaultChecked control={<Checkbox defaultChecked />} />
+                        <p className={`my-3 text-[0.8em] font-medium font-serif whitespace-nowrap `}>
+                            Keep me signed in
+                        </p>
+
+                    </span>
+
+                    <span onClick={() => { SignUp() }} className={`text-center p-2 mx-3 self-center border-[1px] border-[green] bg-[#056835] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                        <p className={`text-[white] text-sm font-bold`}>
+                            Continue
+                        </p>
+                    </span>
+
                     <p onClick={() => {
-                        setAction('SignUp');
+                        setAction('SignIn');
                         setEmail("")
                         setPassword("")
-                    }} className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
-                        Sign up
+                    }} className={`my-3 text-[0.8em] font-medium font-serif text-[#056835] underline whitespace-nowrap text-center hover:cursor-pointer `}>
+                        Go back
                     </p>
-                </span>
+                </div>
+            }
 
-
-            </div>
 
             <div className="border-4 border-t-lime-300 mt-8 mx-8 col-start-1 col-end-8 row-start-3 row-end-4 grid grid-rows-2">
 
@@ -358,46 +475,47 @@ const Login = () => {
     )
 }
 
-// export const getServerSideProps = async (context) => {
-//   try {
-//     const cookies = nookies.get(context);
-//     console.log(JSON.stringify(cookies, null, 2));
-//     const token = await AdminAuth.verifyIdToken(cookies.token);
-//     const { uid, email } = token;
+export const getServerSideProps = async (context) => {
+    try {
+        const cookies = nookies.get(context);
+        console.log(JSON.stringify(cookies, null, 2));
 
-//     const db = AdminFireStore;
+        const token = await AdminAuth.verifyIdToken(cookies.token);
+        const { uid, email } = token;
 
-//     // Add a new document in collection "Users"
-//     db.collection("Customers").doc(uid).set({
-//       uid: uid,
-//       email: email,
-//     })
-//       .then(() => {
-//         console.log("Document successfully written!");
-//       })
-//       .catch((error) => {
-//         console.error("Error writing document: ", error);
-//       });
+        // If token exists no need to log in again; redirect to '/' 
+        if (token) {
+            return {
+                redirect: {
+                    destination: `/`,
+                    permanent: false,
+                },
+                props: {
+                    // email, uid, token
+                }
+            }
 
-//     // the user is authenticated!
-//     // FETCH STUFF HERE
+        }
 
-//     return {
-//       props: { email, uid, token },
+        // User not logged in; no need for any SSR props; Becasue Catch statement will be triggered
 
-//     };
-//   } catch (err) {
-//     // either the `token` cookie didn't exist
-//     // or token verification failed
-//     // either way: redirect to the login page
-//     // either the `token` cookie didn't exist
-//     // or token verification failed
-//     // either way: redirect to the login page
-//     return {
-//       props: {},
-//     };
-//   }
-// };
+        return {
+            props: {},
+
+        };
+    } catch (err) {
+        // either the `token` cookie didn't exist
+        // or token verification failed
+        // either way: allow user to stay on page to login
+        return {
+            props: {
+
+            },
+        };
+    }
+};
+
+
 
 
 export default Login;
