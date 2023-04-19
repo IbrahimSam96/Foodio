@@ -45,7 +45,7 @@ div.swiper-button-next:hover {
 
 /* MUI STepper Text */
 .Mui-active {
-  font-weight: 900 !important;
+  font-weight: 600 !important;
   color: #056835 !important;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
@@ -53,11 +53,12 @@ div.swiper-button-next:hover {
 .MuiStepLabel-label {
   color: #056835 !important;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 16px;
+  font-size: 0.7em;
   white-space: nowrap;
   margin-left: 5px;
   margin-right: 5px;
-
+  margin-bottom: auto !important;
+  margin-top: auto !important;
 }
 .Mui-disabled	{
   color: grey !important;
