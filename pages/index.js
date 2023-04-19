@@ -11,6 +11,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import "swiper/css/effect-coverflow";
 import Link from 'next/link';
+import LogoutIcon from '@mui/icons-material/Logout';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 
 
 const Home = () => {
@@ -90,7 +92,28 @@ const Home = () => {
 
         {user.user ?
           <span className={`col-start-6 p-4 mx-2 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
-            <p className={`group-hover:text-[green] text-sm `}> My Account </p>
+            <p className={`group-hover:text-[green] text-sm inline`}> My Account </p>
+            <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
+              fill="currentColor"></path>
+            </svg>
+
+            <span className={`hidden ml-[-100px] z-50 group-hover:grid bg-[#EAE6DF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
+
+              <span className={`hover:bg-[#E4FABF] p-3 `}>
+                <p className={` whitespace-nowrap text-sm	 `}>  My Orders </p>
+              </span>
+
+              <span className={`hover:bg-[#E4FABF] p-3 flex`}>
+                <SupportAgentIcon className={`mr-2`} />
+                <p className={`whitespace-nowrap text-sm	`}> Support  </p>
+              </span>
+
+              <span className={`hover:bg-[#E4FABF] p-3 flex`}>
+                <LogoutIcon className={`mr-2`} />
+                <p className={` whitespace-nowrap text-sm	`}>  Logout </p>
+              </span>
+
+            </span>
           </span>
           :
           <span onClick={() => router.push('/login')} className={`col-start-6 py-2 px-8 mx-4 border-[1px] border-[green] self-center justify-self-end hover:bg-[#E4FABF] hover:cursor-pointer group`}>
@@ -369,25 +392,25 @@ const Home = () => {
         <span className={`grid self-center row-start-1 col-start-2 col-end-8`}>
 
           <span className={`grid self-center justify-self-start row-start-1 col-start-1`}>
-          <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] p-2 `}>Boxeh </p>
-          <Link href={'/ourStory'}>
-            <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline `}>
-              Our Story
-            </p>
-          </Link>
+            <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] p-2 `}>Boxeh </p>
+            <Link href={'/ourStory'}>
+              <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline `}>
+                Our Story
+              </p>
+            </Link>
 
-          <Link href={'/aboutUs'}>
+            <Link href={'/aboutUs'}>
 
-            <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
-              About Us
-            </p>
-          </Link>
+              <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
+                About Us
+              </p>
+            </Link>
 
-          <Link href={'/faqs'}>
-            <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
-              FAQS
-            </p>
-          </Link>
+            <Link href={'/faqs'}>
+              <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
+                FAQS
+              </p>
+            </Link>
           </span>
 
           <span className={`self-center justify-self-start row-start-1 col-start-2 `} >
@@ -412,7 +435,7 @@ const Home = () => {
             <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2`}>
               © Boxeh 2023
             </p>
-            
+
             <Link href={'/conditions'}>
 
               <p className={`ml-4 text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
@@ -429,7 +452,7 @@ const Home = () => {
 
           </span>
 
-        
+
           <span className={`justify-self-start self-center row-start-1 col-start-2 `} >
             <Image
               width={50}

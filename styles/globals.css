@@ -18,29 +18,48 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 /* Swiper */
 div.swiper-button-prev,
 div.swiper-button-next {
-color: lime;
-padding: 50px;
-border-radius: 50%;
-transform: scale(.3);
-outline: auto;
+  color: lime;
+  padding: 50px;
+  border-radius: 50%;
+  transform: scale(.3);
+  outline: auto;
 }
 
-div.swiper-button-prev:hover{
+div.swiper-button-prev:hover {
   background-color: #E4FABF;
 
 }
+
 div.swiper-button-next:hover {
   background-color: #E4FABF;
+
+}
+
+/* MUI STepper Text */
+.Mui-active {
+  font-weight: 900 !important;
+  color: #056835 !important;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.MuiStepLabel-label {
+  color: #056835 !important;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 16px;
+  white-space: nowrap;
+  margin-left: 5px;
+  margin-right: 5px;
+
+}
+.Mui-disabled	{
+  color: grey !important;
 
 }
