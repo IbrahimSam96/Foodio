@@ -25,14 +25,22 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import { styled } from '@mui/material/styles';
 import { StepConnector, stepConnectorClasses } from '@mui/material';
 import { useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, EffectCoverflow } from "swiper";
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import "swiper/css/effect-coverflow";
 
 
 const Plans = () => {
 
+  const user = useAuth();
+
+
   const [activeStep, setActiveStep] = useState(0);
   const [numberOfPeople, setNumberOfPeople] = useState(2);
   const [numberOfRecipes, setNumberOfRecipes] = useState(3);
-
 
   const steps = [
     'Select Plan',
@@ -77,7 +85,7 @@ const Plans = () => {
     width: 30,
     height: 30,
     display: 'flex',
-    marginTop:"10px",
+    marginTop: "10px",
     borderRadius: '50%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -113,7 +121,7 @@ const Plans = () => {
   return (
     <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,auto,350px] bg-[white]`}>
 
-      <div className={`bg-[#EAE6DF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,1fr,150px] max-h-[60px] shadow shadow-lime-300 `}>
+      <div className={`bg-[#EAE6DF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,1fr,150px] max-h-[60px] shadow shadow-slate-300 `}>
 
         <span>
           <Image
@@ -128,12 +136,17 @@ const Plans = () => {
           />
         </span>
 
-        <Stepper className={`justify-self-center `} alternativeLabel  activeStep={activeStep} connector={<ColorlibConnector />}>
+        <Stepper className={`justify-self-center `} alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
           {steps.map((label, index) => {
             return (
-              < Step className={``} key={label} >
+              < Step className={``} key={label} disabled={index == 1 && user.user && true} >
                 <StepLabel className={`mx-4 hover:cursor-pointer `} onClick={() => {
-                  setActiveStep((prev) => prev + 1)
+                  if (index == 1 && user.user && true) {
+                    // Do nothin
+                  }
+                  else {
+                    setActiveStep((prev) => index)
+                  }
                 }} StepIconComponent={ColorlibStepIcon} >{label}</StepLabel>
               </Step>
             )
@@ -144,167 +157,277 @@ const Plans = () => {
 
       </div>
 
-      <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow  shadow-slate-500 m-2 p-10`} >
+      {activeStep == 1 &&
+        <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow shadow-slate-400 mt-8 p-10`} >
 
-        <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>Choose your plan size
-        </p>
+          <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>Choose your plan size
+          </p>
 
-        <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto`}>
-          We'll set this as your default size, but you can always change it from week to week.
-        </p>
+          <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto`}>
+            We'll set this as your default size, but you can always change it from week to week.
+          </p>
 
-        <span className={`self-center grid grid-rows-1 `}>
+          <span className={`self-center grid grid-rows-1 `}>
 
-          <span className={`self-center row-start-1 col-start-1`}>
-            <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
-              Number of people
+            <span className={`self-center row-start-1 col-start-1`}>
+              <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
+                Number of people
+              </p>
+            </span>
+
+            <span className={`flex ml-auto row-start-1 col-start-2 `}>
+              <span
+                onClick={() => { setNumberOfPeople(2) }}
+                className={`${numberOfPeople == 2 ? `z-[-2]` : `z-10`} py-2 px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                <p className={`text-[green] text-[0.7em] font-bold inline`}>
+                  2
+                </p>
+              </span>
+
+              <span
+                onClick={() => { setNumberOfPeople(4) }}
+                className={`${numberOfPeople == 4 ? `z-[-2]` : `z-10`}  py-2 px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                <p className={`text-[green] text-[0.7em] font-bold inline`}>
+                  4
+                </p>
+              </span>
+
+            </span>
+
+            <span className={`flex ml-auto row-start-1 col-start-2 `}>
+              <span
+                onClick={() => { }}
+                className={`py-2 px-14 transition-[margin] ${numberOfPeople == 2 ? `mr-[119px]` : `mr-0`} border-[1px] border-[green]  bg-[#056835] `}>
+                <p className={`text-[white] text-[0.7em] font-bold inline`}>
+                  {numberOfPeople}
+
+                </p>
+              </span>
+
+            </span>
+          </span>
+
+          <span className={`self-center grid grid-rows-1 py-4 `}>
+
+            <span className={`self-center row-start-1 col-start-1`}>
+              <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
+                Recipes per week
+              </p>
+            </span>
+
+            <span className={`flex ml-auto row-start-1 col-start-2 `}>
+              <span
+                onClick={() => { setNumberOfRecipes(3) }}
+                className={`${numberOfRecipes == 3 ? `z-[-2]` : `z-10`} py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                <p className={`text-[green] text-[0.7em] font-bold inline`}>
+                  3
+                </p>
+              </span>
+
+              <span
+                onClick={() => { setNumberOfRecipes(4) }}
+                className={`${numberOfRecipes == 4 ? `z-[-2]` : `z-10`}  py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                <p className={`text-[green] text-[0.7em] font-bold inline`}>
+                  4
+                </p>
+              </span>
+
+              <span
+                onClick={() => { setNumberOfRecipes(5) }}
+                className={`${numberOfRecipes == 5 ? `z-[-2]` : `z-10`}  py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                <p className={`text-[green] text-[0.7em] font-bold inline`}>
+                  5
+                </p>
+              </span>
+
+            </span>
+
+            <span className={`flex ml-auto row-start-1 col-start-2 `}>
+              <span
+                onClick={() => { }}
+                className={`transition-[margin] py-2 px-[36px] ${numberOfRecipes == 3 ? `mr-[158px]` : numberOfRecipes == 4 ? `mr-[79px] ` : `mr-0`} border-[1px] border-[green]  bg-[#056835] `}>
+                <p className={`text-[white] text-[0.7em] font-bold inline`}>
+                  {numberOfRecipes}
+
+                </p>
+              </span>
+
+            </span>
+
+          </span>
+
+          <span className={`grid  border-[2px] border-slate-400 rounded`}>
+
+            <span className={`mx-2 border-b-[1px] border-slate-400 py-2`}>
+
+              <p className={` text-[0.7em] font-bold font-serif text-[rgb(36,36,36)] `}>
+                Price Summary
+              </p>
+
+              <p className={` text-[0.7em] font-serif text-[rgb(36,36,36)] py-2`}>
+                {`${numberOfRecipes} meals for ${numberOfPeople} people per week`}
+              </p>
+              <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
+                {`${numberOfRecipes * numberOfPeople} total servings `}
+              </p>
+            </span>
+
+            <span className={``}>
+
+              <span className={`flex pt-4`}>
+                <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
+                  Box price
+                </p>
+
+                <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                  {`$${(numberOfPeople * numberOfRecipes * 4.5).toFixed(2)}`}
+                </p>
+              </span>
+
+              <span className={`flex py-1`}>
+                <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)]`}>
+                  Price per serving
+                </p>
+
+                <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                  {`$${((numberOfPeople * numberOfRecipes * 4.5) / (numberOfPeople * numberOfRecipes)).toFixed(2)}`}
+                </p>
+              </span>
+
+              <span className={`flex py-1`}>
+                <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
+                  Shipping
+                </p>
+
+                <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                  +$3.00
+                </p>
+              </span>
+
+              <span className={`flex py-4 bg-slate-300 `}>
+                <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] my-auto`}>
+                  First Box Total
+                </p>
+
+                <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                  {`$${(numberOfPeople * numberOfRecipes * 4.5 + 3).toFixed(2)} `}
+
+                </p>
+              </span>
+            </span>
+
+
+          </span>
+
+          <span onClick={() => {
+            if (user.user) {
+              setActiveStep(2)
+            }
+            else {
+              setActiveStep(1)
+            }
+          }} className={`py-2 px-8 my-4 text-center border-[1px] border-[green] self-center bg-[#056835] hover:opacity-80 hover:cursor-pointer group`}>
+            <p className={`text-[white] text-sm font-bold`}>
+              Select this plan
             </p>
           </span>
+        </div>
+      }
 
-          <span className={`flex ml-auto row-start-1 col-start-2 `}>
-            <span
-              onClick={() => { setNumberOfPeople(2) }}
-              className={`${numberOfPeople == 2 ? `z-[-2]` : `z-10`} py-2 px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
-              <p className={`text-[green] text-[0.7em] font-bold inline`}>
-                2
-              </p>
-            </span>
+      {activeStep == 3 &&
 
-            <span
-              onClick={() => { setNumberOfPeople(4) }}
-              className={`${numberOfPeople == 4 ? `z-[-2]` : `z-10`}  py-2 px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
-              <p className={`text-[green] text-[0.7em] font-bold inline`}>
-                4
-              </p>
-            </span>
+        <div className={`start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow shadow-slate-400 mt-8 p-10`}>
 
-          </span>
+        </div>
+      }
 
-          <span className={`flex ml-auto row-start-1 col-start-2 `}>
-            <span
-              onClick={() => { }}
-              className={`py-2 px-14 transition-[margin] ${numberOfPeople == 2 ? `mr-[119px]` : `mr-0`} border-[1px] border-[green]  bg-[#056835] `}>
-              <p className={`text-[white] text-[0.7em] font-bold inline`}>
-                {numberOfPeople}
+      <div className={`col-start-1 col-end-8 row-start-3 grid justify-self-center mt-8`}>
 
-              </p>
-            </span>
-
-          </span>
+        <span className={`self-center justify-self-center text-center`}>
+          <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] `}>
+            Over 35 fresh recipes every week
+          </p>
+          <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 `}>
+            and a changing selection of desserts, snacks, and sides
+          </p>
         </span>
 
-        <span className={`self-center grid grid-rows-1 py-4 `}>
-
-          <span className={`self-center row-start-1 col-start-1`}>
-            <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
-              Recipes per week
-            </p>
-          </span>
-
-          <span className={`flex ml-auto row-start-1 col-start-2 `}>
-            <span
-              onClick={() => { setNumberOfRecipes(3) }}
-              className={`${numberOfRecipes == 3 ? `z-[-2]` : `z-10`} py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
-              <p className={`text-[green] text-[0.7em] font-bold inline`}>
-                3
+        <Swiper
+          centeredSlides={false}
+          slidesPerView={4}
+          navigation={false}
+          // modules={[Navigation]}
+          allowTouchMove={true}
+          className={`w-full mb-8  max-w-[960px] `}
+          loop={true}
+        >
+          <SwiperSlide >
+            <span className={`grid px-2`} >
+              <Image
+                width={260}
+                height={315}
+                className={`inline justify-self-center `}
+                alt={'Beans-Foul-and-Beef-Rice'}
+                src={'/Beans-Foul-and-Beef-Rice.jpeg'}
+              />
+              <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+                Beans-Foul-and-Beef-Rice
               </p>
             </span>
 
-            <span
-              onClick={() => { setNumberOfRecipes(4) }}
-              className={`${numberOfRecipes == 4 ? `z-[-2]` : `z-10`}  py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
-              <p className={`text-[green] text-[0.7em] font-bold inline`}>
-                4
+          </SwiperSlide >
+
+          <SwiperSlide >
+            <span className={`grid px-2`} >
+
+              <Image
+                width={260}
+                height={315}
+                className={`inline justify-self-center `}
+                alt={'Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce'}
+                src={'/Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce.jpeg'}
+              />
+              <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+                Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce
+              </p>
+            </span>
+          </SwiperSlide >
+          <SwiperSlide >
+            <span className={`grid px-2`} >
+
+              <Image
+                width={260}
+                height={315}
+                className={`inline  justify-self-center `}
+                alt={'Peri-Peri-Chicken'}
+                src={'/Peri-Peri-Chicken.jpeg'}
+              />
+              <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+                Peri-Peri-Chicken
+              </p>
+            </span>
+          </SwiperSlide >
+          <SwiperSlide >
+            <span className={`grid px-2`} >
+
+              <Image
+                width={260}
+                height={315}
+                className={`inline justify-self-center `}
+                alt={'Shells-Pasta-with-Yogurt-and-Tahini-Sauce'}
+                src={'/Shells-Pasta-with-Yogurt-and-Tahini-Sauce.jpeg'}
+              />
+              <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
+                Shells-Pasta-with-Yogurt-and-Tahini-Sauce
               </p>
             </span>
 
-            <span
-              onClick={() => { setNumberOfRecipes(5) }}
-              className={`${numberOfRecipes == 5 ? `z-[-2]` : `z-10`}  py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
-              <p className={`text-[green] text-[0.7em] font-bold inline`}>
-                5
-              </p>
-            </span>
-
-          </span>
-
-          <span className={`flex ml-auto row-start-1 col-start-2 `}>
-            <span
-              onClick={() => { }}
-              className={`transition-[margin] py-2 px-[35.8px] ${numberOfRecipes == 3 ? `mr-[158px]` : numberOfRecipes == 4 ? `mr-[79px] ` : `mr-0`} border-[1px] border-[green]  bg-[#056835] `}>
-              <p className={`text-[white] text-[0.7em] font-bold inline`}>
-                {numberOfRecipes}
-
-              </p>
-            </span>
-
-          </span>
-
-        </span>
-
-        <span className={`grid  border-[2px] border-slate-400 rounded`}>
-
-          <span className={`mx-2 border-b-[1px] border-slate-400 py-2`}>
-
-            <p className={` text-[0.7em] font-bold font-serif text-[rgb(36,36,36)] `}>
-              Price Summary
-            </p>
-
-            <p className={` text-[0.7em] font-serif text-[rgb(36,36,36)] py-2`}>
-              {`${numberOfRecipes} meals for ${numberOfPeople} people per week`}
-            </p>
-            <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
-              {`${numberOfRecipes * numberOfPeople} total servings `}
-            </p>
-          </span>
-
-          <span className={``}>
-
-            <span className={`flex pt-4`}>
-              <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
-                Box price
-              </p>
-
-              <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
-                {`$${(numberOfPeople * numberOfRecipes * 4.5).toFixed(2)}`}
-              </p>
-            </span>
-
-            <span className={`flex py-1`}>
-              <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)]`}>
-                Price per serving
-              </p>
-
-              <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
-                {`$${(numberOfPeople * numberOfRecipes * 4.5 / numberOfPeople * numberOfRecipes).toFixed(2)}`}
-              </p>
-            </span>
-
-            <span className={`flex py-1`}>
-              <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
-                Shipping
-              </p>
-
-              <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
-               +$3.00
-              </p>
-            </span>
-
-            <span className={`flex py-4 bg-slate-400 `}>
-              <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] my-auto`}>
-                First Box Total
-              </p>
-
-              <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
-                {`$${(numberOfPeople * numberOfRecipes * 4.5 + 3).toFixed(2) } `}
-
-              </p>
-            </span>
-          </span>
-
-        </span>
+          </SwiperSlide>
+        </Swiper>
 
       </div>
+
+
     </div >
   )
 }

@@ -1,6 +1,9 @@
 import Image from 'next/image'
 import { useAuth } from '@/Authenticator';
 
+import { firebaseauth } from '@/InitFirebase'
+import { signOut } from "firebase/auth";
+
 import { useRouter } from 'next/router'
 import { TypeAnimation } from 'react-type-animation';
 // Carousel/Swiper
@@ -22,10 +25,22 @@ const Home = () => {
 
   console.log(user.user)
 
+  const SignOut = () => {
+    signOut(firebaseauth).then(() => {
+      // Sign-out successful.
+      console.log("success")
+    }).catch((error) => {
+      console.log(error)
+      // An error happened.
+    });
+
+  }
+
+
   return (
     <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,650px,550px,450px,350PX,350px] bg-[#ffffff]`}>
 
-      <div className={`bg-[#EAE6DF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-lime-300 `}>
+      <div className={`bg-[#EAE6DF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-slate-300 `}>
 
         <span>
           <Image
@@ -40,7 +55,7 @@ const Home = () => {
           />
         </span>
 
-        <span className={` p-4 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
+        <span onClick={() => router.push('/plans')} className={` p-4 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
           <p className={`group-hover:text-[green] text-sm `}> Our Plans </p>
         </span>
 
@@ -108,7 +123,9 @@ const Home = () => {
                 <p className={`whitespace-nowrap text-sm	`}> Support  </p>
               </span>
 
-              <span className={`hover:bg-[#E4FABF] p-3 flex`}>
+              <span onClick={() => {
+                SignOut()
+              }} className={`hover:bg-[#E4FABF] p-3 flex`}>
                 <LogoutIcon className={`mr-2`} />
                 <p className={` whitespace-nowrap text-sm	`}>  Logout </p>
               </span>

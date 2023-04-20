@@ -23,7 +23,7 @@ body {
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
-/* Swiper */
+/* Swiper Navigation Buttons */
 div.swiper-button-prev,
 div.swiper-button-next {
   color: lime;
@@ -42,6 +42,7 @@ div.swiper-button-next:hover {
   background-color: #E4FABF;
 
 }
+
 
 /* MUI STepper Text */
 .Mui-active {

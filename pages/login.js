@@ -25,6 +25,8 @@ import { useState } from 'react';
 
 const Login = () => {
 
+
+
     const user = useAuth();
     const router = useRouter();
 
@@ -35,7 +37,9 @@ const Login = () => {
 
     const provider = new GoogleAuthProvider();
 
-    const SignUp = () => {
+    const SignUp = (e) => {
+        e.preventDefault();
+
         createUserWithEmailAndPassword(firebaseauth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -54,7 +58,8 @@ const Login = () => {
 
     }
 
-    const SignIn = () => {
+    const SignIn = (e) => {
+        e.preventDefault();
         signInWithEmailAndPassword(firebaseauth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -110,7 +115,6 @@ const Login = () => {
 
     }
 
-
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -119,12 +123,11 @@ const Login = () => {
         event.preventDefault();
     };
 
-
     return (
 
         <div className={`h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,750px,350px] bg-white`}>
 
-            <div className={`bg-[#EAE6DF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-lime-300 `}>
+            <div className={`bg-[#EAE6DF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-slate-300 `}>
 
                 <span>
                     <Image
@@ -220,11 +223,12 @@ const Login = () => {
                         label="Email"
                         variant="outlined"
                         onChange={(v) => {
-                            console.log(v)
+                            console.log(v.target.value)
                             setEmail(v.target.value)
                         }}
                     />
                     <OutlinedInput
+                        // value={password}
                         required
                         sx={{ margin: "10px" }}
                         color="success"
@@ -232,7 +236,7 @@ const Login = () => {
                         autoComplete="current-password"
                         onChange={(v) => {
                             console.log(v.target.value)
-                            setPassword(v)
+                            setPassword(v.target.value)
                         }}
 
                         id="outlined-adornment-password"
@@ -259,7 +263,7 @@ const Login = () => {
                         </Link>
                     </span>
 
-                    <span onClick={() => { SignIn() }} className={`text-center p-2 mx-3 self-center border-[1px] border-[green] bg-[#056835] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                    <span onClick={(e) => SignIn(e)} className={`text-center p-2 mx-3 self-center border-[1px] border-[green] bg-[#056835] hover:cursor-pointer hover:opacity-100 opacity-80`}>
                         <p className={`text-[white] text-sm font-bold`}>
                             Log In
                         </p>
@@ -306,7 +310,7 @@ const Login = () => {
                     </p>
 
                     <TextField
-                        // value={email}
+                        value={email}
                         required
                         sx={{ margin: "10px", width: "400px" }}
                         color="success"
@@ -320,6 +324,7 @@ const Login = () => {
                     />
 
                     <OutlinedInput
+                        value={password}
                         required
                         sx={{ margin: "10px", width: "400px" }}
                         color="success"
@@ -327,7 +332,7 @@ const Login = () => {
                         autoComplete="current-password"
                         onChange={(v) => {
                             console.log(v.target.value)
-                            setPassword(v)
+                            setPassword(v.target.value)
                         }}
 
                         id="outlined-adornment-password"
@@ -373,7 +378,7 @@ const Login = () => {
 
                     </span>
 
-                    <span onClick={() => { SignUp() }} className={`text-center p-2 mx-3 self-center border-[1px] border-[green] bg-[#056835] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                    <span onClick={(e) => { SignUp(e) }} className={`text-center p-2 mx-3 self-center border-[1px] border-[green] bg-[#056835] hover:cursor-pointer hover:opacity-100 opacity-80`}>
                         <p className={`text-[white] text-sm font-bold`}>
                             Continue
                         </p>
