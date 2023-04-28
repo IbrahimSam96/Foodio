@@ -1,4 +1,10 @@
 import Image from 'next/image'
+
+// Stripe SDK
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "../components/CheckoutForm";
+
 // Client Firebase SDK
 import { firebaseauth } from '@/InitFirebase'
 import {
@@ -23,14 +29,20 @@ import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 
 import { styled } from '@mui/material/styles';
-import { StepConnector, stepConnectorClasses } from '@mui/material';
-import { useState } from 'react';
+import { Checkbox, StepConnector, TextField, stepConnectorClasses } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, EffectCoverflow } from "swiper";
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import "swiper/css/effect-coverflow";
+
+
+// Make sure to call loadStripe outside of a component’s render to avoid
+// recreating the Stripe object on every render.
+// This is your test publishable API key.
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 
 const Plans = () => {
@@ -118,6 +130,61 @@ const Plans = () => {
     );
   }
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddrress] = useState("");
+  const [address2, setAddrress2] = useState("");
+
+  const [city, setCity] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const [error, setError] = useState(false)
+  const [billingAddress, setBillingAddress] = useState(false);
+
+  const [firstNameB, setFirstNameB] = useState("");
+  const [lastNameB, setLastNameB] = useState("");
+  const [addressB, setAddrressB] = useState("");
+  const [address2B, setAddrress2B] = useState("");
+
+  const [cityB, setCityB] = useState("");
+  const [postalCodeB, setPostalCodeB] = useState("");
+  const [phoneB, setPhoneB] = useState("");
+
+  const [shippingConfirmed, setShippingConfirmed] = useState(false);
+
+  // Stripe Checkout 
+  const [clientSecret, setClientSecret] = useState("");
+  const [paymentStatus, setPaymentStatus] = useState("");
+
+  useEffect(() => {
+
+    console.log("Activated new client secret")
+    if (shippingConfirmed) {
+      // Create PaymentIntent as soon as the page loads
+      fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ order: numberOfPeople * numberOfRecipes }),
+      })
+        .then((res) => res.json())
+        .then((data) => setClientSecret(data.clientSecret));
+    }
+  }, [shippingConfirmed, paymentStatus]);
+
+  const appearance = {
+    variables: {
+      colorPrimary: '#056835',
+      colorBackground: '#E4FABF',
+      colorText: '#056835',
+    },
+  };
+
+  const options = {
+    clientSecret,
+    appearance,
+  };
+
   return (
     <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,auto,350px] bg-[white]`}>
 
@@ -139,9 +206,9 @@ const Plans = () => {
         <Stepper className={`justify-self-center `} alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
           {steps.map((label, index) => {
             return (
-              < Step className={``} key={label} disabled={index == 1 && user.user && true} >
-                <StepLabel className={`mx-4 hover:cursor-pointer `} onClick={() => {
-                  if (index == 1 && user.user && true) {
+              < Step className={``} key={label} disabled={(index == 1 && user.user !== undefined) || (index == 3 && !shippingConfirmed)} >
+                <StepLabel className={`mx-4 ${((index == 1 && user.user) || (index == 3 && !shippingConfirmed)) && `hover:cursor-default`} hover:cursor-pointer `} onClick={() => {
+                  if ((index == 1 && user.user) || (index == 3 && !shippingConfirmed)) {
                     // Do nothin
                   }
                   else {
@@ -157,216 +224,219 @@ const Plans = () => {
 
       </div>
 
-      {activeStep == 1 &&
-        <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow shadow-slate-400 mt-8 p-10`} >
+      {(activeStep == 0 || activeStep == 1) &&
+        <>
+          <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow shadow-slate-400 mt-8 p-10`} >
 
-          <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>Choose your plan size
-          </p>
-
-          <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto`}>
-            We'll set this as your default size, but you can always change it from week to week.
-          </p>
-
-          <span className={`self-center grid grid-rows-1 `}>
-
-            <span className={`self-center row-start-1 col-start-1`}>
-              <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
-                Number of people
-              </p>
-            </span>
-
-            <span className={`flex ml-auto row-start-1 col-start-2 `}>
-              <span
-                onClick={() => { setNumberOfPeople(2) }}
-                className={`${numberOfPeople == 2 ? `z-[-2]` : `z-10`} py-2 px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
-                <p className={`text-[green] text-[0.7em] font-bold inline`}>
-                  2
-                </p>
-              </span>
-
-              <span
-                onClick={() => { setNumberOfPeople(4) }}
-                className={`${numberOfPeople == 4 ? `z-[-2]` : `z-10`}  py-2 px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
-                <p className={`text-[green] text-[0.7em] font-bold inline`}>
-                  4
-                </p>
-              </span>
-
-            </span>
-
-            <span className={`flex ml-auto row-start-1 col-start-2 `}>
-              <span
-                onClick={() => { }}
-                className={`py-2 px-14 transition-[margin] ${numberOfPeople == 2 ? `mr-[119px]` : `mr-0`} border-[1px] border-[green]  bg-[#056835] `}>
-                <p className={`text-[white] text-[0.7em] font-bold inline`}>
-                  {numberOfPeople}
-
-                </p>
-              </span>
-
-            </span>
-          </span>
-
-          <span className={`self-center grid grid-rows-1 py-4 `}>
-
-            <span className={`self-center row-start-1 col-start-1`}>
-              <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
-                Recipes per week
-              </p>
-            </span>
-
-            <span className={`flex ml-auto row-start-1 col-start-2 `}>
-              <span
-                onClick={() => { setNumberOfRecipes(3) }}
-                className={`${numberOfRecipes == 3 ? `z-[-2]` : `z-10`} py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
-                <p className={`text-[green] text-[0.7em] font-bold inline`}>
-                  3
-                </p>
-              </span>
-
-              <span
-                onClick={() => { setNumberOfRecipes(4) }}
-                className={`${numberOfRecipes == 4 ? `z-[-2]` : `z-10`}  py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
-                <p className={`text-[green] text-[0.7em] font-bold inline`}>
-                  4
-                </p>
-              </span>
-
-              <span
-                onClick={() => { setNumberOfRecipes(5) }}
-                className={`${numberOfRecipes == 5 ? `z-[-2]` : `z-10`}  py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
-                <p className={`text-[green] text-[0.7em] font-bold inline`}>
-                  5
-                </p>
-              </span>
-
-            </span>
-
-            <span className={`flex ml-auto row-start-1 col-start-2 `}>
-              <span
-                onClick={() => { }}
-                className={`transition-[margin] py-2 px-[36px] ${numberOfRecipes == 3 ? `mr-[158px]` : numberOfRecipes == 4 ? `mr-[79px] ` : `mr-0`} border-[1px] border-[green]  bg-[#056835] `}>
-                <p className={`text-[white] text-[0.7em] font-bold inline`}>
-                  {numberOfRecipes}
-
-                </p>
-              </span>
-
-            </span>
-
-          </span>
-
-          <span className={`grid  border-[2px] border-slate-400 rounded`}>
-
-            <span className={`mx-2 border-b-[1px] border-slate-400 py-2`}>
-
-              <p className={` text-[0.7em] font-bold font-serif text-[rgb(36,36,36)] `}>
-                Price Summary
-              </p>
-
-              <p className={` text-[0.7em] font-serif text-[rgb(36,36,36)] py-2`}>
-                {`${numberOfRecipes} meals for ${numberOfPeople} people per week`}
-              </p>
-              <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
-                {`${numberOfRecipes * numberOfPeople} total servings `}
-              </p>
-            </span>
-
-            <span className={``}>
-
-              <span className={`flex pt-4`}>
-                <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
-                  Box price
-                </p>
-
-                <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
-                  {`$${(numberOfPeople * numberOfRecipes * 4.5).toFixed(2)}`}
-                </p>
-              </span>
-
-              <span className={`flex py-1`}>
-                <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)]`}>
-                  Price per serving
-                </p>
-
-                <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
-                  {`$${((numberOfPeople * numberOfRecipes * 4.5) / (numberOfPeople * numberOfRecipes)).toFixed(2)}`}
-                </p>
-              </span>
-
-              <span className={`flex py-1`}>
-                <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
-                  Shipping
-                </p>
-
-                <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
-                  +$3.00
-                </p>
-              </span>
-
-              <span className={`flex py-4 bg-slate-300 `}>
-                <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] my-auto`}>
-                  First Box Total
-                </p>
-
-                <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
-                  {`$${(numberOfPeople * numberOfRecipes * 4.5 + 3).toFixed(2)} `}
-
-                </p>
-              </span>
-            </span>
-
-
-          </span>
-
-          <span onClick={() => {
-            if (user.user) {
-              setActiveStep(2)
-            }
-            else {
-              setActiveStep(1)
-            }
-          }} className={`py-2 px-8 my-4 text-center border-[1px] border-[green] self-center bg-[#056835] hover:opacity-80 hover:cursor-pointer group`}>
-            <p className={`text-[white] text-sm font-bold`}>
-              Select this plan
+            <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>Choose your plan size
             </p>
-          </span>
-        </div>
-      }
 
-      {activeStep == 3 &&
+            <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto`}>
+              We'll set this as your default size, but you can always change it from week to week.
+            </p>
 
-        <div className={`start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow shadow-slate-400 mt-8 p-10`}>
+            <span className={`self-center grid grid-rows-1 `}>
 
-        </div>
-      }
+              <span className={`self-center row-start-1 col-start-1`}>
+                <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
+                  Number of people
+                </p>
+              </span>
 
-      <div className={`col-start-1 col-end-8 row-start-3 grid justify-self-center mt-8`}>
+              <span className={`flex ml-auto row-start-1 col-start-2 `}>
+                <span
+                  onClick={() => { setNumberOfPeople(2) }}
+                  className={`${numberOfPeople == 2 ? `z-[-2]` : `z-10`} py-2 px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                  <p className={`text-[green] text-[0.7em] font-bold inline`}>
+                    2
+                  </p>
+                </span>
 
-        <span className={`self-center justify-self-center text-center`}>
-          <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] `}>
-            Over 35 fresh recipes every week
-          </p>
-          <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 `}>
-            and a changing selection of desserts, snacks, and sides
-          </p>
-        </span>
+                <span
+                  onClick={() => { setNumberOfPeople(4) }}
+                  className={`${numberOfPeople == 4 ? `z-[-2]` : `z-10`}  py-2 px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                  <p className={`text-[green] text-[0.7em] font-bold inline`}>
+                    4
+                  </p>
+                </span>
 
+              </span>
+
+              <span className={`flex ml-auto row-start-1 col-start-2 `}>
+                <span
+                  onClick={() => { }}
+                  className={`py-2 px-14 transition-[margin] ${numberOfPeople == 2 ? `mr-[119px]` : `mr-0`} border-[1px] border-[green]  bg-[#056835] `}>
+                  <p className={`text-[white] text-[0.7em] font-bold inline`}>
+                    {numberOfPeople}
+
+                  </p>
+                </span>
+
+              </span>
+            </span>
+
+            <span className={`self-center grid grid-rows-1 py-4 `}>
+
+              <span className={`self-center row-start-1 col-start-1`}>
+                <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
+                  Recipes per week
+                </p>
+              </span>
+
+              <span className={`flex ml-auto row-start-1 col-start-2 `}>
+                <span
+                  onClick={() => { setNumberOfRecipes(3) }}
+                  className={`${numberOfRecipes == 3 ? `z-[-2]` : `z-10`} py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                  <p className={`text-[green] text-[0.7em] font-bold inline`}>
+                    3
+                  </p>
+                </span>
+
+                <span
+                  onClick={() => { setNumberOfRecipes(4) }}
+                  className={`${numberOfRecipes == 4 ? `z-[-2]` : `z-10`}  py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                  <p className={`text-[green] text-[0.7em] font-bold inline`}>
+                    4
+                  </p>
+                </span>
+
+                <span
+                  onClick={() => { setNumberOfRecipes(5) }}
+                  className={`${numberOfRecipes == 5 ? `z-[-2]` : `z-10`}  py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                  <p className={`text-[green] text-[0.7em] font-bold inline`}>
+                    5
+                  </p>
+                </span>
+
+              </span>
+
+              <span className={`flex ml-auto row-start-1 col-start-2 `}>
+                <span
+                  onClick={() => { }}
+                  className={`transition-[margin] py-2 px-[36px] ${numberOfRecipes == 3 ? `mr-[158px]` : numberOfRecipes == 4 ? `mr-[79px] ` : `mr-0`} border-[1px] border-[green]  bg-[#056835] `}>
+                  <p className={`text-[white] text-[0.7em] font-bold inline`}>
+                    {numberOfRecipes}
+
+                  </p>
+                </span>
+
+              </span>
+
+            </span>
+
+            <span className={`grid  border-[2px] border-slate-400 rounded`}>
+
+              <span className={`mx-2 border-b-[1px] border-slate-400 py-2`}>
+
+                <p className={` text-[0.7em] font-bold font-serif text-[rgb(36,36,36)] `}>
+                  Price Summary
+                </p>
+
+                <p className={` text-[0.7em] font-serif text-[rgb(36,36,36)] py-2`}>
+                  {`${numberOfRecipes} meals for ${numberOfPeople} people per week`}
+                </p>
+                <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
+                  {`${numberOfRecipes * numberOfPeople} total servings `}
+                </p>
+              </span>
+
+              <span className={``}>
+
+                <span className={`flex pt-4`}>
+                  <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
+                    Box price
+                  </p>
+
+                  <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                    {`$${(numberOfPeople * numberOfRecipes * 4.5).toFixed(2)}`}
+                  </p>
+                </span>
+
+                <span className={`flex py-1`}>
+                  <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)]`}>
+                    Price per serving
+                  </p>
+
+                  <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                    {`$${((numberOfPeople * numberOfRecipes * 4.5) / (numberOfPeople * numberOfRecipes)).toFixed(2)}`}
+                  </p>
+                </span>
+
+                <span className={`flex py-1`}>
+                  <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
+                    Shipping
+                  </p>
+
+                  <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                    +$3.00
+                  </p>
+                </span>
+
+                <span className={`flex py-4 bg-slate-300 `}>
+                  <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] my-auto`}>
+                    First Box Total
+                  </p>
+
+                  <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                    {`$${(numberOfPeople * numberOfRecipes * 4.5 + 3).toFixed(2)} `}
+
+                  </p>
+                </span>
+              </span>
+
+
+            </span>
+
+            <span onClick={() => {
+              if (user.user) {
+                setActiveStep(2)
+              }
+              else {
+                setActiveStep(1)
+              }
+            }} className={`py-2 px-8 my-4 text-center border-[1px] border-[green] self-center bg-[#056835] hover:opacity-80 hover:cursor-pointer group`}>
+              <p className={`text-[white] text-sm font-bold`}>
+                Select this plan
+              </p>
+            </span>
+          </div>
+
+          <div className={`col-start-1 col-end-8 row-start-3 grid justify-self-center mt-8 grid-cols-[minmax(0,auto)]`}>
+
+            <span className={`self-center justify-self-center text-center`}>
+              <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] `}>
+                Over 35 fresh recipes every week
+              </p>
+              <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 `}>
+                and a changing selection of desserts, snacks, and sides
+              </p>
+            </span>
         <Swiper
+          effect={"coverflow"}
           centeredSlides={false}
-          slidesPerView={4}
-          navigation={false}
-          // modules={[Navigation]}
-          allowTouchMove={true}
-          className={`w-full mb-8  max-w-[960px] `}
+          slidesPerView={2}
+          speed={1000}
+          navigation={true}
+          modules={[Navigation, EffectCoverflow]}
+          allowTouchMove={false}
+          className={`w-full mt-8 self-center max-w-[1400px] `}
           loop={true}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
+          }}
+        // spaceBetween={-190}
+
         >
           <SwiperSlide >
-            <span className={`grid px-2`} >
+            <span className={`grid`} >
               <Image
-                width={260}
-                height={315}
-                className={`inline justify-self-center `}
+                width={400}
+                height={220}
+                className={`inline mx-8 justify-self-center `}
                 alt={'Beans-Foul-and-Beef-Rice'}
                 src={'/Beans-Foul-and-Beef-Rice.jpeg'}
               />
@@ -378,12 +448,12 @@ const Plans = () => {
           </SwiperSlide >
 
           <SwiperSlide >
-            <span className={`grid px-2`} >
+            <span className={`grid`} >
 
               <Image
-                width={260}
-                height={315}
-                className={`inline justify-self-center `}
+                width={450}
+                height={220}
+                className={`inline mx-8 justify-self-center `}
                 alt={'Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce'}
                 src={'/Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce.jpeg'}
               />
@@ -393,12 +463,12 @@ const Plans = () => {
             </span>
           </SwiperSlide >
           <SwiperSlide >
-            <span className={`grid px-2`} >
+            <span className={`grid`} >
 
               <Image
-                width={260}
-                height={315}
-                className={`inline  justify-self-center `}
+                width={450}
+                height={220}
+                className={`inline mx-8 justify-self-center `}
                 alt={'Peri-Peri-Chicken'}
                 src={'/Peri-Peri-Chicken.jpeg'}
               />
@@ -408,12 +478,12 @@ const Plans = () => {
             </span>
           </SwiperSlide >
           <SwiperSlide >
-            <span className={`grid px-2`} >
+            <span className={`grid`} >
 
               <Image
-                width={260}
-                height={315}
-                className={`inline justify-self-center `}
+                width={450}
+                height={220}
+                className={`inline mx-8 justify-self-center `}
                 alt={'Shells-Pasta-with-Yogurt-and-Tahini-Sauce'}
                 src={'/Shells-Pasta-with-Yogurt-and-Tahini-Sauce.jpeg'}
               />
@@ -422,10 +492,356 @@ const Plans = () => {
               </p>
             </span>
 
-          </SwiperSlide>
+          </SwiperSlide >
+
         </Swiper>
 
-      </div>
+
+          </div>
+        </>
+      }
+
+      {activeStep == 2 &&
+
+        <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow shadow-slate-400 mt-8 p-10`}>
+
+          <span className={`flex `}>
+            <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>
+              Please provide your address to see available delivery dates.
+            </p>
+          </span>
+
+          <span className={`flex`} >
+            <TextField
+              value={firstName}
+              error={error && !firstName}
+              autoComplete="given-name"
+              required
+              sx={{ marginRight: "10px" }}
+              color="success"
+              id="outlined-basic"
+              label="First Name"
+              variant="outlined"
+              onChange={(e) => {
+                setFirstName(e.target.value)
+              }}
+            />
+
+            <TextField
+              value={lastName}
+              error={error && !lastName}
+              autoComplete="family-name"
+              required
+              sx={{}}
+              color="success"
+              id="outlined-basic"
+              label="Last Name"
+              variant="outlined"
+              onChange={(e) => {
+
+                setLastName(e.target.value)
+              }}
+            />
+
+          </span>
+
+          <span className={`flex py-4`} >
+
+            <TextField
+              value={address}
+              error={error && !address}
+
+              required
+              sx={{ marginRight: "10px" }}
+              color="success"
+              id="outlined-basic"
+              label="Address 1"
+              variant="outlined"
+              onChange={(e) => {
+
+                setAddrress(e.target.value)
+              }}
+            />
+
+            <TextField
+              value={address2}
+              sx={{}}
+              color="success"
+              id="outlined-basic"
+              label="Address 2"
+              placeholder='Apt., suite,floor'
+              variant="outlined"
+              onChange={(e) => {
+
+                setAddrress2(e.target.value)
+              }}
+            />
+
+          </span>
+
+          <span className={`flex py-4`} >
+
+            <TextField
+              value={city}
+              error={error && !city}
+              required
+              sx={{ marginRight: "10px" }}
+              color="success"
+              id="outlined-basic"
+              label="City"
+              variant="outlined"
+              onChange={(e) => {
+
+                setCity(e.target.value)
+              }}
+            />
+
+            <TextField
+              value={postalCode}
+              error={error && !postalCode}
+              required
+              sx={{}}
+              color="success"
+              id="outlined-basic"
+              label="Postal Code"
+              variant="outlined"
+              onChange={(e) => {
+
+                setPostalCode(e.target.value)
+              }}
+
+            />
+
+          </span>
+
+
+          <span className={`flex py-4`} >
+
+            <TextField
+              value={phone}
+              error={error && !phone}
+              autoComplete='tel'
+              required
+              sx={{ marginRight: "10px" }}
+              color="success"
+              id="outlined-basic"
+              placeholder='For delivery purposes'
+              type="tel"
+              label="Phone"
+              variant="outlined"
+              onChange={(e) => {
+
+                setPhone(e.target.value)
+              }} />
+
+          </span>
+
+          <span className={` `}>
+            <TextField
+              value={billingAddress}
+              fullWidth
+              id="outlined-select-currency-native"
+              select
+              label="Billing Address"
+              SelectProps={{
+                native: true,
+              }}
+              onChange={(e) => {
+                console.log(e.target.value, "Ok")
+
+                setBillingAddress(!billingAddress)
+
+              }}
+            >
+              <option key={'Use delivery address'} value={false}>
+                Use delivery address
+              </option>
+              <option key={'Add a billing address'} value={true}>
+                Add a billing address
+              </option>
+            </TextField>
+
+          </span>
+
+          {billingAddress &&
+            <>
+              <span className={`flex `}>
+                <p className={` text-[1.2em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>
+                  Billing Address
+                </p>
+              </span>
+
+              <span className={`flex`} >
+
+                <TextField
+                  value={firstNameB}
+                  error={error && !firstNameB}
+                  autoComplete="given-name"
+                  required
+                  sx={{ marginRight: "10px" }}
+                  color="success"
+                  id="outlined-basic"
+                  label="First Name"
+                  variant="outlined"
+                  onChange={(e) => {
+                    setFirstNameB(e.target.value)
+                  }}
+                />
+
+                <TextField
+                  value={lastNameB}
+                  error={error && !lastNameB}
+                  autoComplete="family-name"
+                  required
+                  sx={{}}
+                  color="success"
+                  id="outlined-basic"
+                  label="Last Name"
+                  variant="outlined"
+                  onChange={(e) => {
+
+                    setLastNameB(e.target.value)
+                  }}
+                />
+
+              </span>
+
+              <span className={`flex py-4`} >
+
+                <TextField
+                  value={addressB}
+                  error={error && !addressB}
+                  required
+                  sx={{ marginRight: "10px" }}
+                  color="success"
+                  id="outlined-basic"
+                  label="Address 1"
+                  variant="outlined"
+                  onChange={(e) => {
+
+                    setAddrressB(e.target.value)
+                  }}
+                />
+
+                <TextField
+                  value={address2B}
+                  sx={{}}
+                  color="success"
+                  id="outlined-basic"
+                  label="Address 2"
+                  placeholder='Apt., suite,floor'
+                  variant="outlined"
+                  onChange={(e) => {
+
+                    setAddrress2B(e.target.value)
+                  }}
+                />
+
+              </span>
+
+              <span className={`flex py-4`} >
+
+                <TextField
+                  value={cityB}
+                  error={error && !cityB}
+                  required
+                  sx={{ marginRight: "10px" }}
+                  color="success"
+                  id="outlined-basic"
+                  label="City"
+                  variant="outlined"
+                  onChange={(e) => {
+
+                    setCityB(e.target.value)
+                  }}
+                />
+
+                <TextField
+                  value={postalCodeB}
+                  error={error && !postalCodeB}
+                  required
+                  sx={{}}
+                  color="success"
+                  id="outlined-basic"
+                  label="Postal Code"
+                  variant="outlined"
+                  onChange={(e) => {
+
+                    setPostalCodeB(e.target.value)
+                  }}
+
+                />
+
+              </span>
+
+
+              <span className={`flex py-4`} >
+
+                <TextField
+                  value={phoneB}
+                  error={error && !phoneB}
+                  autoComplete='tel'
+                  required
+                  sx={{ marginRight: "10px" }}
+                  color="success"
+                  id="outlined-basic"
+                  placeholder='For delivery purposes'
+                  type="tel"
+                  label="Phone"
+                  variant="outlined"
+                  onChange={(e) => {
+
+                    setPhoneB(e.target.value)
+                  }} />
+
+              </span>
+
+            </>
+          }
+
+          <span onClick={() => {
+
+            if ((firstName == "") || (lastName == "") || (address == "") || (city == "") || (postalCode == "") || (phone == "")) {
+              setError(true)
+            }
+            else {
+
+              if (billingAddress) {
+                if ((firstNameB == "") || (lastNameB == "") || (addressB == "") || (cityB == "") || (postalCodeB == "") || (phoneB == "")) {
+                  setError(true)
+                }
+                else {
+                  setError(false)
+                  setActiveStep(3)
+                  setShippingConfirmed(true)
+                }
+              }
+              else {
+                setError(false)
+                setActiveStep(3)
+                setShippingConfirmed(true)
+
+              }
+
+            }
+
+          }} className={`py-2 px-8 my-4 text-center border-[1px] border-[green] self-center bg-[#056835] hover:opacity-80 hover:cursor-pointer group`}>
+            <p className={`text-[white] text-sm font-bold`}>
+              Continue
+            </p>
+          </span>
+
+        </div>
+      }
+
+      {clientSecret && activeStep == 3 && (
+        <div className={`col-start-1 col-end-8 justify-self-center self-center row-start-2`}>
+          <Elements options={options} stripe={stripePromise}>
+            <CheckoutForm setPaymentStatus={setPaymentStatus} />
+          </Elements>
+        </div>
+      )}
+
 
 
     </div >
