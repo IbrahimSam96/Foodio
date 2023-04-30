@@ -16,14 +16,16 @@ import "swiper/css/effect-coverflow";
 import Link from 'next/link';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+
+import { useCallback, useEffect, useState } from 'react';
 
 
 const Home = () => {
 
   const user = useAuth();
   const router = useRouter();
-
-  console.log(user.user)
 
   const SignOut = () => {
     signOut(firebaseauth).then(() => {
@@ -35,7 +37,6 @@ const Home = () => {
     });
 
   }
-
 
   return (
     <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,650px,550px,450px,350PX,350px] bg-[#ffffff]`}>
@@ -141,16 +142,6 @@ const Home = () => {
         }
 
       </div>
-
-      {/* <div className={`col-start-1 col-end-8 row-start-2 row-end-3 aspect-video self-center `}>
-        <Image
-          src={'/cover-1.jpg'}
-          width="0"
-          height="0"
-          sizes="100vw"
-          className="w-full h-auto "
-        />
-      </div> */}
 
       <div className="col-start-1 col-end-8 row-start-2 row-end-3 h-full w-full relative">
         <Image

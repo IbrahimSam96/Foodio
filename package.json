@@ -21,6 +21,7 @@
     "eslint-config-next": "13.3.0",
     "firebase": "^9.19.1",
     "firebase-admin": "^11.6.0",
+    "moment": "^2.29.4",
     "next": "^13.3.0",
     "nookies": "^2.5.2",
     "postcss": "8.4.21",

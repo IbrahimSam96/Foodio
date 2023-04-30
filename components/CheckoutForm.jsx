@@ -7,7 +7,7 @@ import {
 
 import SyncIcon from '@mui/icons-material/Sync';
 
-export default function CheckoutForm({ setPaymentStatus }) {
+export default function CheckoutForm({ setPaymentStatus, PlaceOrder }) {
 
   const stripe = useStripe();
   const elements = useElements();
@@ -83,8 +83,10 @@ export default function CheckoutForm({ setPaymentStatus }) {
           setPaymentStatus("failed")
         }
       }
-
-
+      else{
+        setPaymentStatus("succeeded");
+        PlaceOrder(res)
+      }
 
     }).catch((err) => {
       console.log("Error", err)
@@ -96,7 +98,6 @@ export default function CheckoutForm({ setPaymentStatus }) {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
 
-
     setIsLoading(false);
   };
 
@@ -106,24 +107,18 @@ export default function CheckoutForm({ setPaymentStatus }) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit} className={`justify-self-center self-center m-8 p-8  shadow shadow-slate-400 border-[1px] border-[#056835]`} >
-      {!stripe && !elements ?
-        <>
-          <SyncIcon />
-        </>
-        :
-        <>
-          <PaymentElement id="payment-element" options={paymentElementOptions} />
-          <button
-            className={`w-full p-2 mt-4 bg-[#056835] text-white font-Financials text-[1em] opacity-100 hover:opacity-90`}
-            disabled={isLoading || !stripe || !elements} id="submit">
-            <span id="button-text">
-              {isLoading ? <SyncIcon className={`animate-spin	`} sx={{ color: "white", fontSize: "25px" }} /> : "Pay now"}
-            </span>
-          </button>
-          {/* Show any error or success messages */}
-          {message && <div className={`${error && 'text-[red] text-center pt-2'}`} id="payment-message">{message}</div>}
-        </>
-      }
+
+      <PaymentElement id="payment-element" options={paymentElementOptions} />
+      <button
+        className={`w-full p-2 mt-4 bg-[#056835] text-white font-Financials text-[1em] opacity-100 hover:opacity-90`}
+        disabled={isLoading || !stripe || !elements} id="submit">
+        <span id="button-text">
+          {isLoading ? <SyncIcon className={`animate-spin	`} sx={{ color: "white", fontSize: "25px" }} /> : "Pay now"}
+        </span>
+      </button>
+      {/* Show any error or success messages */}
+      {message && <div className={`${error && 'text-[red] text-center pt-2'}`} id="payment-message">{message}</div>}
+
     </form>
   );
 }
