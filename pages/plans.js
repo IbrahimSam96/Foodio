@@ -575,10 +575,13 @@ const Plans = ({ email, uid }) => {
               autoComplete="given-name"
               required
               sx={{ marginRight: "10px" }}
+              autoFocus={true}
               color="success"
               id="outlined-basic"
-              label="First Name"
+              // label="First Name"
+              helperText="First Name"
               variant="outlined"
+              size="small"
               onChange={(e) => {
                 setFirstName(e.target.value)
               }}
@@ -588,12 +591,14 @@ const Plans = ({ email, uid }) => {
               value={lastName}
               error={error && !lastName}
               autoComplete="family-name"
+              helperText='Last Name'
               required
               sx={{}}
               color="success"
               id="outlined-basic"
-              label="Last Name"
+              // label="Last Name"
               variant="outlined"
+              size="small"
               onChange={(e) => {
 
                 setLastName(e.target.value)
@@ -607,13 +612,14 @@ const Plans = ({ email, uid }) => {
             <TextField
               value={address}
               error={error && !address}
-
+              autoComplete={false}
               required
               sx={{ marginRight: "10px" }}
               color="success"
               id="outlined-basic"
-              label="Address 1"
+              helperText="Address 1"
               variant="outlined"
+              size="small"
               onChange={(e) => {
 
                 setAddrress(e.target.value)
@@ -625,9 +631,10 @@ const Plans = ({ email, uid }) => {
               sx={{}}
               color="success"
               id="outlined-basic"
-              label="Address 2"
+              helperText="Address 2"
               placeholder='Apt., suite,floor'
               variant="outlined"
+              size="small"
               onChange={(e) => {
 
                 setAddrress2(e.target.value)
@@ -645,8 +652,9 @@ const Plans = ({ email, uid }) => {
               sx={{ marginRight: "10px" }}
               color="success"
               id="outlined-basic"
-              label="City"
+              helperText="City"
               variant="outlined"
+              size="small"
               onChange={(e) => {
 
                 setCity(e.target.value)
@@ -660,8 +668,9 @@ const Plans = ({ email, uid }) => {
               sx={{}}
               color="success"
               id="outlined-basic"
-              label="Postal Code"
+              helperText="Postal Code"
               variant="outlined"
+              size="small"
               onChange={(e) => {
 
                 setPostalCode(e.target.value)
@@ -684,8 +693,9 @@ const Plans = ({ email, uid }) => {
               id="outlined-basic"
               placeholder='For delivery purposes'
               type="tel"
-              label="Phone"
+              helperText="Phone"
               variant="outlined"
+              size="small"
               onChange={(e) => {
 
                 setPhone(e.target.value)
@@ -703,6 +713,7 @@ const Plans = ({ email, uid }) => {
               SelectProps={{
                 native: true,
               }}
+              size="small"
               onChange={(e) => {
                 console.log(e.target.value, "Ok")
 
@@ -739,6 +750,7 @@ const Plans = ({ email, uid }) => {
                   color="success"
                   id="outlined-basic"
                   label="First Name"
+                  size="small"
                   variant="outlined"
                   onChange={(e) => {
                     setFirstNameB(e.target.value)
@@ -755,6 +767,7 @@ const Plans = ({ email, uid }) => {
                   id="outlined-basic"
                   label="Last Name"
                   variant="outlined"
+                  size="small"
                   onChange={(e) => {
 
                     setLastNameB(e.target.value)
@@ -774,6 +787,7 @@ const Plans = ({ email, uid }) => {
                   id="outlined-basic"
                   label="Address 1"
                   variant="outlined"
+                  size="small"
                   onChange={(e) => {
 
                     setAddrressB(e.target.value)
@@ -788,6 +802,7 @@ const Plans = ({ email, uid }) => {
                   label="Address 2"
                   placeholder='Apt., suite,floor'
                   variant="outlined"
+                  size="small"
                   onChange={(e) => {
 
                     setAddrress2B(e.target.value)
@@ -807,6 +822,7 @@ const Plans = ({ email, uid }) => {
                   id="outlined-basic"
                   label="City"
                   variant="outlined"
+                  size="small"
                   onChange={(e) => {
 
                     setCityB(e.target.value)
@@ -822,6 +838,7 @@ const Plans = ({ email, uid }) => {
                   id="outlined-basic"
                   label="Postal Code"
                   variant="outlined"
+                  size="small"
                   onChange={(e) => {
 
                     setPostalCodeB(e.target.value)
@@ -846,6 +863,7 @@ const Plans = ({ email, uid }) => {
                   type="tel"
                   label="Phone"
                   variant="outlined"
+                  size="small"
                   onChange={(e) => {
 
                     setPhoneB(e.target.value)
@@ -998,7 +1016,7 @@ const Plans = ({ email, uid }) => {
       {activeStep == 4 && paymentStatus == 'succeeded' && (
         <div className={`col-start-1 col-end-8  row-start-2 justify-self-center self-center mx-8 shadow shadow-slate-400`}>
           <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>
-            Congratulations! You're order has been placed successfully. 
+            Congratulations! You're order has been placed successfully.
           </p>
 
         </div>
