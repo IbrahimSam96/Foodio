@@ -1,7 +1,11 @@
+import Image from "next/image";
+import { useCallback, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import DoneIcon from '@mui/icons-material/Done';
 
-
-const Slider = () => {
-
+const Slider = ({ filteredRecipes, setFilteredRecipes, selectedReicpes, setSelectedRecipes, numberOfRecipes, overSelected, setOverSelected }) => {
 
     const [swiperRef, setSwiperRef] = useState();
 
@@ -15,97 +19,150 @@ const Slider = () => {
 
     }, [swiperRef]);
 
-    
+
+    const RecipeSlide = ({ recipe }) => {
+
+
+        const SelectRecipe = (recipe) => {
+
+            if (recipe.selected == true) {
+                console.log('already selected')
+                // Removes Error if reaches maximum number fo seleted recipes
+                if (selectedReicpes.length == numberOfRecipes) {
+                    setOverSelected(false)
+                }
+                let updatedArray = selectedReicpes;
+                // Removes selected object from selectedRecipes
+                for (var i = 0; i < updatedArray.length; i++) {
+                    if (updatedArray[i].name === recipe.name) {
+                        updatedArray.splice(i, 1);
+                    }
+                }
+
+
+                setSelectedRecipes(updatedArray)
+
+                // Make it unselected
+                const updated = filteredRecipes.map(c => {
+                    if (c.name === recipe.name) c.selected = !c.selected;
+                    return c;
+                });
+
+                setFilteredRecipes(updated);
+
+            }
+            //Not Selected 
+            else {
+                // Exceeds plans selected number of recipes
+                if (selectedReicpes.length == numberOfRecipes) {
+                    setOverSelected(true)
+                }
+                else {
+                    const updated = filteredRecipes.map(c => {
+                        if (c.name === recipe.name) c.selected = !c.selected;
+                        return c;
+                    });
+
+                    setFilteredRecipes(updated);
+
+                    let updatedArray = selectedReicpes;
+
+                    updatedArray.push(recipe)
+                    setSelectedRecipes(updatedArray)
+                    console.log(selectedReicpes)
+                }
+            }
+        }
+
+
+        return (
+            <span className={`grid ${recipe.selected ? `opacity-50` : ``}`}
+                onClick={() => {
+                    SelectRecipe(recipe);
+                }} >
+                <span className={`relative `}>
+
+                    {recipe.selected && <DoneIcon className={`absolute top-[40%] left-[45%] p-[5px] text-[50px] inline bg-[green] fill-white rounded-[50%] `} />}
+
+                    <Image
+                        width={400}
+                        height={220}
+                        className={`self-center justify-self-center`}
+                        alt={`${recipe.name}`}
+                        src={`/${`${recipe.name}`}.jpeg`}
+                    />
+                </span>
+                <p className={`justify-self-start self-center text-[1.3em] text-[black] p-2 `}>
+                    {recipe.name}
+                </p>
+
+                <span className={`m-2 justify-self-start self-center flex`}>
+
+                    <p className={`bg-[#CCCCCC] p-2 inline font-bold rounded text-xs `}> {recipe.time} min </p>
+
+                    {recipe.tags.map((tag) => {
+                        return (
+                            <p key={tag} className={`bg-[#D2F895] p-2 mx-2 inline text-[green] font-bold rounded text-xs `}> {tag} </p>
+                        )
+                    })}
+
+                </span>
+            </span>
+        )
+    }
+
+    const EmptySlide = () => {
+        return (
+            <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>
+                Select a category to see more recipes
+            </p>
+        )
+    }
+
     return (
         <div className={`flex`}>
-            <span
-                onClick={handlePrevious}
-                className={`inline my-auto mx-4 rounded-[50%] border-[1px] border-[green] hover:cursor-pointer hover:bg-[#E4FABF] `}>
-                <KeyboardArrowLeftIcon className={`text-[35px] text-[green]`} />
-            </span>
-
-            <Swiper
-                onSwiper={setSwiperRef}
-                className={`max-w-[1000px] `}
-                centeredSlides={false}
-                slidesPerView={3.5}
-                // speed={1000}
-                navigation={false}
-                allowTouchMove={true}
-                loop={false}
-                spaceBetween={30}
-
-            >
-                <SwiperSlide >
-                    <span className={`grid grid-cols-1 grid-rows-1`} >
-                        <Image
-                            width={400}
-                            height={220}
-                            className={`col-start-1 row-start-1`}
-                            alt={'Beans-Foul-and-Beef-Rice'}
-                            src={'/Beans-Foul-and-Beef-Rice.jpeg'}
-                        />
-                        <p className={` justify-self-center self-center text-[0.8em] font-medium font-serif text-[white] p-2 bg-[green] `}>
-                            Beans-Foul-and-Beef-Rice
-                        </p>
+            {filteredRecipes == 0 ? EmptySlide() :
+                <>
+                    <span
+                        onClick={handlePrevious}
+                        className={`hidden lg:inline my-auto mx-4 rounded-[50%] border-[1px] border-[green] hover:cursor-pointer hover:bg-[#E4FABF] `}>
+                        <KeyboardArrowLeftIcon className={`text-[35px] text-[green]`} />
                     </span>
 
-                </SwiperSlide >
+                    <Swiper
+                        onSwiper={setSwiperRef}
+                        className={`max-w-[1500px] w-full`}
+                        centeredSlides={false}
+                        slidesPerView={3.5}
+                        // speed={1000}
+                        navigation={false}
+                        allowTouchMove={true}
+                        loop={false}
+                        spaceBetween={20}
 
-                <SwiperSlide >
-                    <span className={`grid`} >
+                    >
 
-                        <Image
-                            width={450}
-                            height={220}
-                            className={`inline mx-8 justify-self-center `}
-                            alt={'Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce'}
-                            src={'/Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce.jpeg'}
-                        />
-                        <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
-                            Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce
-                        </p>
+                        {filteredRecipes.map((recipe) => (
+                            <SwiperSlide key={recipe.name}>
+
+                                <RecipeSlide recipe={recipe} />
+
+                            </SwiperSlide>
+                        )
+                        )}
+
+                    </Swiper>
+
+                    <span
+                        onClick={handleNext}
+                        className={`hidden lg:inline my-auto mx-4 rounded-[50%] border-[1px] border-[green] hover:cursor-pointer hover:bg-[#E4FABF] `}>
+                        <KeyboardArrowRightIcon className={`text-[35px] text-[green]`} />
                     </span>
-                </SwiperSlide >
-                <SwiperSlide >
-                    <span className={`grid`} >
+                </>
+            }
 
-                        <Image
-                            width={450}
-                            height={220}
-                            className={`inline mx-8 justify-self-center `}
-                            alt={'Peri-Peri-Chicken'}
-                            src={'/Peri-Peri-Chicken.jpeg'}
-                        />
-                        <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
-                            Peri-Peri-Chicken
-                        </p>
-                    </span>
-                </SwiperSlide >
-                <SwiperSlide >
-                    <span className={`grid`} >
 
-                        <Image
-                            width={450}
-                            height={220}
-                            className={`inline mx-8 justify-self-center `}
-                            alt={'Shells-Pasta-with-Yogurt-and-Tahini-Sauce'}
-                            src={'/Shells-Pasta-with-Yogurt-and-Tahini-Sauce.jpeg'}
-                        />
-                        <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
-                            Shells-Pasta-with-Yogurt-and-Tahini-Sauce
-                        </p>
-                    </span>
 
-                </SwiperSlide >
-
-            </Swiper>
-
-            <span
-                onClick={handleNext}
-                className={`inline my-auto mx-4 rounded-[50%] border-[1px] border-[green] hover:cursor-pointer hover:bg-[#E4FABF] `}>
-                <KeyboardArrowRightIcon className={`text-[35px] text-[green]`} />
-            </span>
         </div>
 
 

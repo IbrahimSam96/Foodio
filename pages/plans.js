@@ -43,11 +43,14 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import "swiper/css/effect-coverflow";
 import moment from 'moment/moment';
+import Slider from '@/components/Slider';
+import RecipeCategory from '@/components/RecipeCategory';
 
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
+// 4242 4242 4242 4242 Test Card
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 
@@ -134,6 +137,45 @@ const Plans = ({ email, uid }) => {
     );
   }
 
+  const recipesCategories = ['One-Pot Wonders', 'Loved By Kiddos', 'Terrific Traybakes', 'Vegetarian', 'Light Delights', 'Asian', 'Indian', 'SeaFood', 'Quick & Easy', 'Chicken'];
+
+  const [
+    categories,
+    setCategories
+  ] = useState(recipesCategories.map((name, id) => {
+    return { id, name, selected: true };
+  }));
+
+  const recipes = [
+    { name: 'Beans-Foul-and-Beef-Rice', time: '50', tags: ['One-Pot Wonders'], selected: false },
+    { name: 'Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce', time: '35', tags: ['Vegetarian', 'Light Delights'], selected: false },
+    { name: 'Peri-Peri-Chicken', time: '55', tags: ['Terrific Traybakes'], selected: false },
+    { name: 'Shells-Pasta-with-Yogurt-and-Tahini-Sauce', time: '15', tags: ['Loved By Kiddos'], selected: false },
+    { name: 'Baked-Chicken-Tray-with-Thyme', time: '55', tags: ['Terrific Traybakes'], selected: false },
+    { name: 'Mongolian-Chicken', time: '25', tags: ['One-Pot Wonders', 'Asian'], selected: false },
+    { name: 'Chicken-Curry-with-White-Rice', time: '35', tags: ['Indian'], selected: false },
+    { name: 'Beef-Steaks-with-Mushroom-and-Pomegranate-Sauce', time: '35', tags: ['One-Pot Wonders'], selected: false },
+    { name: 'Smoked-Beef-Kabab-with-Tomato-Sauce', time: '30', tags: ['Terrific Traybakes'], selected: false },
+    { name: 'Beef-Pasta-with-Blue-cheese-sauce', time: '11', tags: ['One-Pot Wonders', 'Quick & Easy'], selected: false },
+    { name: 'Herby-Fish-Rolls', time: '35', tags: ['Terrific Traybakes', 'SeaFood'], selected: false },
+    { name: 'Potatoes-Cream-and-Sausage-Pasta', time: '40', tags: ['One-Pot Wonders'], selected: false },
+    { name: 'Steak-Rolls-with-Pepper-Sauce', time: '30', tags: ['Terrific Traybakes'], selected: false },
+    { name: 'Msakhan-Traybake', time: '55', tags: ['Terrific Traybakes'], selected: false },
+    { name: 'Chicken-Shawarma-Tacos', time: '15', tags: ['Chicken', 'Loved By Kiddos'], selected: false },
+    { name: 'Chicken-Zurbian', time: '55', tags: ['Chicken'], selected: false },
+    { name: 'Shrimp-Scampi', time: '10', tags: ['One-Pot Wonders', 'SeaFood', 'Quick & Easy'], selected: false },
+    { name: 'Baked-Fish-Fillet-in-Parchment-Paper', time: '40', tags: ['Terrific Traybakes', 'Light Delights'], selected: false },
+    { name: 'Teriyaki-Chicken-with-Broccoli', time: '25', tags: ['Asian'], selected: false },
+    { name: 'Baked-Fish-Fillet-in-Tomatoes-and-Green-Olives', time: '50', tags: ['Terrific Traybakes', 'Light Delights', 'SeaFood'], selected: false },
+    { name: 'Fattet-Il-Kofta', time: '40', tags: ['One-Pot Wonders'], selected: false },
+    { name: 'Thai-Style-Chicken', time: '30', tags: ['Light Delights'], selected: false },
+    { name: 'Low-Calorie-Beef-Stroganoff', time: '30', tags: ['Light Delights'], selected: false },
+    { name: 'Chicken-Shawarma-Salad', time: '10', tags: ['Light Delights'], selected: false },
+    { name: 'Bulgur-Salad-with-Grilled-Chicken', time: '25', tags: ['Light Delights'], selected: false },
+
+
+  ];
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddrress] = useState("");
@@ -193,6 +235,7 @@ const Plans = ({ email, uid }) => {
   var date = new Date();
   var numberOfDaysToAdd = 3;
   var deliveryDate = date.setDate(date.getDate() + numberOfDaysToAdd);
+  const [orderRef, setOrderRef] = useState()
 
   const PlaceOrder = async (paymentObject) => {
 
@@ -217,11 +260,23 @@ const Plans = ({ email, uid }) => {
       deliveryDate: deliveryDate,
       numberOfPeople: numberOfPeople,
       numberOfRecipes: numberOfRecipes
-    });
+    }).then((res) => {
+      console.log(res.id)
+      setOrderRef(res.id)
+    }).catch((err) => {
+      console.log(err)
+    })
+
 
     setActiveStep(4);
 
   }
+
+  const [filteredRecipes, setFilteredRecipes] = useState(recipes)
+
+  const [selectedReicpes, setSelectedRecipes] = useState([]);
+
+  const [overSelected, setOverSelected] = useState(false);
 
   return (
     <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,auto,350px] bg-[white]`}>
@@ -277,7 +332,7 @@ const Plans = ({ email, uid }) => {
             <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow shadow-slate-400 mt-8 p-10`} >
 
 
-              <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>Choose your plan size
+              <p className={` text-[2.0em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>Choose your plan size
               </p>
 
               <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto`}>
@@ -459,13 +514,38 @@ const Plans = ({ email, uid }) => {
               src={'/tablet-desktop-right.avif'}
             />
           </div>
-          <div className={`col-start-1 col-end-8 row-start-3 grid `}>
+
+
+          <div className={`col-start-1 col-end-8 row-start-3 justify-self-center self-center`}>
 
             <span className={`self-center justify-self-center text-center`}>
-              <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] `}>
+              <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] `}>
+                What kind of recipes do you like?
+              </p>
+              <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] p-2 `}>
+                Please select from the options below. You can always change them later.
+              </p>
+            </span>
+
+            <span className={`flex justify-self-center self-center justify-center flex-wrap max-w-[1200px]  `}>
+
+
+              {categories.map((category) => {
+                return (
+                  <RecipeCategory category={category.name} selected={category.selected} categories={categories} setCategories={setCategories} recipes={recipes} setFilteredRecipes={setFilteredRecipes} />
+                )
+              })}
+            </span>
+
+          </div>
+
+          <div className={`col-start-1 col-end-8 row-start-5 grid `}>
+
+            <span className={`self-center justify-self-center text-center`}>
+              <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] `}>
                 Over 35 fresh recipes every week
               </p>
-              <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 `}>
+              <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] p-2 `}>
                 and a changing selection of desserts, snacks, and sides
               </p>
             </span>
@@ -1014,11 +1094,67 @@ const Plans = ({ email, uid }) => {
       )}
 
       {activeStep == 4 && paymentStatus == 'succeeded' && (
-        <div className={`col-start-1 col-end-8  row-start-2 justify-self-center self-center mx-8 shadow shadow-slate-400`}>
+        <div className={`col-start-1 col-end-8 row-start-2 justify-self-center self-center mx-8 shadow shadow-slate-400 grid`}>
+
           <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>
             Congratulations! You're order has been placed successfully.
           </p>
 
+          <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto`}>
+            Based on your select preference, here is a list of recipes you can select from
+          </p>
+
+          <span className={`flex justify-self-center self-center justify-center flex-wrap max-w-[1200px] `}>
+            {categories.map((category) => {
+              return (
+                <RecipeCategory category={category.name} selected={category.selected} categories={categories} setCategories={setCategories} recipes={recipes} setFilteredRecipes={setFilteredRecipes} />
+              )
+            })}
+          </span>
+          <span className={`my-8 overflow-hidden`}>
+
+            <span className={`grid`}>
+              <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto text-center`}>
+                Selected Recipes {selectedReicpes.length} / {numberOfRecipes}
+              </p>
+              {overSelected &&
+                <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto text-center`}>
+                  You can't choose more than the selected plan's number of recipes ( {numberOfRecipes} )
+                </p>
+              }
+
+            </span>
+            <Slider filteredRecipes={filteredRecipes}
+              setFilteredRecipes={setFilteredRecipes}
+              selectedReicpes={selectedReicpes}
+              setSelectedRecipes={setSelectedRecipes}
+              numberOfRecipes={numberOfRecipes}
+              overSelected={overSelected}
+              setOverSelected={setOverSelected}
+            />
+          </span>
+
+          <span onClick={async () => {
+            if (numberOfRecipes == selectedReicpes.length) {
+
+              const docRef = doc(firebasedb, "Customers", uid, "Orders", orderRef);
+
+              await updateDoc(docRef, {
+                selectedReicpes: selectedReicpes
+              },
+              );
+            }
+            else {
+
+            }
+          }}
+            className={`${numberOfRecipes == selectedReicpes.length ? `opacity-100 hover:cursor-pointer` : `opacity-50`}  group py-4 px-4 m-2 border-[2px] rounded text-center w-[175px] relative selft-center justify-self-center bg-[#D2F895] text-[green] font-bold border-[green]`
+            }
+          >
+            <p className={`text-sm my-auto inline`}>
+              Submit
+            </p>
+          </span>
         </div>
       )}
 

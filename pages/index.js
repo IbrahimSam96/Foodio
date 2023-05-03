@@ -16,8 +16,7 @@ import "swiper/css/effect-coverflow";
 import Link from 'next/link';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+
 
 import { useCallback, useEffect, useState } from 'react';
 

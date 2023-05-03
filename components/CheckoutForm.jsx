@@ -70,7 +70,7 @@ export default function CheckoutForm({ setPaymentStatus, PlaceOrder }) {
       },
       redirect: 'if_required'
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
 
       if (res.error) {
         if (res.error.type === "card_error" || res.error.type === "validation_error") {
@@ -85,7 +85,7 @@ export default function CheckoutForm({ setPaymentStatus, PlaceOrder }) {
       }
       else{
         setPaymentStatus("succeeded");
-        PlaceOrder(res)
+        PlaceOrder(res.paymentIntent)
       }
 
     }).catch((err) => {
