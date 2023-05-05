@@ -1,10 +1,13 @@
-import Image from 'next/image'
 import { useAuth } from '@/Authenticator';
+import RecipeSlider from '@/components/RecipeSlider';
 
-import { firebaseauth } from '@/InitFirebase'
+import Image from 'next/image';
+import Link from 'next/link';
+
+import { firebaseauth } from '@/InitFirebase';
 import { signOut } from "firebase/auth";
 
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import { TypeAnimation } from 'react-type-animation';
 // Carousel/Swiper
 // import { Swiper, SwiperSlide } from 'swiper/react';
@@ -13,12 +16,9 @@ import { TypeAnimation } from 'react-type-animation';
 // import 'swiper/css';
 // import 'swiper/css/navigation';
 // import "swiper/css/effect-coverflow";
-import Link from 'next/link';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 
-import { useCallback, useEffect, useState } from 'react';
-import RecipeSlider from '@/components/RecipeSlider';
 
 
 const Home = () => {
@@ -42,16 +42,16 @@ const Home = () => {
 
       <div className={`bg-[#FFFFFF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-slate-300 max-h-[64px]`}>
 
-          <Image
-            width={50}
-            height={64}
-            className={`inline hover:cursor-pointer `}
-            alt={'Boxeh'}
-            src={'/Brand.png'}
-            onClick={() => {
-              window.location = '/'
-            }}
-          />
+        <Image
+          width={50}
+          height={64}
+          className={`inline hover:cursor-pointer `}
+          alt={'Boxeh'}
+          src={'/Brand.png'}
+          onClick={() => {
+            window.location = '/'
+          }}
+        />
 
         <span onClick={() => router.push('/plans')} className={` p-[20px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
           <p className={`group-hover:text-[green] text-sm whitespace-nowrap`}> Our Plans </p>
@@ -104,7 +104,7 @@ const Home = () => {
         </span>
 
         {user.user ?
-          <span className={`col-start-6 p-4 mx-2 self-center justify-self-center hover:bg-[#FFFFFF] hover:cursor-pointer group`}>
+          <span className={`col-start-6 mx-2 self-center justify-self-center hover:cursor-pointer group`}>
             <p className={`group-hover:text-[green] text-sm inline`}> My Account </p>
             <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
               fill="currentColor"></path>
@@ -112,18 +112,18 @@ const Home = () => {
 
             <span className={`hidden ml-[-100px] z-50 group-hover:grid bg-[#FFFFFF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
 
-              <span className={`hover:bg-[#FFFFFF] p-3 `}>
+              <span className={`hover:bg-[#D2F895] p-3 `}>
                 <p className={` whitespace-nowrap text-sm	 `}>  My Orders </p>
               </span>
 
-              <span className={`hover:bg-[#FFFFFF] p-3 flex`}>
+              <span className={`hover:bg-[#D2F895] p-3 flex`}>
                 <SupportAgentIcon className={`mr-2`} />
                 <p className={`whitespace-nowrap text-sm	`}> Support  </p>
               </span>
 
               <span onClick={() => {
                 SignOut()
-              }} className={`hover:bg-[#FFFFFF] p-3 flex`}>
+              }} className={`hover:bg-[#D2F895] p-3 flex`}>
                 <LogoutIcon className={`mr-2`} />
                 <p className={` whitespace-nowrap text-sm	`}>  Logout </p>
               </span>

@@ -583,7 +583,7 @@ const Plans = ({ email, uid }) => {
               />
             </span>
 
-            <Carousel pauseOnHover="hover" controls={false} className={`max-w-[550px]`} >
+            <Carousel controls={false} className={`max-w-[550px]`} interval={2000} >
 
               <Carousel.Item fade >
                 <span className={`grid`}>
@@ -592,8 +592,9 @@ const Plans = ({ email, uid }) => {
                     Free giveaways to share, efficient timely delivery, well packed,
                     items all on ice, in the coolest boxed box I've ever seen a little cooler! wow!
                   </p>
-                  <p className={` text-center font-Financials text-[grey]`} > - Sabah </p>
-                  <Rating className={`justify-self-center`} name="size-small" defaultValue={5} size="small" readOnly />
+                  <p className={` text-center font-Financials text-[grey] mb-4`} > - Sabah </p>
+
+                  <Rating className={`justify-self-center `} name="size-small" defaultValue={5} size="small" readOnly />
                 </span>
               </Carousel.Item>
 
@@ -1096,18 +1097,17 @@ const Plans = ({ email, uid }) => {
               )
             })}
           </span>
-          <span className={`my-8 overflow-hidden grid`}>
-
-            <span className={`grid self-center`}>
-              <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto text-center`}>
-                Selected Recipes {selectedReicpes.length} / {numberOfRecipes}
+          <span className={`grid self-center justify-self-center`}>
+            <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto text-center `}>
+              Selected Recipes {selectedReicpes.length} / {numberOfRecipes}
+            </p>
+            {overSelected &&
+              <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto text-center`}>
+                You can't choose more than the selected plan's number of recipes ( {numberOfRecipes} )
               </p>
-              {overSelected &&
-                <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto text-center`}>
-                  You can't choose more than the selected plan's number of recipes ( {numberOfRecipes} )
-                </p>
-              }
-            </span>
+            }
+          </span>
+          <span className={`my-8 overflow-hidden grid`}>
 
             <Slider filteredRecipes={filteredRecipes}
               setFilteredRecipes={setFilteredRecipes}
@@ -1117,40 +1117,43 @@ const Plans = ({ email, uid }) => {
               overSelected={overSelected}
               setOverSelected={setOverSelected}
             />
+          </span>
 
-            <span
-              onClick={async () => {
+          <span
+            onClick={async () => {
 
-                if (numberOfRecipes == selectedReicpes.length) {
-                  setLoading(true)
-                  const docRef = doc(firebasedb, "Customers", uid, "Orders", orderRef);
-                  await updateDoc(docRef, {
-                    selectedReicpes: selectedReicpes
-                  },
-                  );
-                  setLoading(false)
-                }
-                else {
+              if (numberOfRecipes == selectedReicpes.length) {
+                setLoading(true)
+                const docRef = doc(firebasedb, "Customers", uid, "Orders", orderRef);
+                await updateDoc(docRef, {
+                  selectedReicpes: selectedReicpes
+                },
+                );
+                setLoading(false)
+              }
+              else {
 
-                }
-              }}
-              className={`${numberOfRecipes == selectedReicpes.length ? `opacity-100 hover:cursor-pointer` : `opacity-50`} 
-              group p-3 m-2 border-[1px] rounded text-center w-[175px] h-[48px] relative
+              }
+            }}
+            className={`${numberOfRecipes == selectedReicpes.length ? `opacity-100 hover:cursor-pointer` : `opacity-50`} 
+              group p-2 m-2 border-[1px] rounded text-center w-[175px] h-[48px] relative
                self-center justify-self-center bg-[#D2F895]
                 text-[green] font-bold border-[green]`
-              }
-            >
-              <span className={`flex`}>
-                {loading && <AutorenewIcon className={`animate-spin text-sm`} />}
-                <p className={`text-sm my-auto inline`}>
-                  Submit
-                </p>
-              </span>
+            }
+          >
+            {loading ?
+              <AutorenewIcon className={`animate-spin text-xl my-auto `} />
+              :
+              <p className={`text-sm inline my-auto mx-auto `}>
+                Submit
+              </p>
+            }
 
-            </span>
           </span>
+
         </div>
-      )}
+      )
+      }
 
 
     </div >

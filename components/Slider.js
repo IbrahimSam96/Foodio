@@ -137,7 +137,7 @@ const Slider = ({ filteredRecipes, setFilteredRecipes, selectedReicpes, setSelec
                         // speed={1000}
                         navigation={false}
                         allowTouchMove={true}
-                        loop={false}
+                        loop={true}
                         spaceBetween={20}
 
                     >
