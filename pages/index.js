@@ -7,18 +7,18 @@ import { signOut } from "firebase/auth";
 import { useRouter } from 'next/router'
 import { TypeAnimation } from 'react-type-animation';
 // Carousel/Swiper
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, EffectCoverflow } from "swiper";
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import "swiper/css/effect-coverflow";
+// import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Navigation, EffectCoverflow } from "swiper";
+// // Import Swiper styles
+// import 'swiper/css';
+// import 'swiper/css/navigation';
+// import "swiper/css/effect-coverflow";
 import Link from 'next/link';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 
-
 import { useCallback, useEffect, useState } from 'react';
+import RecipeSlider from '@/components/RecipeSlider';
 
 
 const Home = () => {
@@ -38,14 +38,13 @@ const Home = () => {
   }
 
   return (
-    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,650px,550px,450px,300px,350PX,250px] bg-[#ffffff]`}>
+    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[64px,650px,550px,550px,300px,350PX,250px] bg-[#ffffff]`}>
 
-      <div className={`bg-[#EAE6DF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-slate-300 `}>
+      <div className={`bg-[#FFFFFF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-slate-300 max-h-[64px]`}>
 
-        <span>
           <Image
             width={50}
-            height={50}
+            height={64}
             className={`inline hover:cursor-pointer `}
             alt={'Boxeh'}
             src={'/Brand.png'}
@@ -53,52 +52,51 @@ const Home = () => {
               window.location = '/'
             }}
           />
+
+        <span onClick={() => router.push('/plans')} className={` p-[20px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
+          <p className={`group-hover:text-[green] text-sm whitespace-nowrap`}> Our Plans </p>
         </span>
 
-        <span onClick={() => router.push('/plans')} className={` p-4 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
-          <p className={`group-hover:text-[green] text-sm `}> Our Plans </p>
-        </span>
-
-        <span className={` p-4 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
+        <span className={` p-[18px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
           <p className={`group-hover:text-[green] inline text-sm `}>  How It Works  </p>
           <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
             fill="currentColor"></path>
           </svg>
 
-          <span className={`hidden z-50 group-hover:grid bg-[#EAE6DF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
+          <span className={`hidden z-50 group-hover:grid bg-[#FFFFFF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
 
-            <span className={`hover:bg-[#E4FABF] p-3 `}>
+            <span className={`hover:bg-[#D2F895] p-3 `}>
               <p className={` whitespace-nowrap text-sm	 `}>  How It Works </p>
             </span>
 
-            <span className={`hover:bg-[#E4FABF] p-3 `}>
+            <span className={`hover:bg-[#D2F895] p-3 `}>
               <p className={`whitespace-nowrap text-sm	`}>  Our Chefs </p>
             </span>
 
-            <span className={`hover:bg-[#E4FABF] p-3`}>
+            <span className={`hover:bg-[#D2F895] p-3`}>
               <p className={` whitespace-nowrap text-sm	`}>  Delivery Areas </p>
             </span>
 
           </span>
         </span>
 
-        <span className={` p-4 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
+        <span className={` p-[18px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
           <p className={`group-hover:text-[green] inline text-sm `}>  Our Receipes </p>
           <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
             fill="currentColor"></path>
           </svg>
 
-          <span className={`hidden z-50 group-hover:grid bg-[#EAE6DF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
+          <span className={`hidden z-50 group-hover:grid bg-[#FFFFFF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
 
-            <span className={`hover:bg-[#E4FABF] p-3 `}>
+            <span className={`hover:bg-[#D2F895] p-3 `}>
               <p className={` whitespace-nowrap text-sm	 `}>  On The Menu </p>
             </span>
 
-            <span className={`hover:bg-[#E4FABF] p-3 `}>
+            <span className={`hover:bg-[#D2F895] p-3 `}>
               <p className={`whitespace-nowrap text-sm	`}>  Cookbook </p>
             </span>
 
-            <span className={`hover:bg-[#E4FABF] p-3`}>
+            <span className={`hover:bg-[#D2F895] p-3`}>
               <p className={` whitespace-nowrap text-sm	`}>  Vegetarian Receipes </p>
             </span>
 
@@ -106,26 +104,26 @@ const Home = () => {
         </span>
 
         {user.user ?
-          <span className={`col-start-6 p-4 mx-2 self-center justify-self-center hover:bg-[#E4FABF] hover:cursor-pointer group`}>
+          <span className={`col-start-6 p-4 mx-2 self-center justify-self-center hover:bg-[#FFFFFF] hover:cursor-pointer group`}>
             <p className={`group-hover:text-[green] text-sm inline`}> My Account </p>
             <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
               fill="currentColor"></path>
             </svg>
 
-            <span className={`hidden ml-[-100px] z-50 group-hover:grid bg-[#EAE6DF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
+            <span className={`hidden ml-[-100px] z-50 group-hover:grid bg-[#FFFFFF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
 
-              <span className={`hover:bg-[#E4FABF] p-3 `}>
+              <span className={`hover:bg-[#FFFFFF] p-3 `}>
                 <p className={` whitespace-nowrap text-sm	 `}>  My Orders </p>
               </span>
 
-              <span className={`hover:bg-[#E4FABF] p-3 flex`}>
+              <span className={`hover:bg-[#FFFFFF] p-3 flex`}>
                 <SupportAgentIcon className={`mr-2`} />
                 <p className={`whitespace-nowrap text-sm	`}> Support  </p>
               </span>
 
               <span onClick={() => {
                 SignOut()
-              }} className={`hover:bg-[#E4FABF] p-3 flex`}>
+              }} className={`hover:bg-[#FFFFFF] p-3 flex`}>
                 <LogoutIcon className={`mr-2`} />
                 <p className={` whitespace-nowrap text-sm	`}>  Logout </p>
               </span>
@@ -133,7 +131,7 @@ const Home = () => {
             </span>
           </span>
           :
-          <span onClick={() => router.push('/login')} className={`col-start-6 py-2 px-8 mx-4 border-[1px] border-[green] self-center justify-self-end hover:bg-[#E4FABF] hover:cursor-pointer group`}>
+          <span onClick={() => router.push('/login')} className={`col-start-6 py-2 px-8 mx-4 border-[1px] border-[green] self-center justify-self-end hover:bg-[#D2F895] hover:border-[2px] hover:cursor-pointer group`}>
             <p className={`text-[green] text-sm font-bold`}>
               Log In
             </p>
@@ -290,90 +288,7 @@ const Home = () => {
           </p>
         </span>
 
-        <Swiper
-          effect={"coverflow"}
-          centeredSlides={false}
-          slidesPerView={2}
-          speed={1000}
-          navigation={true}
-          modules={[Navigation, EffectCoverflow]}
-          allowTouchMove={false}
-          className={`w-full mt-8 self-center max-w-[1400px] `}
-          loop={true}
-          coverflowEffect={{
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: false,
-          }}
-        // spaceBetween={-190}
-
-        >
-          <SwiperSlide >
-            <span className={`grid`} >
-              <Image
-                width={400}
-                height={220}
-                className={`inline mx-8 justify-self-center `}
-                alt={'Beans-Foul-and-Beef-Rice'}
-                src={'/Beans-Foul-and-Beef-Rice.jpeg'}
-              />
-              <p className={`text-[1em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
-                Beans-Foul-and-Beef-Rice
-              </p>
-            </span>
-
-          </SwiperSlide >
-
-          <SwiperSlide >
-            <span className={`grid`} >
-
-              <Image
-                width={450}
-                height={220}
-                className={`inline mx-8 justify-self-center `}
-                alt={'Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce'}
-                src={'/Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce.jpeg'}
-              />
-              <p className={`text-[1em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
-                Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce
-              </p>
-            </span>
-          </SwiperSlide >
-          <SwiperSlide >
-            <span className={`grid`} >
-
-              <Image
-                width={450}
-                height={220}
-                className={`inline mx-8 justify-self-center `}
-                alt={'Peri-Peri-Chicken'}
-                src={'/Peri-Peri-Chicken.jpeg'}
-              />
-              <p className={`text-[1em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
-                Peri-Peri-Chicken
-              </p>
-            </span>
-          </SwiperSlide >
-          <SwiperSlide >
-            <span className={`grid`} >
-
-              <Image
-                width={450}
-                height={220}
-                className={`inline mx-8 justify-self-center `}
-                alt={'Shells-Pasta-with-Yogurt-and-Tahini-Sauce'}
-                src={'/Shells-Pasta-with-Yogurt-and-Tahini-Sauce.jpeg'}
-              />
-              <p className={`text-[1em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
-                Shells-Pasta-with-Yogurt-and-Tahini-Sauce
-              </p>
-            </span>
-
-          </SwiperSlide >
-
-        </Swiper>
+        <RecipeSlider />
 
         <span
           onClick={() => router.push('/plans')}

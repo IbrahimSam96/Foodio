@@ -30,9 +30,10 @@ import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 import { styled } from '@mui/material/styles';
-import { Checkbox, StepConnector, TextField, stepConnectorClasses } from '@mui/material';
+import { Checkbox, Rating, StepConnector, TextField, stepConnectorClasses } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, EffectCoverflow } from "swiper";
@@ -45,6 +46,10 @@ import "swiper/css/effect-coverflow";
 import moment from 'moment/moment';
 import Slider from '@/components/Slider';
 import RecipeCategory from '@/components/RecipeCategory';
+// Bootstrap
+import Carousel from 'react-bootstrap/Carousel';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { TypeAnimation } from 'react-type-animation';
 
 
 // Make sure to call loadStripe outside of a component’s render to avoid
@@ -277,11 +282,12 @@ const Plans = ({ email, uid }) => {
   const [selectedReicpes, setSelectedRecipes] = useState([]);
 
   const [overSelected, setOverSelected] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   return (
-    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,auto,350px] bg-[white]`}>
+    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] ${activeStep == 0 ? `grid-rows-[60px,auto,350px,250px,100px]` : `grid-rows-[60px,auto,350px]`} bg-[#F8F8F8]`}>
 
-      <div className={`bg-[#EAE6DF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,1fr,150px] max-h-[60px] shadow shadow-slate-300 `}>
+      <div className={`bg-[#FFFFFF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,1fr,150px] max-h-[60px] shadow shadow-slate-300 `}>
 
         <span>
           <Image
@@ -319,7 +325,7 @@ const Plans = ({ email, uid }) => {
 
       {(activeStep == 0 || activeStep == 1) &&
         <>
-          <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center flex mx-4`}>
+          <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center flex mx-4 bg-[#FFFFFF]`}>
 
             <Image
               width={150}
@@ -335,7 +341,7 @@ const Plans = ({ email, uid }) => {
               <p className={` text-[2.0em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>Choose your plan size
               </p>
 
-              <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto`}>
+              <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto `}>
                 We'll set this as your default size, but you can always change it from week to week.
               </p>
 
@@ -498,8 +504,8 @@ const Plans = ({ email, uid }) => {
                 else {
                   setActiveStep(1)
                 }
-              }} className={`py-2 px-8 my-4 text-center border-[1px] border-[green] self-center bg-[#056835] hover:opacity-80 hover:cursor-pointer group`}>
-                <p className={`text-[white] text-sm font-bold`}>
+              }} className={`py-3 px-8 my-4 text-center border-[1px] border-[green] self-center bg-[#056835] hover:opacity-80 hover:cursor-pointer group`}>
+                <p className={`text-[white] text-sm font-bold my-auto`}>
                   Select this plan
                 </p>
               </span>
@@ -539,102 +545,82 @@ const Plans = ({ email, uid }) => {
 
           </div>
 
-          <div className={`col-start-1 col-end-8 row-start-5 grid `}>
+          <div className={`col-start-1 col-end-8 row-start-4 justify-self-center self-center grid`}>
 
-            <span className={`self-center justify-self-center text-center`}>
-              <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] `}>
-                Over 35 fresh recipes every week
+            <span className={`flex justify-self-center`}>
+              <p className={` text-[1.5em] text-[rgb(36,36,36)] font-Financials inline`}>
+                We save you serious
               </p>
-              <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] p-2 `}>
-                and a changing selection of desserts, snacks, and sides
-              </p>
+              <TypeAnimation
+                sequence={[
+                  'Time', // Types 'One'
+                  1000, // Waits 1s
+                  'Money', // Deletes 'One' and types 'Two'
+                  1000, // Waits 2s
+                  'Effort', // Types 'Three' without deleting 'Two'
+                  1000, // Waits 1s
+                  () => {
+                    console.log('Sequence completed');
+                  },
+                ]}
+                wrapper="span"
+                cursor={false}
+                repeat={Infinity}
+                speed={{ type: 'keyStrokeDelayInMs', value: 250 }}
+                className={`my-auto`}
+                style={{
+                  height: '40px',
+                  width: '40px',
+                  marginLeft: "10px",
+
+                  // margin: "auto",
+                  display: 'inline',
+                  fontSize: '1em',
+                  // zIndex: "20",
+                  color: "black",
+                  textDecoration: "underline"
+                }}
+              />
             </span>
-            <Swiper
-              effect={"coverflow"}
-              centeredSlides={false}
-              slidesPerView={2}
-              speed={1000}
-              navigation={true}
-              modules={[Navigation, EffectCoverflow]}
-              allowTouchMove={false}
-              className={`w-full mt-8 self-center max-w-[1400px] `}
-              loop={true}
-              coverflowEffect={{
-                rotate: 50,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: false,
-              }}
-            // spaceBetween={-190}
 
-            >
-              <SwiperSlide >
-                <span className={`grid`} >
-                  <Image
-                    width={400}
-                    height={220}
-                    className={`inline mx-8 justify-self-center `}
-                    alt={'Beans-Foul-and-Beef-Rice'}
-                    src={'/Beans-Foul-and-Beef-Rice.jpeg'}
-                  />
-                  <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
-                    Beans-Foul-and-Beef-Rice
+            <Carousel pauseOnHover="hover" controls={false} className={`max-w-[550px]`} >
+
+              <Carousel.Item fade >
+                <span className={`grid`}>
+                  <p className={` text-center font-Financials text-[rgb(36,36,36)]`} >
+                    Delicious food, kid friendly menu, great prices, freebies,
+                    Free giveaways to share, efficient timely delivery, well packed,
+                    items all on ice, in the coolest boxed box I've ever seen a little cooler! wow!
                   </p>
+                  <p className={` text-center font-Financials text-[grey]`} > - Sabah </p>
+                  <Rating className={`justify-self-center`} name="size-small" defaultValue={5} size="small" readOnly />
                 </span>
+              </Carousel.Item>
 
-              </SwiperSlide >
-
-              <SwiperSlide >
-                <span className={`grid`} >
-
-                  <Image
-                    width={450}
-                    height={220}
-                    className={`inline mx-8 justify-self-center `}
-                    alt={'Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce'}
-                    src={'/Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce.jpeg'}
-                  />
-                  <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
-                    Eggplant-and-Halloumi-Rolls-with-Tomato-Sauce
+              <Carousel.Item fade >
+                <span className={`grid `}>
+                  <p className={` text-center font-Financials text-[rgb(36,36,36)]`}  >
+                    The recipes are varied, delicious, and easy to prepare.
+                    The ingredients are good quality, especially the protein.
+                    The price is reasonable for what you get.
                   </p>
+                  <p className={` text-center font-Financials text-[grey]`} > - Manal </p>
+                  <Rating className={`justify-self-center`} name="size-small" defaultValue={5} size="small" readOnly />
                 </span>
-              </SwiperSlide >
-              <SwiperSlide >
-                <span className={`grid`} >
+              </Carousel.Item  >
 
-                  <Image
-                    width={450}
-                    height={220}
-                    className={`inline mx-8 justify-self-center `}
-                    alt={'Peri-Peri-Chicken'}
-                    src={'/Peri-Peri-Chicken.jpeg'}
-                  />
-                  <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
-                    Peri-Peri-Chicken
+              <Carousel.Item fade >
+                <span className={`grid `}>
+                  <p className={` text-center font-Financials text-[rgb(36,36,36)]`} >
+                    After using Boxeh for more than a year, my family is very satisfied with the food and service.
                   </p>
+                  <p className={` text-center font-Financials text-[grey]`} > - Mohammed </p>
+                  <Rating className={`justify-self-center`} name="size-small" defaultValue={5} size="small" readOnly />
                 </span>
-              </SwiperSlide >
-              <SwiperSlide >
-                <span className={`grid`} >
-
-                  <Image
-                    width={450}
-                    height={220}
-                    className={`inline mx-8 justify-self-center `}
-                    alt={'Shells-Pasta-with-Yogurt-and-Tahini-Sauce'}
-                    src={'/Shells-Pasta-with-Yogurt-and-Tahini-Sauce.jpeg'}
-                  />
-                  <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center  `}>
-                    Shells-Pasta-with-Yogurt-and-Tahini-Sauce
-                  </p>
-                </span>
-
-              </SwiperSlide >
-
-            </Swiper>
-
+              </Carousel.Item>
+            </Carousel>
           </div>
+
         </>
       }
 
@@ -980,8 +966,8 @@ const Plans = ({ email, uid }) => {
 
             }
 
-          }} className={`py-2 px-8 my-4 text-center border-[1px] border-[green] self-center bg-[#056835] hover:opacity-80 hover:cursor-pointer group`}>
-            <p className={`text-[white] text-sm font-bold`}>
+          }} className={`py-3 px-8 my-4 text-center border-[1px] border-[green] self-center bg-[#056835] hover:opacity-80 hover:cursor-pointer group`}>
+            <p className={`text-[white] text-sm font-bold my-auto`}>
               Continue
             </p>
           </span>
@@ -1004,9 +990,8 @@ const Plans = ({ email, uid }) => {
             }
           </div>
 
-          <div className={`col-start-1 col-end-8 lg:col-start-6 lg:col-end-8 row-start-3 lg:row-start-2 justify-self-center self-center ml-8 shadow shadow-slate-400`}>
-
-            <span className={``}>
+          <div className={`grid col-start-1 col-end-8 lg:col-start-6 lg:col-end-8 row-start-3 lg:row-start-2 justify-self-center self-center ml-8 shadow shadow-slate-400`}>
+            <span className={`grid self-center`}>
               <p className={` text-[1em] font-light font-serif text-[rgb(36,36,36)] py-4 px-4`}>
                 Summary
               </p>
@@ -1111,9 +1096,9 @@ const Plans = ({ email, uid }) => {
               )
             })}
           </span>
-          <span className={`my-8 overflow-hidden`}>
+          <span className={`my-8 overflow-hidden grid`}>
 
-            <span className={`grid`}>
+            <span className={`grid self-center`}>
               <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto text-center`}>
                 Selected Recipes {selectedReicpes.length} / {numberOfRecipes}
               </p>
@@ -1122,8 +1107,8 @@ const Plans = ({ email, uid }) => {
                   You can't choose more than the selected plan's number of recipes ( {numberOfRecipes} )
                 </p>
               }
-
             </span>
+
             <Slider filteredRecipes={filteredRecipes}
               setFilteredRecipes={setFilteredRecipes}
               selectedReicpes={selectedReicpes}
@@ -1132,28 +1117,37 @@ const Plans = ({ email, uid }) => {
               overSelected={overSelected}
               setOverSelected={setOverSelected}
             />
-          </span>
 
-          <span onClick={async () => {
-            if (numberOfRecipes == selectedReicpes.length) {
+            <span
+              onClick={async () => {
 
-              const docRef = doc(firebasedb, "Customers", uid, "Orders", orderRef);
+                if (numberOfRecipes == selectedReicpes.length) {
+                  setLoading(true)
+                  const docRef = doc(firebasedb, "Customers", uid, "Orders", orderRef);
+                  await updateDoc(docRef, {
+                    selectedReicpes: selectedReicpes
+                  },
+                  );
+                  setLoading(false)
+                }
+                else {
 
-              await updateDoc(docRef, {
-                selectedReicpes: selectedReicpes
-              },
-              );
-            }
-            else {
+                }
+              }}
+              className={`${numberOfRecipes == selectedReicpes.length ? `opacity-100 hover:cursor-pointer` : `opacity-50`} 
+              group p-3 m-2 border-[1px] rounded text-center w-[175px] h-[48px] relative
+               self-center justify-self-center bg-[#D2F895]
+                text-[green] font-bold border-[green]`
+              }
+            >
+              <span className={`flex`}>
+                {loading && <AutorenewIcon className={`animate-spin text-sm`} />}
+                <p className={`text-sm my-auto inline`}>
+                  Submit
+                </p>
+              </span>
 
-            }
-          }}
-            className={`${numberOfRecipes == selectedReicpes.length ? `opacity-100 hover:cursor-pointer` : `opacity-50`}  group py-4 px-4 m-2 border-[2px] rounded text-center w-[175px] relative selft-center justify-self-center bg-[#D2F895] text-[green] font-bold border-[green]`
-            }
-          >
-            <p className={`text-sm my-auto inline`}>
-              Submit
-            </p>
+            </span>
           </span>
         </div>
       )}

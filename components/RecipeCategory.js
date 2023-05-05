@@ -32,7 +32,7 @@ const RecipeCategory = ({ category, selected, categories, setCategories, recipes
             handleCategory(e)
             filterRecipes()
         }}
-            className={`hover:cursor-pointer group py-4 px-4 m-2 border-[2px] rounded text-center w-[175px] relative
+            className={`hover:cursor-pointer group py-3 px-3 m-2 border-[1px] rounded text-center w-[175px] h-[48px] relative
             ${selected ? `border-[green] bg-[#D2F895] text-[green] font-bold ` : `hover:border-[green] border-[#CCCCCC] text-[black]`}`
             }
         >
