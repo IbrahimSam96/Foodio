@@ -228,7 +228,7 @@ const Login = () => {
             </div>
 
             {action == "SignIn" ?
-                <div className={`max-w-[450px] col-start-2 col-end-8 row-start-2 self-center justify-self-start grid `}>
+                <div className={`max-w-[450px] col-start-2 col-end-8 row-start-2 self-center justify-self-start grid bg-[#FFFFFF] border-[1px] border-slate-200 `}>
 
                     <p className={` text-3xl justify-self-center p-2`}>
                         Log In
@@ -324,7 +324,7 @@ const Login = () => {
 
                 </div>
                 :
-                <div className={`max-w-[450px] col-start-2 col-end-8 row-start-2 self-center justify-self-start grid `}>
+                <div className={`max-w-[450px] col-start-2 col-end-8 row-start-2 self-center justify-self-start grid bg-[#FFFFFF] border-[1px] border-slate-200`}>
                     <p className={` text-3xl justify-self-center p-2`}>
                         Create a Boxeh account
                     </p>
