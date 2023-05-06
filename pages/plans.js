@@ -264,7 +264,8 @@ const Plans = ({ email, uid }) => {
       timestamp: paymentObject.created,
       deliveryDate: deliveryDate,
       numberOfPeople: numberOfPeople,
-      numberOfRecipes: numberOfRecipes
+      numberOfRecipes: numberOfRecipes,
+      delivered: false
     }).then((res) => {
       console.log(res.id)
       setOrderRef(res.id)
@@ -1073,7 +1074,6 @@ const Plans = ({ email, uid }) => {
 
             </span>
 
-
           </div>
         </>
       )}
@@ -1128,7 +1128,8 @@ const Plans = ({ email, uid }) => {
                   selectedReicpes: selectedReicpes
                 },
                 );
-                setLoading(false)
+                setLoading(false);
+                window.location = '/my-account'
               }
               else {
 

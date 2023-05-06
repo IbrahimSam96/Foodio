@@ -112,7 +112,9 @@ const Home = () => {
 
             <span className={`hidden ml-[-100px] z-50 group-hover:grid bg-[#FFFFFF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
 
-              <span className={`hover:bg-[#D2F895] p-3 `}>
+              <span onClick={() => {
+                router.push('/my-account')
+              }} className={`hover:bg-[#D2F895] p-3 `}>
                 <p className={` whitespace-nowrap text-sm	 `}>  My Orders </p>
               </span>
 
@@ -170,13 +172,15 @@ const Home = () => {
           speed={{ type: 'keyStrokeDelayInMs', value: 250 }}
 
           style={{
-            height: '85px',
-            width: '300px',
-            margin: "auto",
+            height: '35px',
+            width: '150px',
+            // margin: "auto",
             display: 'block',
             fontSize: '2em',
             zIndex: "20",
-            color: "green"
+            color: "green",
+            justifySelf: "center"
+
           }}
         />
         <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] w-[350px] p-2`}>
@@ -185,7 +189,7 @@ const Home = () => {
 
         <span
           onClick={() => router.push('/plans')}
-          className={`mt-6 py-2 px-8 mx-8 border-[1px] border-[green] bg-lime-300 hover:cursor-pointer hover:opacity-100 opacity-80`}>
+          className={`mt-6 py-2 px-4 mx-4 border-[1px] border-[green] bg-lime-300 hover:cursor-pointer hover:opacity-100 opacity-80`}>
           <p className={`text-[green] text-sm font-bold inline`}>
             View our plans
           </p>
@@ -193,7 +197,7 @@ const Home = () => {
 
       </div>
 
-      <div className={`mt-4 col-start-1 col-end-8 row-start-3 row-end-4 justify-self-center self-center text-center grid`}>
+      <div className={`mt-8 col-start-1 col-end-8 row-start-3 row-end-4 justify-self-center self-center text-center grid`}>
 
         <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] `}>How it Works </p>
 
