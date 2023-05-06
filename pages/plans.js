@@ -337,18 +337,17 @@ const Plans = ({ email, uid }) => {
 
             <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow shadow-slate-400 mt-8 p-10`} >
 
-
-              <p className={` text-[2.0em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>Choose your plan size
+              <p className={` text-[2.0em] font-medium font-serif text-[rgb(36,36,36)] mx-auto`}>Choose your plan size
               </p>
 
-              <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto `}>
+              <p className={`text-[0.8em] font-Financials text-[rgb(36,36,36)] mx-auto `}>
                 We'll set this as your default size, but you can always change it from week to week.
               </p>
 
               <span className={`self-center grid grid-rows-1 `}>
 
                 <span className={`self-center row-start-1 col-start-1`}>
-                  <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
+                  <p className={` text-[0.8em] text-[rgb(36,36,36)] inline `}>
                     Number of people
                   </p>
                 </span>
@@ -385,10 +384,10 @@ const Plans = ({ email, uid }) => {
                 </span>
               </span>
 
-              <span className={`self-center grid grid-rows-1 py-4 `}>
+              <span className={`self-center grid grid-rows-1 py-3 `}>
 
                 <span className={`self-center row-start-1 col-start-1`}>
-                  <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
+                  <p className={` text-[0.8em] text-[rgb(36,36,36)] inline`}>
                     Recipes per week
                   </p>
                 </span>
@@ -434,60 +433,60 @@ const Plans = ({ email, uid }) => {
 
               </span>
 
-              <span className={`grid  border-[2px] border-[darkseagreen] rounded`}>
+              <span className={`grid border-[1px] border-[#056835] rounded`}>
 
                 <span className={`mx-2 border-b-[1px] border-slate-400 py-2`}>
 
-                  <p className={` text-[0.7em] font-bold font-serif text-[rgb(36,36,36)] `}>
+                  <p className={` text-[0.8em] font-bold font-Financials text-[rgb(36,36,36)] `}>
                     Price Summary
                   </p>
 
-                  <p className={` text-[0.7em] font-serif text-[rgb(36,36,36)] py-2`}>
+                  <p className={` text-[0.8em] text-[rgb(36,36,36)] `}>
                     {`${numberOfRecipes} meals for ${numberOfPeople} people per week`}
                   </p>
-                  <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] `}>
+                  <p className={` text-[0.8em] text-[rgb(36,36,36)] `}>
                     {`${numberOfRecipes * numberOfPeople} total servings `}
                   </p>
                 </span>
 
-                <span className={``}>
+                <span className={`mt-2`}>
 
-                  <span className={`flex pt-4`}>
-                    <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
+                  <span className={`flex`}>
+                    <p className={` ml-2 text-[0.8em] text-[rgb(36,36,36)] inline my-auto `}>
                       Box price
                     </p>
 
-                    <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                    <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2 inline my-auto`}>
                       {`$${(numberOfPeople * numberOfRecipes * 4.5).toFixed(2)}`}
                     </p>
                   </span>
 
-                  <span className={`flex py-1`}>
-                    <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)]`}>
+                  <span className={`flex `}>
+                    <p className={` ml-2 text-[0.8em] text-[rgb(36,36,36)] inline my-auto`}>
                       Price per serving
                     </p>
 
-                    <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                    <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2 inline my-auto`}>
                       {`$${((numberOfPeople * numberOfRecipes * 4.5) / (numberOfPeople * numberOfRecipes)).toFixed(2)}`}
                     </p>
                   </span>
 
-                  <span className={`flex py-1`}>
-                    <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
+                  <span className={`flex`}>
+                    <p className={`ml-2 text-[0.8em] text-[rgb(36,36,36)] inline my-auto `}>
                       Shipping
                     </p>
 
-                    <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                    <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2 inline my-auto`}>
                       +$3.00
                     </p>
                   </span>
 
-                  <span className={`flex py-4 bg-slate-300 `}>
-                    <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] my-auto`}>
+                  <span className={`flex py-3 bg-slate-300 `}>
+                    <p className={`ml-2 text-[0.8em] font-serif text-[rgb(36,36,36)] inline my-auto`}>
                       First Box Total
                     </p>
 
-                    <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2`}>
+                    <p className={` text-[0.8em] font-medium font-Financials text-[rgb(36,36,36)] ml-auto mr-2 inline my-auto`}>
                       {`$${(numberOfPeople * numberOfRecipes * 4.5 + 3).toFixed(2)} `}
 
                     </p>
@@ -504,7 +503,7 @@ const Plans = ({ email, uid }) => {
                 else {
                   setActiveStep(1)
                 }
-              }} className={`py-3 px-8 my-4 text-center border-[1px] border-[green] self-center bg-[#056835] hover:opacity-80 hover:cursor-pointer group`}>
+              }} className={`py-2 px-8 my-4 text-center border-[1px] border-[green] self-center bg-[#056835] hover:opacity-80 hover:cursor-pointer group`}>
                 <p className={`text-[white] text-sm font-bold my-auto`}>
                   Select this plan
                 </p>
@@ -627,7 +626,7 @@ const Plans = ({ email, uid }) => {
 
       {activeStep == 2 &&
 
-        <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow shadow-slate-400 mt-8 p-10`}>
+        <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow shadow-slate-400 mt-8 p-10 bg-[#FFFFFF]`}>
 
           <span className={`flex `}>
             <p className={` text-[0.7em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>
