@@ -3,6 +3,7 @@ import '@/styles/globals.css'
 // Prevents MUI icons from not appearing on server load 
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import { Analytics } from '@vercel/analytics/react';
 
 const cache = createCache({
   key: 'css',
@@ -15,6 +16,8 @@ export default function App({ Component, pageProps }) {
       <CacheProvider value={cache}>
 
         <Component {...pageProps} />
+        <Analytics />
+
       </CacheProvider>
 
     </AuthProvider>
