@@ -46,7 +46,7 @@ const Login = () => {
                 const user = userCredential.user;
                 console.log("Success")
                 // ...
-                router.push('/plans');
+                window.location = '/plans';
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -65,7 +65,7 @@ const Login = () => {
                 // Signed in 
                 const user = userCredential.user;
                 console.log("Success")
-                router.push('/plans');
+                window.location = '/plans';
                 // ...
             })
             .catch((error) => {
@@ -89,7 +89,7 @@ const Login = () => {
                 const user = result.user;
                 // IdP data available using getAdditionalUserInfo(result)
                 // ...
-                router.push('/plans');
+                window.location = '/plans';
 
                 console.log(result)
             }).catch((error) => {
@@ -101,6 +101,7 @@ const Login = () => {
                 // The AuthCredential type that was used.
                 const credential = GoogleAuthProvider.credentialFromError(error);
                 // ...
+                console.log(error)
             });
     }
 
