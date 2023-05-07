@@ -286,7 +286,7 @@ const Plans = ({ email, uid }) => {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] ${activeStep == 0 ? `grid-rows-[60px,auto,auto,auto,100px]` : `grid-rows-[60px,auto,350px]`} bg-[#F8F8F8]`}>
+    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] ${activeStep == 0 ? `grid-rows-[60px,auto,auto,auto,100px]` : `grid-rows-[60px,auto,auto]`} bg-[#F8F8F8]`}>
 
       <div className={`bg-[#FFFFFF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,1fr,150px] max-h-[60px] shadow shadow-slate-300 `}>
 
@@ -993,9 +993,9 @@ const Plans = ({ email, uid }) => {
             }
           </div>
 
-          <div className={`grid col-start-1 col-end-8 lg:col-start-6 lg:col-end-8 row-start-3 lg:row-start-2 justify-self-center self-center ml-8 shadow shadow-slate-400`}>
+          <div className={`grid my-4 col-start-1 col-end-8 lg:col-start-6 lg:col-end-8 row-start-3 lg:row-start-2 justify-self-center self-center ml-8 shadow shadow-slate-400`}>
             <span className={`grid self-center`}>
-              <p className={` text-[1em] font-light font-serif text-[rgb(36,36,36)] py-4 px-4`}>
+              <p className={` text-[1em] font-light font-serif text-[rgb(36,36,36)] py-2 px-4`}>
                 Summary
               </p>
 
@@ -1008,10 +1008,10 @@ const Plans = ({ email, uid }) => {
                   src={'/green-salad.svg'}
                 />
                 <span className={`grid`}>
-                  <p className={`mx-2 font-serif text-[rgb(36,36,36)] `}>
+                  <p className={`mx-2 font-serif text-[rgb(36,36,36)] my-auto`}>
                     {`${numberOfRecipes} recipes for ${numberOfPeople} people`}
                   </p>
-                  <p className={`mx-2 font-light text-[rgb(36,36,36)]`}>
+                  <p className={`mx-2 font-light text-[rgb(36,36,36)] my-auto`}>
                     {`${numberOfRecipes * numberOfPeople} servings at ${((numberOfPeople * numberOfRecipes * 4.5) / (numberOfPeople * numberOfRecipes)).toFixed(2)} per serving `}
                   </p>
                 </span>
@@ -1019,7 +1019,7 @@ const Plans = ({ email, uid }) => {
               </span>
 
               <span className={`flex pt-4`}>
-                <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
+                <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)]  `}>
                   Box price
                 </p>
 
@@ -1028,7 +1028,7 @@ const Plans = ({ email, uid }) => {
                 </p>
               </span>
 
-              <span className={`flex py-1`}>
+              <span className={`flex `}>
                 <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
                   Shipping
                 </p>
@@ -1037,7 +1037,7 @@ const Plans = ({ email, uid }) => {
                   +$3.00
                 </p>
               </span>
-              <span className={`flex py-4 bg-slate-300 `}>
+              <span className={`flex py-2 bg-slate-300 `}>
                 <p className={`ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] my-auto`}>
                   Box Total
                 </p>
@@ -1050,7 +1050,7 @@ const Plans = ({ email, uid }) => {
               <span className={`flex pt-4 mx-2`}>
                 <HomeOutlinedIcon className={`my-auto text-[20px]`} />
                 <span className={`grid  my-auto`}>
-                  <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
+                  <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] my-auto`}>
                     Delivery address
                   </p>
 
@@ -1064,7 +1064,7 @@ const Plans = ({ email, uid }) => {
                 <LocalShippingOutlinedIcon className={`my-auto text-[20px]`} />
 
                 <span className={`grid `}>
-                  <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] `}>
+                  <p className={` ml-2 text-[0.7em] font-serif text-[rgb(36,36,36)] my-auto`}>
                     Delivery date
                   </p>
 
