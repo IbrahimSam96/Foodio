@@ -584,7 +584,7 @@ const Plans = ({ email, uid }) => {
 
             <Carousel controls={false} className={`max-w-[550px]`} interval={2000} >
 
-              <Carousel.Item fade >
+              <Carousel.Item fade="true" >
                 <span className={`grid`}>
                   <p className={` text-center font-Financials text-[rgb(36,36,36)]`} >
                     {`          Delicious food, kid friendly menu, great prices, freebies,
@@ -597,7 +597,7 @@ const Plans = ({ email, uid }) => {
                 </span>
               </Carousel.Item>
 
-              <Carousel.Item fade >
+              <Carousel.Item fade="true">
                 <span className={`grid `}>
                   <p className={` text-center font-Financials text-[rgb(36,36,36)]`}  >
                     The recipes are varied, delicious, and easy to prepare.
@@ -609,7 +609,7 @@ const Plans = ({ email, uid }) => {
                 </span>
               </Carousel.Item  >
 
-              <Carousel.Item fade >
+              <Carousel.Item fade="true" >
                 <span className={`grid `}>
                   <p className={` text-center font-Financials text-[rgb(36,36,36)]`} >
                     After using Boxeh for more than a year, my family is very satisfied with the food and service.
