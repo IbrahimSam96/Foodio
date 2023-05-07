@@ -41,40 +41,40 @@ const MyAccount = ({ uid }) => {
 
     }
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     const getData = async () => {
-    //         setLoading(true)
-    //         const colRef = collection(firebasedb, "Customers", uid, 'Orders');
-    //         const querySnapshot = await getDocs(colRef);
-    //         let active_Orders = [];
-    //         let past_Orders = [];
+        const getData = async () => {
+            setLoading(true)
+            const colRef = collection(firebasedb, "Customers", uid, 'Orders');
+            const querySnapshot = await getDocs(colRef);
+            let active_Orders = [];
+            let past_Orders = [];
 
-    //         querySnapshot.forEach((doc) => {
-    //             // doc.data() is never undefined for query doc snapshots
-    //             // console.log(doc.id, " => ", doc.data());
-    //             let order = {}
-    //             order = doc.data();
-    //             order.id = doc.id;
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                // console.log(doc.id, " => ", doc.data());
+                let order = {}
+                order = doc.data();
+                order.id = doc.id;
 
-    //             if (order.delivered) {
-    //                 past_Orders.push(order);
-    //             } else {
-    //                 active_Orders.push(order);
-    //             }
-    //             // console.log(active_Orders)
-    //         });
-    //         active_Orders.sort((a, b) => a.deliveryDate - b.deliveryDate);
-    //         past_Orders.sort((a, b) => a.deliveryDate - b.deliveryDate);
+                if (order.delivered) {
+                    past_Orders.push(order);
+                } else {
+                    active_Orders.push(order);
+                }
+                // console.log(active_Orders)
+            });
+            active_Orders.sort((a, b) => a.deliveryDate - b.deliveryDate);
+            past_Orders.sort((a, b) => a.deliveryDate - b.deliveryDate);
 
-    //         setActiveOrders(active_Orders);
-    //         setPastOrders(past_Orders);
-    //         setLoading(false)
-    //     }
+            setActiveOrders(active_Orders);
+            setPastOrders(past_Orders);
+            setLoading(false)
+        }
 
-    //         getData();
+            getData();
 
-    // }, [view, uid])
+    }, [view, uid])
 
     return (
         <div className={`h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[64px,auto,250px] bg-[#FFFFFF]`}>
