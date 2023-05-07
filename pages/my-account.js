@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import moment from "moment";
 
-const MyAccount = () => {
+const MyAccount = ({ uid }) => {
 
     const user = useAuth();
     const router = useRouter();
@@ -41,11 +41,11 @@ const MyAccount = () => {
 
     }
 
-    useEffect( () => {
+    useEffect(() => {
 
         const getData = async () => {
             setLoading(true)
-            const colRef = collection(firebasedb, "Customers", user.user.uid, 'Orders');
+            const colRef = collection(firebasedb, "Customers", uid, 'Orders');
             const querySnapshot = await getDocs(colRef);
             let active_Orders = [];
             let past_Orders = [];
@@ -74,7 +74,7 @@ const MyAccount = () => {
 
         getData();
 
-    }, [view, user.user?.uid])
+    }, [view, uid])
 
     return (
         <div className={`h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[64px,auto,250px] bg-[#FFFFFF]`}>
@@ -105,7 +105,7 @@ const MyAccount = () => {
                 </span>
 
 
-                {user.user &&
+                {uid &&
                     <span className={`col-start-6 mx-2 self-center justify-self-center hover:cursor-pointer group`}>
 
                         <p className={`group-hover:text-[green] text-sm inline`}> My Account </p>
@@ -313,32 +313,31 @@ export default MyAccount;
 
 
 
-// export const getServerSideProps = async (context) => {
-//     try {
-//       const cookies = nookies.get(context);
-//       console.log(JSON.stringify(cookies, null, 2));
-//       const token = await AdminAuth.verifyIdToken(cookies.token);
-//       const { uid, email } = token;
+export const getServerSideProps = async (context) => {
+    try {
+        const cookies = nookies.get(context);
+        console.log(JSON.stringify(cookies, null, 2));
+        const token = await AdminAuth.verifyIdToken(cookies.token);
+        const { uid, email } = token;
 
-  
-//       return {
-//         props: { uid, email },
-  
-//       };
-//     } catch (err) {
-//       // either the `token` cookie didn't exist
-//       // or token verification failed
-//       // either way: redirect to the login page
-//       // either the `token` cookie didn't exist
-//       // or token verification failed
-//       // either way: redirect to the login page
-//       return {
-//         redirect: {
-//           destination: `/login`,
-//           permanent: false,
-//         },
-//         props: {}
-//       }
-//     }
-//   };
-  
+
+        return {
+            props: { uid, email },
+
+        };
+    } catch (err) {
+        // either the `token` cookie didn't exist
+        // or token verification failed
+        // either way: redirect to the login page
+        // either the `token` cookie didn't exist
+        // or token verification failed
+        // either way: redirect to the login page
+        return {
+            redirect: {
+                destination: `/login`,
+                permanent: false,
+            },
+            props: {}
+        }
+    }
+};
