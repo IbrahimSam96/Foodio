@@ -415,7 +415,7 @@ const Login = () => {
             }
             <div className={`col-start-1 col-end-8 row-start-3 row-end-4 grid bg-[#FFFFFF] grid-cols-[repeat(7,1fr)]`}>
 
-                <div className="justify-self-center sm:justify-self-auto col-start-1 sm:col-start-2 col-end-7 row-start-3 row-end-4 grid grid-cols-1 bg-[#FFFFFF] ">
+                <div className="justify-self-center sm:justify-self-auto col-start-1 sm:col-start-2 col-end-8 sm:col-end-7 row-start-3 row-end-4 grid grid-cols-1 bg-[#FFFFFF] ">
 
                     <span className={`flex self-center`}>
 
@@ -490,14 +490,14 @@ const Login = () => {
 
                             <Link href={'/conditions'}>
 
-                                <p className={`hidden sm:block text-[0.8em] font-medium font-serif text-[green] p-2 underline whitespace-nowrap`}>
+                                <p className={` text-[0.6em] font-medium font-serif text-[green] p-2 underline whitespace-nowrap`}>
                                     Terms & Conditions
                                 </p>
                             </Link>
 
                             <Link href={'/privacy'}>
 
-                                <p className={`hidden sm:block ml-4 text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
+                                <p className={` ml-2 text-[0.6em] font-medium font-serif text-[green] p-2 underline`}>
                                     Privacy
                                 </p>
                             </Link>
