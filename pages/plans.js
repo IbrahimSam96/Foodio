@@ -993,8 +993,9 @@ const Plans = ({ email, uid }) => {
             }
           </div>
 
-          <div className={`grid my-4 col-start-1 col-end-8 lg:col-start-6 lg:col-end-8 row-start-3 lg:row-start-2 justify-self-center self-center ml-8 shadow shadow-slate-400`}>
-            <span className={`grid self-center`}>
+          <div className={`grid  my-4 col-start-1 col-end-8 lg:col-start-6 lg:col-end-8 row-start-3 lg:row-start-2 justify-self-center self-center lg:ml-8 shadow shadow-slate-400`}>
+            
+            <span className={`grid self-center min-w-[360px] lg:min-w-max`}>
               <p className={` text-[1em] font-light font-serif text-[rgb(36,36,36)] py-2 px-4`}>
                 Summary
               </p>
