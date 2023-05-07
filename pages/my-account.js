@@ -314,42 +314,33 @@ const MyAccount = ({ uid }) => {
 export default MyAccount;
 
 
+
 export const getServerSideProps = async (context) => {
     try {
-        const cookies = nookies.get(context);
-        console.log(JSON.stringify(cookies, null, 2));
+      const cookies = nookies.get(context);
+      console.log(JSON.stringify(cookies, null, 2));
+      const token = await AdminAuth.verifyIdToken(cookies.token);
+      const { uid, email } = token;
 
-        const token = await AdminAuth.verifyIdToken(cookies.token);
-
-        // If no token exists; redirect to '/login' 
-        if (!token) {
-            return {
-                redirect: {
-                    destination: `/login`,
-                    permanent: false,
-                },
-                props: {
-                    // email, uid, token
-                }
-            }
-
-        }
-
-        const { uid, email } = token;
-
-        // User not logged in; no need for any SSR props; Becasue Catch statement will be triggered
-        return {
-            props: { uid, email },
-
-        };
+  
+      return {
+        props: { uid, email },
+  
+      };
     } catch (err) {
-        // either the `token` cookie didn't exist
-        // or token verification failed
-        // either way: allow user to stay on page to login
-        return {
-            props: {
-
-            },
-        };
+      // either the `token` cookie didn't exist
+      // or token verification failed
+      // either way: redirect to the login page
+      // either the `token` cookie didn't exist
+      // or token verification failed
+      // either way: redirect to the login page
+      return {
+        redirect: {
+          destination: `/login`,
+          permanent: false,
+        },
+        props: {}
+      }
     }
-};
+  };
+  
