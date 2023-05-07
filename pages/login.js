@@ -236,7 +236,7 @@ const Login = () => {
                     </p>
 
                     <TextField
-                        // value={email}
+                        autoComplete="email"
                         required
                         sx={{ margin: "10px" }}
                         color="success"
@@ -249,7 +249,7 @@ const Login = () => {
                         }}
                     />
                     <OutlinedInput
-                        // value={password}
+                        autoComplete="password"
                         required
                         sx={{ margin: "10px" }}
                         color="success"
