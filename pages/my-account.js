@@ -78,7 +78,7 @@ const MyAccount = ({ uid }) => {
     }, [view, uid])
 
     return (
-        <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[64px,auto,250px] bg-[#FFFFFF]`}>
+        <div className={`h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[64px,auto,250px] bg-[#FFFFFF]`}>
 
             <div className={`bg-[#FFFFFF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,160px,160px,160px,auto,150px] shadow shadow-slate-300 max-h-[64px]`}>
 
@@ -146,7 +146,7 @@ const MyAccount = ({ uid }) => {
                     }
                     <div className={`col-start-1 col-end-8 row-start-2 grid justify-self-center self-center m-8`}>
 
-                        {activeOrders.map((activeOrder) => {
+                        {activeOrders.length > 0 && activeOrders.map((activeOrder) => {
                             return (
                                 <span key={activeOrder.id} className={`justify-self-start self-center grid bg-[#F8F8F8] rounded p-1 m-2`}>
 
@@ -334,6 +334,7 @@ export const getServerSideProps = async (context) => {
             }
 
         }
+
         const { uid, email } = token;
 
         // User not logged in; no need for any SSR props; Becasue Catch statement will be triggered
