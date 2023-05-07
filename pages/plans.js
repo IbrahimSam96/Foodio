@@ -286,7 +286,7 @@ const Plans = ({ email, uid }) => {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] ${activeStep == 0 ? `grid-rows-[60px,auto,350px,250px,100px]` : `grid-rows-[60px,auto,350px]`} bg-[#F8F8F8]`}>
+    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] ${activeStep == 0 ? `grid-rows-[60px,auto,auto,auto,100px]` : `grid-rows-[60px,auto,350px]`} bg-[#F8F8F8]`}>
 
       <div className={`bg-[#FFFFFF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,1fr,150px] max-h-[60px] shadow shadow-slate-300 `}>
 
@@ -303,7 +303,7 @@ const Plans = ({ email, uid }) => {
           />
         </span>
 
-        <Stepper className={`justify-self-center `} alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+        <Stepper className={`justify-self-center hidden sm:flex`} alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
           {steps.map((label, index) => {
             return (
               < Step className={``} key={label} disabled={(index == 1 && user.user !== undefined) || (index == 3 && !shippingConfirmed) || (index == 4 && paymentStatus == "") || (paymentStatus == 'succeeded')} >
@@ -338,16 +338,16 @@ const Plans = ({ email, uid }) => {
 
             <div className={`col-start-1 col-end-8 row-start-2 row-end-3 justify-self-center self-center grid shadow shadow-slate-400 mt-8 p-10`} >
 
-              <p className={` text-[2.0em] font-medium font-serif text-[rgb(36,36,36)] mx-auto`}>Choose your plan size
+              <p className={`text-[1.5em] sm:text-[2.0em] font-medium font-serif text-[rgb(36,36,36)] mx-auto`}>Choose your plan size
               </p>
 
-              <p className={`text-[0.8em] font-Financials text-[rgb(36,36,36)] mx-auto `}>
+              <p className={`text-[0.5em] sm:text-[0.8em] font-Financials text-[rgb(36,36,36)] mx-auto `}>
                 {`We'll set this as your default size, but you can always change it from week to week.`}              </p>
 
               <span className={`self-center grid grid-rows-1 `}>
 
                 <span className={`self-center row-start-1 col-start-1`}>
-                  <p className={` text-[0.8em] text-[rgb(36,36,36)] inline `}>
+                  <p className={` text-[0.5em] sm:text-[0.8em] text-[rgb(36,36,36)] inline `}>
                     Number of people
                   </p>
                 </span>
@@ -355,7 +355,7 @@ const Plans = ({ email, uid }) => {
                 <span className={`flex ml-auto row-start-1 col-start-2 `}>
                   <span
                     onClick={() => { setNumberOfPeople(2) }}
-                    className={`${numberOfPeople == 2 ? `z-[-2]` : `z-10`} py-2 px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                    className={`${numberOfPeople == 2 ? `z-[-2]` : `z-10`} py-2 px-10 sm:px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
                     <p className={`text-[green] text-[0.7em] font-bold inline`}>
                       2
                     </p>
@@ -363,7 +363,7 @@ const Plans = ({ email, uid }) => {
 
                   <span
                     onClick={() => { setNumberOfPeople(4) }}
-                    className={`${numberOfPeople == 4 ? `z-[-2]` : `z-10`}  py-2 px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                    className={`${numberOfPeople == 4 ? `z-[-2]` : `z-10`}  py-2 px-10 sm:px-14 border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
                     <p className={`text-[green] text-[0.7em] font-bold inline`}>
                       4
                     </p>
@@ -374,7 +374,9 @@ const Plans = ({ email, uid }) => {
                 <span className={`flex ml-auto row-start-1 col-start-2 `}>
                   <span
                     onClick={() => { }}
-                    className={`py-2 px-14 transition-[margin] ${numberOfPeople == 2 ? `mr-[119px]` : `mr-0`} border-[1px] border-[green]  bg-[#056835] `}>
+                    className={`py-2 px-10 sm:px-14 transition-[margin] 
+                    ${numberOfPeople == 2 ? `mr-[88px] sm:mr-[119px]` : `mr-0`}
+                     border-[1px] border-[green]  bg-[#056835] `}>
                     <p className={`text-[white] text-[0.7em] font-bold inline`}>
                       {numberOfPeople}
 
@@ -387,7 +389,7 @@ const Plans = ({ email, uid }) => {
               <span className={`self-center grid grid-rows-1 py-3 `}>
 
                 <span className={`self-center row-start-1 col-start-1`}>
-                  <p className={` text-[0.8em] text-[rgb(36,36,36)] inline`}>
+                  <p className={` text-[0.5em] sm:text-[0.8em] text-[rgb(36,36,36)] inline`}>
                     Recipes per week
                   </p>
                 </span>
@@ -395,7 +397,7 @@ const Plans = ({ email, uid }) => {
                 <span className={`flex ml-auto row-start-1 col-start-2 `}>
                   <span
                     onClick={() => { setNumberOfRecipes(3) }}
-                    className={`${numberOfRecipes == 3 ? `z-[-2]` : `z-10`} py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                    className={`${numberOfRecipes == 3 ? `z-[-2]` : `z-10`} py-2 px-[25px] sm:px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
                     <p className={`text-[green] text-[0.7em] font-bold inline`}>
                       3
                     </p>
@@ -403,7 +405,7 @@ const Plans = ({ email, uid }) => {
 
                   <span
                     onClick={() => { setNumberOfRecipes(4) }}
-                    className={`${numberOfRecipes == 4 ? `z-[-2]` : `z-10`}  py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                    className={`${numberOfRecipes == 4 ? `z-[-2]` : `z-10`}  py-2 px-[25px] sm:px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
                     <p className={`text-[green] text-[0.7em] font-bold inline`}>
                       4
                     </p>
@@ -411,7 +413,7 @@ const Plans = ({ email, uid }) => {
 
                   <span
                     onClick={() => { setNumberOfRecipes(5) }}
-                    className={`${numberOfRecipes == 5 ? `z-[-2]` : `z-10`}  py-2 px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
+                    className={`${numberOfRecipes == 5 ? `z-[-2]` : `z-10`}  py-2 px-[25px] sm:px-[35.8px] border-[1px] border-[green] hover:bg-[#E4FABF] hover:cursor-pointer hover:opacity-100 opacity-80`}>
                     <p className={`text-[green] text-[0.7em] font-bold inline`}>
                       5
                     </p>
@@ -422,7 +424,9 @@ const Plans = ({ email, uid }) => {
                 <span className={`flex ml-auto row-start-1 col-start-2 `}>
                   <span
                     onClick={() => { }}
-                    className={`transition-[margin] py-2 px-[36px] ${numberOfRecipes == 3 ? `mr-[158px]` : numberOfRecipes == 4 ? `mr-[79px] ` : `mr-0`} border-[1px] border-[green]  bg-[#056835] `}>
+                    className={`transition-[margin] py-2 px-[25.2px] sm:px-[36px] 
+                    ${numberOfRecipes == 3 ? `mr-[116px] sm:mr-[158px]` : numberOfRecipes == 4 ? `mr-[58px] sm:mr-[79px] ` : `mr-0`} 
+                    border-[1px] border-[green]  bg-[#056835] `}>
                     <p className={`text-[white] text-[0.7em] font-bold inline`}>
                       {numberOfRecipes}
 
@@ -520,8 +524,7 @@ const Plans = ({ email, uid }) => {
             />
           </div>
 
-
-          <div className={`col-start-1 col-end-8 row-start-3 justify-self-center self-center`}>
+          <div className={`col-start-1 col-end-8 row-start-3 justify-self-center self-center mt-4 sm:mt-0`}>
 
             <span className={`self-center justify-self-center text-center`}>
               <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] `}>
@@ -544,7 +547,7 @@ const Plans = ({ email, uid }) => {
 
           </div>
 
-          <div className={`col-start-1 col-end-8 row-start-4 justify-self-center self-center grid`}>
+          <div className={`col-start-1 col-end-8 row-start-4 justify-self-center self-center grid mt-8 sm:mt-0`}>
 
             <span className={`flex justify-self-center`}>
               <p className={` text-[1.5em] text-[rgb(36,36,36)] font-Financials inline`}>
