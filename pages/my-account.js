@@ -117,19 +117,19 @@ const MyAccount = ({ uid }) => {
                         <span className={`hidden ml-[-100px] z-50 group-hover:grid bg-[#FFFFFF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
 
                             <span className={`hover:bg-[#D2F895] p-3 border-b-[1px] border-slate-300`}>
-                                <p className={` whitespace-nowrap text-sm`}>  My Orders </p>
+                                <p className={` whitespace-nowrap text-sm text-black`}>  My Orders </p>
                             </span>
 
                             <span className={`hover:bg-[#D2F895] p-3 flex`}>
                                 <SupportAgentIcon className={`mr-2 text-black`} />
-                                <p className={`whitespace-nowrap text-sm	`}> Support  </p>
+                                <p className={`whitespace-nowrap text-sm text-black`}> Support  </p>
                             </span>
 
                             <span onClick={() => {
                                 SignOut()
                             }} className={`hover:bg-[#D2F895] p-3 flex`}>
                                 <LogoutIcon className={`mr-2 text-black`} />
-                                <p className={` whitespace-nowrap text-sm	`}>  Logout </p>
+                                <p className={` whitespace-nowrap text-sm text-black`}>  Logout </p>
                             </span>
 
                         </span>
