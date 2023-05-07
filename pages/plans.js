@@ -331,7 +331,7 @@ const Plans = ({ email, uid }) => {
             <Image
               width={150}
               height={150}
-              className={`self-center hidden sm:block`}
+              className={`self-center hidden md:block`}
               alt={''}
               src={'/tablet-desktop-left.avif'}
             />
@@ -341,7 +341,7 @@ const Plans = ({ email, uid }) => {
               <p className={`text-[1.5em] sm:text-[2.0em] font-medium font-serif text-[rgb(36,36,36)] mx-auto`}>Choose your plan size
               </p>
 
-              <p className={`text-[0.5em] sm:text-[0.8em] font-Financials text-[rgb(36,36,36)] mx-auto `}>
+              <p className={`text-[0.6em] sm:text-[0.8em] font-Financials text-[rgb(36,36,36)] mx-auto `}>
                 {`We'll set this as your default size, but you can always change it from week to week.`}              </p>
 
               <span className={`self-center grid grid-rows-1 `}>
@@ -425,7 +425,7 @@ const Plans = ({ email, uid }) => {
                   <span
                     onClick={() => { }}
                     className={`transition-[margin] py-2 px-[25.2px] sm:px-[36px] 
-                    ${numberOfRecipes == 3 ? `mr-[116px] sm:mr-[158px]` : numberOfRecipes == 4 ? `mr-[58px] sm:mr-[79px] ` : `mr-0`} 
+                    ${numberOfRecipes == 3 ? `mr-[116.3px] sm:mr-[158px]` : numberOfRecipes == 4 ? `mr-[58.3px] sm:mr-[79px] ` : `mr-0`} 
                     border-[1px] border-[green]  bg-[#056835] `}>
                     <p className={`text-[white] text-[0.7em] font-bold inline`}>
                       {numberOfRecipes}
