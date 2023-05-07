@@ -424,8 +424,8 @@ const Plans = ({ email, uid }) => {
                 <span className={`flex ml-auto row-start-1 col-start-2 `}>
                   <span
                     onClick={() => { }}
-                    className={`transition-[margin] py-2 px-[25.2px] sm:px-[36px] 
-                    ${numberOfRecipes == 3 ? `mr-[116.3px] sm:mr-[158px]` : numberOfRecipes == 4 ? `mr-[58.3px] sm:mr-[79px] ` : `mr-0`} 
+                    className={`transition-[margin] py-2 px-[25.5px] sm:px-[36px] 
+                    ${numberOfRecipes == 3 ? `mr-[116.5px] sm:mr-[158px]` : numberOfRecipes == 4 ? `mr-[58.3px] sm:mr-[79px] ` : `mr-0`} 
                     border-[1px] border-[green]  bg-[#056835] `}>
                     <p className={`text-[white] text-[0.7em] font-bold inline`}>
                       {numberOfRecipes}
