@@ -74,7 +74,7 @@ const MyAccount = () => {
 
         getData();
 
-    }, [view, user.user.uid])
+    }, [view, user.user?.uid])
 
     return (
         <div className={`h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[64px,auto,250px] bg-[#FFFFFF]`}>
