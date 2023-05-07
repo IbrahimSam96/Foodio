@@ -128,7 +128,7 @@ const Login = () => {
 
         <div className={`h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[60px,750px,350px] bg-[#F8F8F8]`}>
 
-            <div className={`bg-[#FFFFFF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-slate-300 max-h-[64px]`}>
+            <div className={`bg-[#FFFFFF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,auto,auto,auto,150px] sm:grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-slate-300 max-h-[64px]`}>
 
                 <Image
                     width={50}
@@ -141,11 +141,11 @@ const Login = () => {
                     }}
                 />
 
-                <span onClick={() => router.push('/plans')} className={` p-[20px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
+                <span onClick={() => router.push('/plans')} className={`p-[20px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
                     <p className={`group-hover:text-[green] text-sm whitespace-nowrap`}> Our Plans </p>
                 </span>
 
-                <span className={` p-[18px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
+                <span className={` hidden sm:block p-[18px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
                     <p className={`group-hover:text-[green] inline text-sm `}>  How It Works  </p>
                     <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
                         fill="currentColor"></path>
@@ -168,7 +168,7 @@ const Login = () => {
                     </span>
                 </span>
 
-                <span className={` p-[18px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
+                <span className={` hidden sm:block p-[18px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
                     <p className={`group-hover:text-[green] inline text-sm `}>  Our Receipes </p>
                     <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
                         fill="currentColor"></path>
@@ -192,7 +192,7 @@ const Login = () => {
                 </span>
 
                 {user.user ?
-                    <span className={`col-start-6 p-4 mx-2 self-center justify-self-center hover:bg-[#FFFFFF] hover:cursor-pointer group`}>
+                    <span className={`col-start-6 mx-2 self-center justify-self-center hover:cursor-pointer group`}>
                         <p className={`group-hover:text-[green] text-sm inline`}> My Account </p>
                         <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
                             fill="currentColor"></path>
@@ -200,18 +200,20 @@ const Login = () => {
 
                         <span className={`hidden ml-[-100px] z-50 group-hover:grid bg-[#FFFFFF] absolute rounded grid-cols-[200px] shadow shadow-[green] `}>
 
-                            <span className={`hover:bg-[#FFFFFF] p-3 `}>
+                            <span onClick={() => {
+                                router.push('/my-account')
+                            }} className={`hover:bg-[#D2F895] p-3 `}>
                                 <p className={` whitespace-nowrap text-sm	 `}>  My Orders </p>
                             </span>
 
-                            <span className={`hover:bg-[#FFFFFF] p-3 flex`}>
+                            <span className={`hover:bg-[#D2F895] p-3 flex`}>
                                 <SupportAgentIcon className={`mr-2`} />
                                 <p className={`whitespace-nowrap text-sm	`}> Support  </p>
                             </span>
 
                             <span onClick={() => {
                                 SignOut()
-                            }} className={`hover:bg-[#FFFFFF] p-3 flex`}>
+                            }} className={`hover:bg-[#D2F895] p-3 flex`}>
                                 <LogoutIcon className={`mr-2`} />
                                 <p className={` whitespace-nowrap text-sm	`}>  Logout </p>
                             </span>
@@ -225,13 +227,12 @@ const Login = () => {
                         </p>
                     </span>
                 }
-
             </div>
 
             {action == "SignIn" ?
-                <div className={`max-w-[450px] col-start-2 col-end-8 row-start-2 self-center justify-self-start grid bg-[#FFFFFF] border-[1px] border-slate-200 rounded`}>
+                <div className={`max-w-[450px] mx-4 col-start-1 sm:col-start-2 col-end-8 row-start-2 self-center justify-self-start grid bg-[#FFFFFF] border-[1px] border-slate-200 rounded`}>
 
-                    <p className={` text-3xl justify-self-center p-2`}>
+                    <p className={` text-xl sm:text-3xl justify-self-center p-2`}>
                         Log In
                     </p>
 
@@ -323,7 +324,7 @@ const Login = () => {
 
                 </div>
                 :
-                <div className={`max-w-[450px] col-start-2 col-end-8 row-start-2 self-center justify-self-start grid bg-[#FFFFFF] border-[1px] border-slate-200 rounded`}>
+                <div className={`max-w-[450px] mx-4 col-start-1 sm:col-start-2 col-end-8 row-start-2 self-center justify-self-start grid bg-[#FFFFFF] border-[1px] border-slate-200 rounded`}>
                     <p className={` text-3xl justify-self-center p-2`}>
                         Create a Boxeh account
                     </p>
@@ -413,22 +414,22 @@ const Login = () => {
                 </div>
             }
             <div className={`col-start-1 col-end-8 row-start-3 row-end-4 grid bg-[#FFFFFF] grid-cols-[repeat(7,1fr)]`}>
-                <div className="justify-self-center sm:justify-self-auto col-start-2 col-end-7 row-start-3 row-end-4 grid grid-cols-1 bg-[#FFFFFF] ">
+                <div className="justify-self-center sm:justify-self-auto col-start-1 sm:col-start-2 col-end-7 row-start-3 row-end-4 grid grid-cols-1 bg-[#FFFFFF] ">
 
                     <span className={`flex self-center`}>
 
-                        <span className={`grid mr-8 `}>
-                            <p className={` text-[1em] font-bold text-[rgb(36,36,36)] p-2 `}>Boxeh </p>
+                        <span className={`grid mr-2 sm:mr-8 `}>
+                            <p className={` text-[1em] font-bold text-[rgb(36,36,36)] p-2 whitespace-nowrap`}>Boxeh </p>
 
                             <Link href={'/ourStory'}>
-                                <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline `}>
+                                <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline whitespace-nowrap `}>
                                     Our Story
                                 </p>
                             </Link>
 
                             <Link href={'/aboutUs'}>
 
-                                <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
+                                <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline whitespace-nowrap`}>
                                     About Us
                                 </p>
                             </Link>
@@ -482,13 +483,13 @@ const Login = () => {
 
                         <span className={`flex my-auto `}>
 
-                            <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 whitespace-nowrap mr-10`}>
+                            <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 whitespace-nowrap mr-6 sm:mr-10`}>
                                 © Boxeh 2023
                             </p>
 
                             <Link href={'/conditions'}>
 
-                                <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline`}>
+                                <p className={`text-[0.8em] font-medium font-serif text-[green] p-2 underline whitespace-nowrap`}>
                                     Terms & Conditions
                                 </p>
                             </Link>
