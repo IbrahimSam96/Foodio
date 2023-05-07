@@ -31,6 +31,7 @@ div.swiper-button-next {
   border-radius: 50%;
   transform: scale(.3);
   outline: auto;
+  display: none;
 }
 
 div.swiper-button-prev:hover {
@@ -41,6 +42,14 @@ div.swiper-button-prev:hover {
 div.swiper-button-next:hover {
   background-color: #E4FABF;
 
+}
+
+@media only screen and (min-width: 640px) {
+
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    display: flex;
+  }
 }
 
 /* MUI STepper Text */
@@ -66,11 +75,12 @@ div.swiper-button-next:hover {
 
 }
 
-.carousel-indicators button{
-background-color: #056835 !important;
+.carousel-indicators button {
+  background-color: #056835 !important;
 
 
 }
+
 /* .StripeElement {
   background-color: white;
   padding: 8px 12px;
