@@ -110,7 +110,7 @@ const MyAccount = ({ uid }) => {
                     <span className={`col-start-6 mx-2 self-center justify-self-center hover:cursor-pointer group`}>
 
                         <p className={`group-hover:text-[green] text-sm text-black inline `}> My Account </p>
-                        <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
+                        <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300 text-black`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
                             fill="currentColor"></path>
                         </svg>
 
@@ -121,14 +121,14 @@ const MyAccount = ({ uid }) => {
                             </span>
 
                             <span className={`hover:bg-[#D2F895] p-3 flex`}>
-                                <SupportAgentIcon className={`mr-2`} />
+                                <SupportAgentIcon className={`mr-2 text-black`} />
                                 <p className={`whitespace-nowrap text-sm	`}> Support  </p>
                             </span>
 
                             <span onClick={() => {
                                 SignOut()
                             }} className={`hover:bg-[#D2F895] p-3 flex`}>
-                                <LogoutIcon className={`mr-2`} />
+                                <LogoutIcon className={`mr-2 text-black`} />
                                 <p className={` whitespace-nowrap text-sm	`}>  Logout </p>
                             </span>
 
