@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { firebaseauth, firebasedb } from '@/InitFirebase';
 import { signOut } from "firebase/auth";
 //  Admin Firebase SDK
-import { AdminAuth } from '@/AdminFirebase';
+// import { AdminAuth } from '@/AdminFirebase';
 
 // SRS
 import nookies from "nookies";
@@ -16,10 +16,10 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 import { useEffect, useState } from "react";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import moment from "moment";
 
-const MyAccount = ({ uid }) => {
+const MyAccount = () => {
 
     const user = useAuth();
     const router = useRouter();
@@ -41,12 +41,11 @@ const MyAccount = ({ uid }) => {
 
     }
 
-
-    useEffect(() => {
+    useEffect( () => {
 
         const getData = async () => {
             setLoading(true)
-            const colRef = collection(firebasedb, "Customers", uid, 'Orders');
+            const colRef = collection(firebasedb, "Customers", user.user.uid, 'Orders');
             const querySnapshot = await getDocs(colRef);
             let active_Orders = [];
             let past_Orders = [];
@@ -75,7 +74,7 @@ const MyAccount = ({ uid }) => {
 
         getData();
 
-    }, [view, uid])
+    }, [view, user.user.uid])
 
     return (
         <div className={`h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[64px,auto,250px] bg-[#FFFFFF]`}>
@@ -203,7 +202,6 @@ const MyAccount = ({ uid }) => {
                 </>
             }
 
-
             <div className="justify-self-center sm:justify-self-auto col-start-2 col-end-7 row-start-3 row-end-4 grid grid-cols-1 ">
 
                 <span className={`flex self-center`}>
@@ -315,32 +313,32 @@ export default MyAccount;
 
 
 
-export const getServerSideProps = async (context) => {
-    try {
-      const cookies = nookies.get(context);
-      console.log(JSON.stringify(cookies, null, 2));
-      const token = await AdminAuth.verifyIdToken(cookies.token);
-      const { uid, email } = token;
+// export const getServerSideProps = async (context) => {
+//     try {
+//       const cookies = nookies.get(context);
+//       console.log(JSON.stringify(cookies, null, 2));
+//       const token = await AdminAuth.verifyIdToken(cookies.token);
+//       const { uid, email } = token;
 
   
-      return {
-        props: { uid, email },
+//       return {
+//         props: { uid, email },
   
-      };
-    } catch (err) {
-      // either the `token` cookie didn't exist
-      // or token verification failed
-      // either way: redirect to the login page
-      // either the `token` cookie didn't exist
-      // or token verification failed
-      // either way: redirect to the login page
-      return {
-        redirect: {
-          destination: `/login`,
-          permanent: false,
-        },
-        props: {}
-      }
-    }
-  };
+//       };
+//     } catch (err) {
+//       // either the `token` cookie didn't exist
+//       // or token verification failed
+//       // either way: redirect to the login page
+//       // either the `token` cookie didn't exist
+//       // or token verification failed
+//       // either way: redirect to the login page
+//       return {
+//         redirect: {
+//           destination: `/login`,
+//           permanent: false,
+//         },
+//         props: {}
+//       }
+//     }
+//   };
   
