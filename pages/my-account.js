@@ -94,7 +94,7 @@ const MyAccount = ({ uid }) => {
                 />
 
                 <span onClick={() => setView('activeOrders')} className={` p-[22px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group ${view == "activeOrders" && `font-bold text-[green] border-b-[4px] border-[green]`}`}>
-                    <p className={`group-hover:text-[green] text-sm whitespace-nowrap`}> My Deliveries </p>
+                    <p className={`group-hover:text-[green] text-sm text-black whitespace-nowrap`}> My Deliveries </p>
                 </span>
 
                 <span onClick={() => setView('pastOrders')} className={`hidden sm:block p-[22px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group ${view == "pastOrders" && `font-bold text-[green] border-b-[4px] border-[green]`}`}>
@@ -109,7 +109,7 @@ const MyAccount = ({ uid }) => {
                 {uid &&
                     <span className={`col-start-6 mx-2 self-center justify-self-center hover:cursor-pointer group`}>
 
-                        <p className={`group-hover:text-[green] text-sm inline`}> My Account </p>
+                        <p className={`group-hover:text-[green] text-sm text-black inline `}> My Account </p>
                         <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
                             fill="currentColor"></path>
                         </svg>
