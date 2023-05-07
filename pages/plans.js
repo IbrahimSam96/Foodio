@@ -1081,12 +1081,12 @@ const Plans = ({ email, uid }) => {
       )}
 
       {activeStep == 4 && paymentStatus == 'succeeded' && (
-        <div className={`col-start-1 col-end-8 row-start-2 justify-self-center self-center mx-8 shadow shadow-slate-400 grid`}>
+        <div className={`col-start-1 col-end-8 row-start-2 justify-self-center self-center mt-4 sm:mt-0 sm:mx-8 shadow shadow-slate-400 grid`}>
 
-          <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>
+          <p className={` text-[1em] sm:text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>
             {`Congratulations! You're order has been placed successfully.`}          </p>
 
-          <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto`}>
+          <p className={` text-[0.8em] sm:text-[1em] font-medium font-serif text-[rgb(36,36,36)] px-3 mx-auto `}>
             Based on your select preference, here is a list of recipes you can select from
           </p>
 
@@ -1097,16 +1097,17 @@ const Plans = ({ email, uid }) => {
               )
             })}
           </span>
+
           <span className={`grid self-center justify-self-center`}>
-            <p className={` text-[2em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto text-center `}>
+            <p className={`text-[1em] sm:text-[1.5em]  font-medium font-serif text-[rgb(36,36,36)] mx-auto text-center `}>
               Selected Recipes {selectedReicpes.length} / {numberOfRecipes}
             </p>
             {overSelected &&
-              <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto text-center`}>
-                {`                You can't choose more than the selected plan's number of recipes ( ${numberOfRecipes} )`}              </p>
+              <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] mx-auto text-center`}>
+                {`You can't choose more than the selected plan's number of recipes ( ${numberOfRecipes} )`}</p>
             }
           </span>
-          <span className={`my-8 overflow-hidden grid`}>
+          <span className={`overflow-hidden grid`}>
 
             <Slider filteredRecipes={filteredRecipes}
               setFilteredRecipes={setFilteredRecipes}
