@@ -1128,9 +1128,13 @@ const Plans = ({ email, uid }) => {
                 await updateDoc(docRef, {
                   selectedReicpes: selectedReicpes
                 },
-                );
-                setLoading(false);
-                window.location = '/my-account'
+                ).then((res) => {
+                  setLoading(false);
+                  window.location = '/my-account'
+                }).catch((err) => {
+                  console.log(err)
+                })
+
               }
               else {
 
