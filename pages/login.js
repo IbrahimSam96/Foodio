@@ -249,7 +249,6 @@ const Login = () => {
                         }}
                     />
                     <OutlinedInput
-                        autoComplete="password"
                         required
                         sx={{ margin: "10px" }}
                         color="success"
