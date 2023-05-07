@@ -38,9 +38,9 @@ const Home = () => {
   }
 
   return (
-    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[64px,650px,550px,550px,300px,350PX,250px] bg-[#ffffff]`}>
+    <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[64px,650px,auto,550px,300px,350PX,250px] bg-[#ffffff]`}>
 
-      <div className={`bg-[#FFFFFF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-slate-300 max-h-[64px]`}>
+      <div className={`bg-[#FFFFFF] mx-2 fixed w-full z-30 col-start-1 col-end-8 grid grid-cols-[60px,100px,auto,auto,auto,150px] sm:grid-cols-[60px,100px,160px,160px,auto,150px] shadow shadow-slate-300 max-h-[64px]`}>
 
         <Image
           width={50}
@@ -53,11 +53,11 @@ const Home = () => {
           }}
         />
 
-        <span onClick={() => router.push('/plans')} className={` p-[20px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
+        <span onClick={() => router.push('/plans')} className={`p-[20px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
           <p className={`group-hover:text-[green] text-sm whitespace-nowrap`}> Our Plans </p>
         </span>
 
-        <span className={` p-[18px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
+        <span className={` hidden sm:block p-[18px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
           <p className={`group-hover:text-[green] inline text-sm `}>  How It Works  </p>
           <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
             fill="currentColor"></path>
@@ -80,7 +80,7 @@ const Home = () => {
           </span>
         </span>
 
-        <span className={` p-[18px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
+        <span className={` hidden sm:block p-[18px] self-center justify-self-center hover:bg-[#D2F895] hover:cursor-pointer group`}>
           <p className={`group-hover:text-[green] inline text-sm `}>  Our Receipes </p>
           <svg className={`inline rotate-0 group-hover:rotate-180 ease-in-out	duration-300	`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" color="inherit"><path fillRule="evenodd" clipRule="evenodd" d="m12 16.333-6-6L7.333 9 12 13.667 16.667 9 18 10.333l-6 6Z"
             fill="currentColor"></path>
@@ -205,7 +205,7 @@ const Home = () => {
           Choose your recipes • Place your order  • Delivered safely to your door
         </p>
 
-        <span className={`flex mx-2`} >
+        <span className={`flex flex-col md:flex-row `} >
 
           <span className={`grid justify-self-center self-center max-w-[300px] mx-8`}>
             <Image
@@ -215,9 +215,9 @@ const Home = () => {
               alt={'Recipes'}
               src={'/Meals-3.jpg'}
             />
-            <p className={` text-[1.3em] font-medium font-serif text-[rgb(36,36,36)] `}>Choose your meals </p>
+            <p className={`text-[1.3em] font-medium font-serif text-[rgb(36,36,36)] `}>Choose your meals </p>
 
-            <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center`}>
+            <p className={`text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center`}>
               Curated, easy-to-follow recipes every week
             </p>
 
@@ -268,9 +268,7 @@ const Home = () => {
             </p>
           </span>
 
-
         </span>
-
 
         <span
           onClick={() => router.push('/plans')}
@@ -350,7 +348,6 @@ const Home = () => {
 
       </div>
 
-
       <div className=" col-start-1 col-end-8 row-start-6 row-end-7 h-full w-full relative">
         <Image
           src={'/bottom_banner_desktop.avif'}
@@ -378,7 +375,7 @@ const Home = () => {
 
       </div>
 
-      <div className="justify-self-center sm:justify-self-auto col-start-2 col-end-7 row-start-7 row-end-8 grid grid-cols-1 ">
+      <div className="justify-self-center sm:justify-self-auto col-start-1 sm:col-start-2 col-end-7 row-start-7 row-end-8 grid grid-cols-1 ">
 
         <span className={`flex self-center`}>
 

@@ -75,29 +75,31 @@ const RecipeSlider = () => {
 
     return (
         <Swiper
-            // effect={"coverflow"}
-            centeredSlides={false}
-            slidesPerView={2.5}
             speed={1000}
             navigation={true}
-            modules={[Navigation,]}
+            modules={[Navigation]}
             allowTouchMove={true}
             className={`w-full self-center max-w-[1500px] `}
             loop={true}
-            // coverflowEffect={{
-            //     rotate: 50,
-            //     stretch: 0,
-            //     depth: 100,
-            //     modifier: 1,
-            //     slideShadows: false,
-            // }}
-        // spaceBetween={30}
+            // centeredSlides={true}
+            breakpoints={{
+                // when window width is >= 640px
+                440: {
+                    width: 440,
+                    slidesPerView: 1,
+                },
+                // when window width is >= 768px
+                768: {
+                    width: 768,
+                    slidesPerView: 1.5,
 
+                },
+            }}
         >
 
             {recipes.map((recipe) => {
                 return (
-                    <SwiperSlide key={recipe.name}>
+                    <SwiperSlide key={recipe.name} >
 
                         <RecipeSlide recipe={recipe} />
 
