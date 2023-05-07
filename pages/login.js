@@ -27,8 +27,6 @@ import { useState } from 'react';
 
 const Login = () => {
 
-
-
     const user = useAuth();
     const router = useRouter();
 
