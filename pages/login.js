@@ -18,7 +18,8 @@ import Link from 'next/link';
 import { Checkbox, FormControlLabel, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import SupportAgentIcon from '@mui/icons-material/SupportAgentIcon'
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import GoogleButton from 'react-google-button'
 import { useRouter } from 'next/router';
@@ -310,8 +311,7 @@ const Login = () => {
 
                     <span className={`flex justify-self-center`}>
                         <p className={` text-[0.8em] font-medium font-serif text-[rgb(36,36,36)] p-2 justify-self-center `}>
-                            Don't have an account?
-
+                            {`Don't have an account?`}
                         </p>
                         <p onClick={() => {
                             setAction('SignUp');

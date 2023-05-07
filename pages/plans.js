@@ -222,7 +222,7 @@ const Plans = ({ email, uid }) => {
         .then((res) => res.json())
         .then((data) => setClientSecret(data.clientSecret));
     }
-  }, [shippingConfirmed, paymentStatus]);
+  }, [shippingConfirmed, paymentStatus, numberOfPeople, numberOfRecipes]);
 
   const appearance = {
     variables: {
@@ -342,8 +342,7 @@ const Plans = ({ email, uid }) => {
               </p>
 
               <p className={`text-[0.8em] font-Financials text-[rgb(36,36,36)] mx-auto `}>
-                We'll set this as your default size, but you can always change it from week to week.
-              </p>
+                {`We'll set this as your default size, but you can always change it from week to week.`}              </p>
 
               <span className={`self-center grid grid-rows-1 `}>
 
@@ -538,7 +537,7 @@ const Plans = ({ email, uid }) => {
 
               {categories.map((category) => {
                 return (
-                  <RecipeCategory category={category.name} selected={category.selected} categories={categories} setCategories={setCategories} recipes={recipes} setFilteredRecipes={setFilteredRecipes} />
+                  <RecipeCategory key={category.name} category={category.name} selected={category.selected} categories={categories} setCategories={setCategories} recipes={recipes} setFilteredRecipes={setFilteredRecipes} />
                 )
               })}
             </span>
@@ -588,9 +587,9 @@ const Plans = ({ email, uid }) => {
               <Carousel.Item fade >
                 <span className={`grid`}>
                   <p className={` text-center font-Financials text-[rgb(36,36,36)]`} >
-                    Delicious food, kid friendly menu, great prices, freebies,
+                    {`          Delicious food, kid friendly menu, great prices, freebies,
                     Free giveaways to share, efficient timely delivery, well packed,
-                    items all on ice, in the coolest boxed box I've ever seen a little cooler! wow!
+                    items all on ice, in the coolest boxed box I've ever seen a little cooler! wow!`}
                   </p>
                   <p className={` text-center font-Financials text-[grey] mb-4`} > - Sabah </p>
 
@@ -1082,8 +1081,7 @@ const Plans = ({ email, uid }) => {
         <div className={`col-start-1 col-end-8 row-start-2 justify-self-center self-center mx-8 shadow shadow-slate-400 grid`}>
 
           <p className={` text-[1.5em] font-medium font-serif text-[rgb(36,36,36)] p-3 mx-auto`}>
-            Congratulations! You're order has been placed successfully.
-          </p>
+            {`Congratulations! You're order has been placed successfully.`}          </p>
 
           <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto`}>
             Based on your select preference, here is a list of recipes you can select from
@@ -1092,7 +1090,7 @@ const Plans = ({ email, uid }) => {
           <span className={`flex justify-self-center self-center justify-center flex-wrap max-w-[1200px] `}>
             {categories.map((category) => {
               return (
-                <RecipeCategory category={category.name} selected={category.selected} categories={categories} setCategories={setCategories} recipes={recipes} setFilteredRecipes={setFilteredRecipes} />
+                <RecipeCategory key={category.name} category={category.name} selected={category.selected} categories={categories} setCategories={setCategories} recipes={recipes} setFilteredRecipes={setFilteredRecipes} />
               )
             })}
           </span>
@@ -1102,8 +1100,7 @@ const Plans = ({ email, uid }) => {
             </p>
             {overSelected &&
               <p className={` text-[1em] font-medium font-serif text-[rgb(36,36,36)] py-4 mx-auto text-center`}>
-                You can't choose more than the selected plan's number of recipes ( {numberOfRecipes} )
-              </p>
+                {`                You can't choose more than the selected plan's number of recipes ( ${numberOfRecipes} )`}              </p>
             }
           </span>
           <span className={`my-8 overflow-hidden grid`}>

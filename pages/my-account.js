@@ -75,7 +75,7 @@ const MyAccount = ({ uid }) => {
 
         getData();
 
-    }, [view])
+    }, [view, uid])
 
     return (
         <div className={` h-full min-h-screen w-full grid grid-cols-[repeat(7,1fr)] grid-rows-[64px,auto,250px] bg-[#FFFFFF]`}>
@@ -170,7 +170,7 @@ const MyAccount = ({ uid }) => {
 
                                         {activeOrder.selectedReicpes.map((recipe) => {
                                             return (
-                                                <span className={`grid m-2 self-center bg-[#FFFFFF] max-w-[300px] shadow shadow-[grey] `}>
+                                                <span key={recipe.name} className={`grid m-2 self-center bg-[#FFFFFF] max-w-[300px] shadow shadow-[grey] `}>
                                                     <Image
                                                         width={300}
                                                         height={200}
