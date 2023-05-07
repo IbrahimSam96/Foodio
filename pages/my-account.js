@@ -165,7 +165,6 @@ const MyAccount = ({ uid }) => {
                                         </p>
                                     </span>
 
-
                                     <span className={`flex justify-self-center self-center justify-start flex-wrap max-w-[1200px] `}>
 
                                         {activeOrder.selectedReicpes.map((recipe) => {
@@ -321,7 +320,6 @@ export const getServerSideProps = async (context) => {
         console.log(JSON.stringify(cookies, null, 2));
 
         const token = await AdminAuth.verifyIdToken(cookies.token);
-        const { uid, email } = token;
 
         // If no token exists; redirect to '/login' 
         if (!token) {
@@ -336,6 +334,7 @@ export const getServerSideProps = async (context) => {
             }
 
         }
+        const { uid, email } = token;
 
         // User not logged in; no need for any SSR props; Becasue Catch statement will be triggered
         return {
